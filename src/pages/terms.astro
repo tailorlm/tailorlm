@@ -1,0 +1,95 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { site } from "../config";
+---
+
+<Layout
+  title="服务条款 — TailorLM"
+  description="TailorLM 服务条款：服务范围、报价与付款、验收、知识产权、数据与责任。"
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">TERMS</p>
+      <h1 class="h1">服务条款</h1>
+      <p class="lead">更新日期：2026-11-12</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container legal">
+      <h2>1. 服务范围</h2>
+      <p>TailorLM 提供开源大模型的后训练、评测、数据与交付服务。具体范围、交付物、时间、验收指标和费用以双方签署的工作说明书（SOW）为准。</p>
+
+      <h2>2. 报价与付款</h2>
+      <p>官网价格为起价，最终报价按项目范围确定。诊断 100% 预付；项目 50% 定金 + 50% 验收。GPU 成本按实际账单 + 15% 管理费转嫁，预付并设上限。价格不含税，开票另加 6% 增值税。</p>
+
+      <h2>3. 客户责任</h2>
+      <p>客户应提供合法来源的数据、必要的业务规则、验收人和部署环境信息，并确保有权授权我们处理相关数据。客户不得要求我们绕过模型安全限制或用于违法用途。</p>
+
+      <h2>4. 验收</h2>
+      <p>验收指标、测试集和验收人在训练前写入 SOW。我们按约定指标和回归结果交付；未达标时按 SOW 约定补数据、调参、缩小范围或按比例退款。</p>
+
+      <h2>5. 知识产权</h2>
+      <p>客户数据归客户所有；交付的 adapter/模型归客户所有；我们保留通用框架、评测方法、模板和工具。第三方基座模型按其许可证使用。</p>
+
+      <h2>6. 数据与保密</h2>
+      <p>客户数据不进 git，只存对象存储和 manifest 指针；训练与评测隔离；项目结束按 SOW 删除或归档。双方对合作中知悉的商业秘密承担保密义务。</p>
+
+      <h2>7. 责任限制</h2>
+      <p>我们不保证模型在所有场景下不出错，也不对客户将模型用于高风险场景造成的损失负责。除故意或重大过失外，我们的累计责任不超过客户已支付的服务费。</p>
+
+      <h2>8. 终止</h2>
+      <p>任一方可提前 14 天书面通知终止；已完成工作和已发生云成本据实结算；数据按 SOW 删除。</p>
+
+      <h2>9. 联系</h2>
+      <p>条款问题：<a href={`mailto:${site.email}`}>{site.email}</a></p>
+
+      <p class="small">本页是通用条款摘要，不构成法律意见；具体项目以签署的 SOW 为准。</p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero {
+    padding: 80px 0 40px;
+  }
+
+  .page-hero .eyebrow {
+    margin-bottom: 20px;
+  }
+
+  .page-hero .h1 {
+    margin-bottom: 16px;
+    font-size: clamp(44px, 6vw, 72px);
+  }
+
+  .legal {
+    max-width: 760px;
+  }
+
+  .legal h2 {
+    font-size: 26px;
+    margin: 36px 0 12px;
+  }
+
+  .legal h2:first-child {
+    margin-top: 0;
+  }
+
+  .legal p {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  .legal a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .legal .small {
+    margin-top: 32px;
+    font-size: 13px;
+  }
+</style>

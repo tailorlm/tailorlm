@@ -2,10 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import PricingTable from "../components/PricingTable.astro";
 import FAQ from "../components/FAQ.astro";
+import { mailto } from "../config";
 
-const mailto =
-  "mailto:contact@mcocdaa.com?subject=" +
-  encodeURIComponent("TailorLM 诊断咨询");
+const mailtoHref = mailto();
 
 const faqs = [
   {
@@ -33,7 +32,7 @@ const faqs = [
           TailorLM 为有明确任务和数据的团队做开源 LLM 后训练：先诊断，再训练，用可复现的评测验收。
         </p>
         <div class="hero-actions">
-          <a class="button" href={mailto}>预约诊断 <span aria-hidden="true">↗</span></a>
+          <a class="button" href={mailtoHref}>预约诊断 <span aria-hidden="true">↗</span></a>
           <a class="button secondary" href="/pricing">看服务与定价</a>
         </div>
         <p class="small muted hero-note">首批 3 个客户享受 20% 共创价 · 诊断费可抵扣</p>
@@ -179,7 +178,7 @@ const faqs = [
             前 3 个客户享受 20% 共创价，需要授权匿名案例和反馈。我们目前没有公开案例，第一批项目会按约定脱敏发布。
           </p>
         </div>
-        <a class="button light" href={mailto}>聊聊你的场景 <span aria-hidden="true">↗</span></a>
+        <a class="button light" href={mailtoHref}>聊聊你的场景 <span aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>

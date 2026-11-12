@@ -1,13 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { site, mailto } from "../config";
 
-const mailto =
-  "mailto:contact@mcocdaa.com?subject=" +
-  encodeURIComponent("TailorLM 诊断咨询") +
-  "&body=" +
-  encodeURIComponent(
-    "1. 产品是什么：\n2. 模型现在哪里不好（3 个真实失败例子）：\n3. 当前模型/方案：\n4. 数据情况（数量、格式、权属）：\n5. 验收指标（现在多少，目标多少）：\n6. 谁验收、部署环境、延迟/显存/成本限制：\n7. 时间和预算范围：\n",
-  );
+const intakeBody = `1. 产品是什么：
+2. 模型现在哪里不好（3 个真实失败例子）：
+3. 当前模型/方案：
+4. 数据情况（数量、格式、权属）：
+5. 验收指标（现在多少，目标多少）：
+6. 谁验收、部署环境、延迟/显存/成本限制：
+7. 时间和预算范围：`;
+
+const mailtoHref = mailto("TailorLM 诊断咨询", intakeBody);
 
 const questions = [
   "你的产品是什么，用户是谁？",
@@ -38,11 +41,11 @@ const questions = [
     <div class="container contact-grid">
       <div class="contact-card">
         <p class="eyebrow">EMAIL</p>
-        <a class="email" href={mailto}>contact@mcocdaa.com</a>
+        <a class="email" href={mailtoHref}>{site.email}</a>
         <p class="muted">
           点击会打开一封预填好问题的邮件。也可以直接复制邮箱，写清楚你的场景即可。
         </p>
-        <a class="button light" href={mailto}>写一封诊断邮件 <span aria-hidden="true">↗</span></a>
+        <a class="button light" href={mailtoHref}>写一封诊断邮件 <span aria-hidden="true">↗</span></a>
         <div class="contact-meta">
           <div><span>响应时间</span><strong>1–2 个工作日</strong></div>
           <div><span>诊断周期</span><strong>3–5 天</strong></div>
@@ -90,7 +93,7 @@ const questions = [
         <h2 class="h2">不确定要不要训练？</h2>
         <p class="lead">先做诊断。如果 Prompt、RAG 或工作流能解决，我们会直接说。</p>
       </div>
-      <a class="button light" href={mailto}>预约诊断 <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={mailtoHref}>预约诊断 <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>

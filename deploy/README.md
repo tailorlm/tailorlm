@@ -1,12 +1,12 @@
 # 部署
 
-静态站，构建产物在 `dist/`。两种方式，任选一种。
+静态站，构建产物在 `dist/`。上线前先完成 ICP 备案，见 [`icp.md`](icp.md)。
 
 ## 方式 A：Nginx + 静态文件
 
 ```bash
 pnpm install
-pnpm build
+PUBLIC_ICP_BEIAN="京ICP备2026000000号-1" pnpm build
 ```
 
 把 `dist/` 同步到服务器：

@@ -1,0 +1,89 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { site } from "../config";
+---
+
+<Layout
+  title="隐私政策 — TailorLM"
+  description="TailorLM 隐私政策：我们收集什么、为什么收集、保存多久，以及你的权利。"
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">PRIVACY</p>
+      <h1 class="h1">隐私政策</h1>
+      <p class="lead">更新日期：2026-11-12</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container legal">
+      <h2>1. 我们收集什么</h2>
+      <p>当你通过邮件或本站联系时，我们收集你主动提供的信息：姓名、公司、邮箱、业务场景、数据情况、预算和时间要求。</p>
+      <p>服务器可能记录常规访问日志，例如 IP、浏览器、访问时间、请求路径，用于安全和故障排查。</p>
+
+      <h2>2. 为什么收集</h2>
+      <p>用于回复咨询、判断是否适合合作、准备诊断和报价、履行合同，以及保障网站安全。</p>
+
+      <h2>3. 保存多久</h2>
+      <p>咨询信息在联系后保存不超过 12 个月；合作项目的数据按合同约定保存和删除。服务器日志按托管服务商的默认周期保存。</p>
+
+      <h2>4. 是否共享</h2>
+      <p>我们不会出售你的信息。为提供服务，可能使用云 GPU、对象存储、邮件和网站托管服务商；仅在必要范围内共享，并要求其按约定保护数据。</p>
+
+      <h2>5. Cookie 与统计</h2>
+      <p>本站是静态网站，不使用广告 Cookie，也不接入第三方行为分析。字体随站点打包，不向第三方字体服务发起请求。</p>
+
+      <h2>6. 你的权利</h2>
+      <p>你可以要求访问、更正或删除你主动提供的联系信息。请发送邮件到 <a href={`mailto:${site.email}`}>{site.email}</a>。</p>
+
+      <h2>7. 数据安全</h2>
+      <p>客户项目数据不进 git，只存对象存储和 manifest 指针；训练与评测隔离；项目结束按合同删除。请不要在第一封邮件中发送未脱敏的个人数据或密钥。</p>
+
+      <h2>8. 变更</h2>
+      <p>政策更新会修改本页日期。重大变更会通过你留下的联系方式告知。</p>
+
+      <h2>9. 联系</h2>
+      <p>隐私问题：<a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero {
+    padding: 80px 0 40px;
+  }
+
+  .page-hero .eyebrow {
+    margin-bottom: 20px;
+  }
+
+  .page-hero .h1 {
+    margin-bottom: 16px;
+    font-size: clamp(44px, 6vw, 72px);
+  }
+
+  .legal {
+    max-width: 760px;
+  }
+
+  .legal h2 {
+    font-size: 26px;
+    margin: 36px 0 12px;
+  }
+
+  .legal h2:first-child {
+    margin-top: 0;
+  }
+
+  .legal p {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 12px;
+  }
+
+  .legal a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+</style>
