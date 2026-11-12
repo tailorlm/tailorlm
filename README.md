@@ -2,9 +2,12 @@
 
 [![CI](https://github.com/tailorlm/tailorlm/actions/workflows/ci.yml/badge.svg)](https://github.com/tailorlm/tailorlm/actions/workflows/ci.yml)
 
+> 状态：商业站代码已就绪，等经营主体/备案后部署。个人主页：https://mcocdaa.com
+
 TailorLM 的公开官网：开源 LLM 后训练、评测与交付。
 
-- 站点：https://tailorlm.mcocdaa.com
+- 商业站：待经营主体/备案后上线
+- 个人主页：https://mcocdaa.com
 - 组织：https://github.com/tailorlm
 - 联系：contact@mcocdaa.com
 
@@ -44,6 +47,6 @@ pnpm preview
 
 首版没有公开客户案例；首批 3 个客户按共创价合作，项目完成后按约定脱敏发布。
 
-## 备案
+## 上线前提
 
-上线前完成 ICP 备案，流程见 [`deploy/icp.md`](deploy/icp.md)。备案通过后设置 `PUBLIC_ICP_BEIAN`，页脚会显示备案号。
+个人备案不能承载报价/售卖页面。TailorLM 商业站需要个体工商户或公司主体 + ICP 备案后再部署；个人主页见 https://mcocdaa.com。部署流程见 [`deploy/icp.md`](deploy/icp.md)。
