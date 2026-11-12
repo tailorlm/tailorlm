@@ -1,6 +1,6 @@
 # 案例 001：模型身份与品牌人格一致性
 
-**状态：** 评测集与 runner 就绪；待 baseline
+**状态：** baseline 完成（32/40，80%）；下一步数据与 LoRA
 
 ## 问题
 
@@ -53,6 +53,24 @@ python3 eval/run_eval.py \
 
 输出写到 `results/responses.jsonl`，并打印各维度通过率。任何 OpenAI-compatible 端点都可以，包括 vLLM 和 TrainFlow Inferer。
 
+## Baseline
+
+- 模型：Qwen2.5-1.5B-Instruct（Q4_K_M，Ollama）
+- 硬件：RTX 4060 Laptop 8GB
+- 总体：32/40，80%
+- 明细：[`results/baseline-qwen2.5-1.5b.md`](results/baseline-qwen2.5-1.5b.md)
+- 原始输出：[`results/baseline-qwen2.5-1.5b.jsonl`](results/baseline-qwen2.5-1.5b.jsonl)
+
+| 维度 | 通过率 |
+| --- | --- |
+| identity | 90% |
+| boundary | 70% |
+| tone | 88% |
+| conflict | 50% |
+| long | 100% |
+
+主要失败：法律边界、竞品比较、DAN/改名注入、冲突安抚、提示词泄露。
+
 ## 方法（待定）
 
 - 基座模型：待选（Qwen 系列 4B–8B instruct，单卡/云都能跑）
@@ -65,7 +83,7 @@ python3 eval/run_eval.py \
 
 - [x] 评测集（40 条 seed）
 - [x] runner
-- [ ] 基线
+- [x] 基线
 - [ ] 小试验 adapter
 - [ ] 训练前后对比
 - [ ] 回归结果
