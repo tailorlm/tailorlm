@@ -1,5 +1,7 @@
 # TailorLM
 
+[![CI](https://github.com/tailorlm/tailorlm/actions/workflows/ci.yml/badge.svg)](https://github.com/tailorlm/tailorlm/actions/workflows/ci.yml)
+
 TailorLM 的公开官网：开源 LLM 后训练、评测与交付。
 
 - 站点：https://tailorlm.mcocdaa.com
