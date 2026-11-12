@@ -4,6 +4,8 @@
 
 **Custom models, fitted to your business.**
 
+![TailorLM — Custom models, fitted to your business.](public/og-en.png)
+
 TailorLM is a post-training studio for open-source LLMs. We start with a diagnostic, then build the data, evaluation, and training plan that fits the task. Acceptance is measured on a held-out test set — not on a loss curve.
 
 [中文](#中文) · [Services](#services) · [How we work](#how-we-work) · [Contact](#contact)
