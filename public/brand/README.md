@@ -40,7 +40,7 @@ TailorLM 的 mark、favicon 和社交卡。选定方案：**量尺括号（Tape 
 - 不拉伸、不旋转、不换色、不加阴影/渐变/描边特效；不把 mark 当底纹或项目符号。
 - mark 内不放文字；wordmark 用站点字体 Fraunces，由 HTML 排版，不塞进 SVG。
 
-## 验收
+## Mark / favicon 验收
 
 - [x] `viewBox="0 0 100 100"`，无固定 `width`/`height`（PNG 除外）
 - [x] 无 `<text>`、`<style>`、渐变、滤镜、mask、clipPath、外链、base64
@@ -49,6 +49,8 @@ TailorLM 的 mark、favicon 和社交卡。选定方案：**量尺括号（Tape 
 - [x] 16px 下用 `tailorlm-mark-small.svg` 可辨认
 - [x] 有单色版、深底头像、浅底头像
 - [x] SVG 文件均 < 1 KB
+
+`og.svg` 是版式文件，允许 `<text>`，不作为 mark 使用。
 
 ## 来源
 
