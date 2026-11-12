@@ -25,9 +25,12 @@ const nav = {
 
 const ctaLabel = lang === "en" ? "Book a diagnostic" : "预约诊断";
 const mailtoHref = mailto(lang === "en" ? "TailorLM diagnostic" : "TailorLM 诊断咨询");
-const switchHref = alternatePath(lang, Astro.url.pathname);
-const switchLabel = lang === "en" ? "中文" : "EN";
 const current = Astro.url.pathname;
+const isNotFound = current.includes("404");
+const switchHref = isNotFound
+  ? localePath(lang === "en" ? "zh" : "en", "/")
+  : alternatePath(lang, current);
+const switchLabel = lang === "en" ? "中文" : "EN";
 
 const isActive = (href: string) => current === href || current.startsWith(`${href}/`);
 ---
