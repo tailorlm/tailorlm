@@ -1,0 +1,492 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const mailto =
+  "mailto:contact@mcocdaa.com?subject=" +
+  encodeURIComponent("TailorLM 诊断咨询");
+
+const steps = [
+  {
+    n: "01",
+    name: "需求诊断",
+    time: "3–5 天",
+    we: "访谈、数据 readiness、基线方案、成本预估、go/no-go。",
+    you: "3 个真实失败例子、当前方案、数据情况、验收人。",
+    out: "诊断报告、方案、预算。",
+  },
+  {
+    n: "02",
+    name: "数据与评测集",
+    time: "1–2 周",
+    we: "清洗、去重、脱敏、格式校验；训练/评测隔离；评分规则。",
+    you: "原始资料、数据权属、业务规则。",
+    out: "数据集、评测集、质量报告。",
+  },
+  {
+    n: "03",
+    name: "基线",
+    time: "2–3 天",
+    we: "用固定测试集测原模型；记录失败案例、延迟、成本。",
+    you: "模型访问方式、推理环境。",
+    out: "baseline 报告。",
+  },
+  {
+    n: "04",
+    name: "小试验",
+    time: "1–2 周",
+    we: "少量高质量数据做 LoRA/QLoRA；前后对比；失败分析。",
+    you: "确认预算和扩大条件。",
+    out: "adapter、实验报告、是否扩大的建议。",
+  },
+  {
+    n: "05",
+    name: "正式训练",
+    time: "1–3 周",
+    we: "可复现配置、TrainFlow 训练、日志、checkpoint、成本记录。",
+    you: "云预算上限、验收人。",
+    out: "adapter/模型、训练记录、成本明细。",
+  },
+  {
+    n: "06",
+    name: "评测与交付",
+    time: "1 周",
+    we: "固定测试集评测、回归、失败案例、部署说明、交付打包。",
+    you: "验收签字。",
+    out: "最终报告、adapter、推理示例、部署说明、局限。",
+  },
+];
+
+const gates = [
+  ["0 需求", "问题、数据权属、验收指标、预算都清楚", "不报价"],
+  ["1 基线", "原模型在固定测试集上的表现已记录", "不训练"],
+  ["2 小试验", "少量高质量数据上出现可测信号", "不扩大"],
+  ["3 正式训练", "小试验通过，客户确认预算", "不启动"],
+  ["4 验收", "达到 SOW 指标，回归测试通过", "不交付"],
+];
+---
+
+<Layout
+  title="流程 — TailorLM"
+  description="TailorLM 的交付流程：诊断、数据与评测集、基线、小试验、正式训练、评测与交付。每一步都有通过条件。"
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">PROCESS</p>
+      <h1 class="h1">先诊断，<br />再训练。</h1>
+      <p class="lead">
+        六个步骤，每一步都有交付和停止条件。没有基线不训练，没有验收指标不接单，没有小试验信号不扩大。
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container timeline">
+      {
+        steps.map((step) => (
+          <article class="step">
+            <span class="n">{step.n}</span>
+            <div class="step-title">
+              <h2>{step.name}</h2>
+              <span class="time">{step.time}</span>
+            </div>
+            <div class="step-cell">
+              <h4>我们做</h4>
+              <p>{step.we}</p>
+            </div>
+            <div class="step-cell">
+              <h4>你提供</h4>
+              <p>{step.you}</p>
+            </div>
+            <div class="step-cell">
+              <h4>产出</h4>
+              <p>{step.out}</p>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-label"><span class="num">GATE</span><span class="txt">通过条件</span></div>
+      <h2 class="h2">每一步都可以停。</h2>
+      <table class="gate-table">
+        <thead>
+          <tr><th>Gate</th><th>通过条件</th><th>不通过</th></tr>
+        </thead>
+        <tbody>
+          {
+            gates.map(([gate, pass, fail]) => (
+              <tr>
+                <td data-label="Gate">{gate}</td>
+                <td data-label="通过条件">{pass}</td>
+                <td data-label="不通过">{fail}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split-grid">
+      <div>
+        <div class="section-label"><span class="num">01</span><span class="txt">你提供</span></div>
+        <h2 class="h3">业务问题，不是模型名。</h2>
+        <ul class="list">
+          <li>模型现在哪里不好，给 3 个真实失败例子；</li>
+          <li>数据大概多少、什么格式、权属是否清楚；</li>
+          <li>什么结果算成功，谁验收；</li>
+          <li>模型最终跑在哪里，延迟/显存/成本限制；</li>
+          <li>预算范围和时间要求。</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-label"><span class="num">02</span><span class="txt">我们交付</span></div>
+        <h2 class="h3">能验收的结果，不是 loss 曲线。</h2>
+        <ul class="list">
+          <li>诊断报告和 go/no-go；</li>
+          <li>数据集、评测集和评分规则；</li>
+          <li>基线、训练后对比、回归和失败案例；</li>
+          <li>adapter/模型、推理示例、部署说明；</li>
+          <li>已知局限和风险。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-label"><span class="num">03</span><span class="txt">验收示例</span></div>
+      <div class="acceptance-panel">
+        <div>
+          <h2 class="h2">训练前写死，<br />训练后按这个测。</h2>
+          <p class="lead">
+            具体指标按项目定，但必须可重复测量。下面是一个身份/品牌人格项目的示例。
+          </p>
+        </div>
+        <ul class="metric-list">
+          <li><span>身份问题通过率</span><strong>≥ 95%</strong></li>
+          <li><span>指定格式遵循率</span><strong>≥ 98%</strong></li>
+          <li><span>品牌语气评分</span><strong>≥ 4.2 / 5</strong></li>
+          <li><span>禁止行为触发率</span><strong>≤ 2%</strong></li>
+          <li><span>通用问答性能下降</span><strong>≤ 3%</strong></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container not-fit">
+      <div>
+        <div class="section-label"><span class="num">04</span><span class="txt">不接什么</span></div>
+        <h2 class="h2">有些项目<br />我们不接。</h2>
+      </div>
+      <ul class="no-list">
+        <li>纯 GPU 租赁或代跑脚本；</li>
+        <li>没有验收指标的项目；</li>
+        <li>数据权属不清、含大量未脱敏个人数据；</li>
+        <li>医疗诊断、招聘筛选、信贷决策等高风险场景；</li>
+        <li>要求绕过模型安全限制；</li>
+        <li>24/7 线上托管。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">START HERE</p>
+        <h2 class="h2">从诊断开始。</h2>
+        <p class="lead">先判断值不值得训练，再决定要不要往下走。</p>
+      </div>
+      <a class="button light" href={mailto}>预约诊断 <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero {
+    padding: 80px 0 64px;
+  }
+
+  .page-hero .eyebrow {
+    margin-bottom: 20px;
+  }
+
+  .page-hero .h1 {
+    margin-bottom: 28px;
+  }
+
+  .timeline {
+    border-top: 1px solid var(--line);
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 48px 1.1fr 1fr 0.8fr 0.8fr;
+    gap: 24px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+
+  .step .n {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+    padding-top: 6px;
+  }
+
+  .step-title h2 {
+    font-size: 26px;
+  }
+
+  .step-title .time {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px 9px;
+  }
+
+  .step-cell h4 {
+    font-family: var(--font-sans);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .step-cell p {
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+
+  .gate-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 32px;
+    text-align: left;
+  }
+
+  .gate-table th {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    padding: 0 16px 12px;
+  }
+
+  .gate-table td {
+    border-top: 1px solid var(--line);
+    padding: 18px 16px;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+
+  .gate-table td:first-child {
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .split-grid,
+  .not-fit {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .list {
+    margin-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+
+  .list li {
+    padding: 12px 0 12px 18px;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+    color: var(--ink-2);
+    position: relative;
+  }
+
+  .list li::before {
+    content: "·";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+  }
+
+  .acceptance-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 48px;
+    margin-top: 16px;
+  }
+
+  .acceptance-panel .lead {
+    margin-top: 20px;
+    font-size: 15px;
+  }
+
+  .metric-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .metric-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+
+  .metric-list span {
+    color: var(--muted);
+  }
+
+  .metric-list strong {
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .no-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .no-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .cta-panel {
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 28px;
+    padding: 56px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .cta-panel .eyebrow {
+    color: rgba(247, 243, 234, 0.55);
+    margin-bottom: 18px;
+  }
+
+  .cta-panel .h2 {
+    color: var(--bg);
+  }
+
+  .cta-panel .lead {
+    color: rgba(247, 243, 234, 0.72);
+    margin-top: 20px;
+    max-width: 560px;
+    font-size: 16px;
+  }
+
+  .button.light {
+    background: var(--bg);
+    color: var(--ink);
+    border-color: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .button.light:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+
+  @media (max-width: 900px) {
+    .step {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .step .n {
+      padding-top: 0;
+    }
+
+    .split-grid,
+    .not-fit,
+    .acceptance-panel {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    .acceptance-panel {
+      padding: 32px;
+    }
+
+    .cta-panel {
+      flex-direction: column;
+      align-items: start;
+      padding: 40px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-hero {
+      padding: 56px 0;
+    }
+
+    .step {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .step .n {
+      padding-top: 0;
+    }
+
+    .gate-table thead {
+      display: none;
+    }
+
+    .gate-table tbody,
+    .gate-table tr,
+    .gate-table td {
+      display: block;
+      width: 100%;
+    }
+
+    .gate-table tr {
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .gate-table td {
+      border: 0;
+      padding: 4px 0;
+    }
+
+    .gate-table td::before {
+      content: attr(data-label) "：";
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .cta-panel {
+      padding: 28px;
+    }
+  }
+</style>

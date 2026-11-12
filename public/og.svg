@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f7f3ea"/>
+  <path d="M80 120 260 120" stroke="#d97745" stroke-width="3"/>
+  <text x="80" y="190" font-family="Georgia, 'Times New Roman', serif" font-size="76" fill="#123c2f">TailorLM</text>
+  <text x="80" y="310" font-family="Georgia, 'Songti SC', serif" font-size="92" fill="#123c2f">量体裁模。</text>
+  <text x="80" y="400" font-family="Inter, 'PingFang SC', sans-serif" font-size="32" fill="#6c6a61">开源 LLM 后训练 · 评测 · 交付</text>
+  <text x="80" y="520" font-family="Inter, 'PingFang SC', sans-serif" font-size="24" fill="#6c6a61">先诊断，再训练；用可复现的评测验收。</text>
+  <path d="M980 120 1120 260" stroke="#123c2f" stroke-width="3"/>
+  <path d="M1040 120 1160 240" stroke="#d97745" stroke-width="3" opacity=".8"/>
+  <path d="M920 120 1040 240" stroke="#123c2f" stroke-width="3" opacity=".35"/>
+</svg>

@@ -1,0 +1,492 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PricingTable from "../components/PricingTable.astro";
+import FAQ from "../components/FAQ.astro";
+
+const mailto =
+  "mailto:contact@mcocdaa.com?subject=" +
+  encodeURIComponent("TailorLM 诊断咨询");
+
+const faqs = [
+  {
+    q: "为什么先诊断，而不是直接训练？",
+    a: "不是所有问题都该用训练解决。诊断会判断是知识不足、行为不对，还是工作流问题；如果 Prompt、RAG 或流程改造能解决，我们会直接说，不卖你训练。",
+  },
+  {
+    q: "你们有公开案例吗？",
+    a: "目前没有公开客户案例。首批 3 个客户享受 20% 共创价，项目完成后按约定脱敏发布。我们不会拿未经验证的项目当案例。",
+  },
+  {
+    q: "数据安全吗？",
+    a: "客户数据不进 git，只存对象存储和 manifest 指针；训练和评测隔离；项目结束按约定删除。首封邮件请不要发送未脱敏的客户数据。",
+  },
+];
+---
+
+<Layout>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">LLM POST-TRAINING STUDIO</p>
+        <h1 class="h1">把你的模型，<br />调成你的产品。</h1>
+        <p class="lead">
+          TailorLM 为有明确任务和数据的团队做开源 LLM 后训练：先诊断，再训练，用可复现的评测验收。
+        </p>
+        <div class="hero-actions">
+          <a class="button" href={mailto}>预约诊断 <span aria-hidden="true">↗</span></a>
+          <a class="button secondary" href="/pricing">看服务与定价</a>
+        </div>
+        <p class="small muted hero-note">首批 3 个客户享受 20% 共创价 · 诊断费可抵扣</p>
+      </div>
+
+      <aside class="hero-card" aria-label="诊断卡">
+        <div class="card-head"><span>TAILORLM / DIAGNOSTIC</span><span>01</span></div>
+        <h2 class="card-title">先诊断，<br />再训练。</h2>
+        <ul class="check-list">
+          <li>这是不是训练能解决的问题？</li>
+          <li>数据够不够，权属清不清楚？</li>
+          <li>用什么指标验收？</li>
+          <li>大概要花多少？</li>
+        </ul>
+        <div class="card-foot"><span>3–5 天</span><span>¥4,800 起</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-label"><span class="num">01</span><span class="txt">你可能遇到</span></div>
+      <div class="grid-4 problem-grid">
+        <article class="problem-card">
+          <span class="n">A</span>
+          <h3>说话不像你的品牌</h3>
+          <p>语气、称呼、边界和你的产品不一致；通用助手味太重。</p>
+        </article>
+        <article class="problem-card">
+          <span class="n">B</span>
+          <h3>长对话会漂移</h3>
+          <p>聊到第十轮，忘了自己是谁、能做什么、不能做什么。</p>
+        </article>
+        <article class="problem-card">
+          <span class="n">C</span>
+          <h3>格式和工具调用不稳</h3>
+          <p>JSON、函数参数、拒答边界经常出错，重试也修不好。</p>
+        </article>
+        <article class="problem-card">
+          <span class="n">D</span>
+          <h3>Prompt / RAG 试过了</h3>
+          <p>知识补上了，但行为和风格还是不稳定，测试集过不了。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container deliver-grid">
+      <div class="deliver-intro">
+        <div class="section-label"><span class="num">02</span><span class="txt">交付什么</span></div>
+        <h2 class="h2">不是“训练完成”，<br />是“确实变好了”。</h2>
+        <p class="lead">
+          客户最终看的不是 loss，而是指定测试集上的业务指标、回归结果和能不能上线。
+        </p>
+      </div>
+
+      <div class="deliver-list">
+        <article class="deliver-item">
+          <span class="n">01</span>
+          <div>
+            <h3>一个业务指标</h3>
+            <p>从 A 到 B，训练前写进 SOW，不临时改口径。</p>
+          </div>
+        </article>
+        <article class="deliver-item">
+          <span class="n">02</span>
+          <div>
+            <h3>固定测试集</h3>
+            <p>训练前后同一套题、同一套评分，可复现。</p>
+          </div>
+        </article>
+        <article class="deliver-item">
+          <span class="n">03</span>
+          <div>
+            <h3>回归测试</h3>
+            <p>确认目标能力变好的同时，没有明显变笨。</p>
+          </div>
+        </article>
+        <article class="deliver-item">
+          <span class="n">04</span>
+          <div>
+            <h3>能用的交付物</h3>
+            <p>adapter/模型、推理示例、部署说明、失败案例和已知局限。</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-label"><span class="num">03</span><span class="txt">怎么走</span></div>
+      <div class="process-grid">
+        <article class="process-step">
+          <span class="n">01</span>
+          <h3>诊断</h3>
+          <p>判断是否值得训练，定义验收指标和预算。</p>
+          <span class="time">3–5 天</span>
+        </article>
+        <article class="process-step">
+          <span class="n">02</span>
+          <h3>基线与数据</h3>
+          <p>建评测集，记录原模型表现，清洗训练数据。</p>
+          <span class="time">1–2 周</span>
+        </article>
+        <article class="process-step">
+          <span class="n">03</span>
+          <h3>小试验</h3>
+          <p>少量高质量数据验证方向，有信号再扩大。</p>
+          <span class="time">1–2 周</span>
+        </article>
+        <article class="process-step">
+          <span class="n">04</span>
+          <h3>训练与交付</h3>
+          <p>正式训练、评测、回归、打包和部署说明。</p>
+          <span class="time">3–6 周</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-label"><span class="num">04</span><span class="txt">服务包</span></div>
+        <div class="section-head-row">
+          <h2 class="h2">从诊断开始，<br />按结果往下走。</h2>
+          <a class="text-link" href="/pricing">完整定价 →</a>
+        </div>
+      </div>
+      <PricingTable />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-panel">
+        <div>
+          <p class="eyebrow">FIRST THREE</p>
+          <h2 class="h2">做首批客户，<br />一起把案例打磨出来。</h2>
+          <p class="lead">
+            前 3 个客户享受 20% 共创价，需要授权匿名案例和反馈。我们目前没有公开案例，第一批项目会按约定脱敏发布。
+          </p>
+        </div>
+        <a class="button light" href={mailto}>聊聊你的场景 <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-wrap">
+      <div>
+        <div class="section-label"><span class="num">05</span><span class="txt">常见问题</span></div>
+        <h2 class="h2">先把问题<br />问清楚。</h2>
+      </div>
+      <FAQ items={faqs} />
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    padding: 80px 0 96px;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 64px;
+    align-items: end;
+  }
+
+  .hero-copy .eyebrow {
+    margin-bottom: 20px;
+  }
+
+  .hero-copy .h1 {
+    max-width: 780px;
+    margin-bottom: 28px;
+    font-size: clamp(48px, 6.2vw, 82px);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 32px;
+  }
+
+  .hero-note {
+    margin-top: 16px;
+  }
+
+  .hero-card {
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 24px;
+    padding: 32px;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 30px 60px rgba(18, 60, 47, 0.14);
+  }
+
+  .card-head,
+  .card-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(247, 243, 234, 0.55);
+  }
+
+  .card-title {
+    font-size: clamp(36px, 4vw, 48px);
+    color: var(--bg);
+    margin: 44px 0 28px;
+  }
+
+  .check-list {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+
+  .check-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 14px;
+    color: rgba(247, 243, 234, 0.82);
+  }
+
+  .check-list li::before {
+    content: "＋";
+    color: var(--accent);
+    line-height: 1.4;
+  }
+
+  .card-foot {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid rgba(247, 243, 234, 0.18);
+    color: rgba(247, 243, 234, 0.82);
+    letter-spacing: 0.04em;
+    text-transform: none;
+    font-size: 13px;
+  }
+
+  .problem-grid {
+    margin-top: 8px;
+  }
+
+  .problem-card {
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+
+  .problem-card .n {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .problem-card h3 {
+    font-size: 22px;
+    margin: 18px 0 10px;
+  }
+
+  .problem-card p {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .deliver-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .deliver-intro .lead {
+    margin-top: 24px;
+  }
+
+  .deliver-item {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .deliver-item:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .deliver-item .n {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .deliver-item h3 {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .deliver-item p {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+
+  .process-step {
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+
+  .process-step .n {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .process-step h3 {
+    font-size: 24px;
+    margin: 18px 0 8px;
+  }
+
+  .process-step p {
+    font-size: 14px;
+    color: var(--muted);
+    min-height: 66px;
+  }
+
+  .process-step .time {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px 10px;
+  }
+
+  .section-head-row {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .text-link {
+    font-size: 14px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .cta-panel {
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 28px;
+    padding: 56px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .cta-panel .eyebrow {
+    color: rgba(247, 243, 234, 0.55);
+    margin-bottom: 18px;
+  }
+
+  .cta-panel .h2 {
+    color: var(--bg);
+  }
+
+  .cta-panel .lead {
+    color: rgba(247, 243, 234, 0.72);
+    margin-top: 20px;
+    max-width: 560px;
+    font-size: 16px;
+  }
+
+  .button.light {
+    background: var(--bg);
+    color: var(--ink);
+    border-color: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .button.light:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+
+  .faq-wrap {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid,
+    .deliver-grid,
+    .faq-wrap {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .hero-card {
+      min-height: 0;
+    }
+
+    .process-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cta-panel {
+      flex-direction: column;
+      align-items: start;
+      padding: 40px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: 56px 0 64px;
+    }
+
+    .process-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .section-head-row {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .cta-panel {
+      padding: 28px;
+    }
+  }
+</style>

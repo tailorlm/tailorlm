@@ -1,0 +1,273 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PricingTable from "../components/PricingTable.astro";
+import FAQ from "../components/FAQ.astro";
+
+const mailto =
+  "mailto:contact@mcocdaa.com?subject=" +
+  encodeURIComponent("TailorLM 诊断咨询");
+
+const faqs = [
+  {
+    q: "为什么 GPU 不包在报价里？",
+    a: "训练时长和卡型取决于模型、数据和实验次数。我们按 Shadeform 实际账单 + 15% 管理费转嫁，预付、设上限，未用完退还或抵扣。这样你不会为没用到的算力买单。",
+  },
+  {
+    q: "能不能只做训练，不做诊断？",
+    a: "不建议。没有基线、验收指标和数据权属，训练很容易变成“跑完但说不清有没有变好”。如果你已经有完整评测集和明确指标，可以直接进小试验。",
+  },
+  {
+    q: "数据安全吗？",
+    a: "客户数据不进 git，只存对象存储和 manifest 指针；训练和评测隔离；项目结束按约定删除。首封邮件请不要发送未脱敏的客户数据。",
+  },
+  {
+    q: "多久能交付？",
+    a: "诊断 3–5 天；数据与评测 1–2 周；LoRA 小试验 1–2 周；完整交付 3–6 周。实际时间取决于数据质量、验收指标和算力排队。",
+  },
+  {
+    q: "你们有案例吗？",
+    a: "目前没有公开客户案例。首批 3 个客户享受 20% 共创价，项目完成后按约定脱敏发布。我们不会拿未经验证的项目当案例。",
+  },
+  {
+    q: "和直接租 GPU 有什么区别？",
+    a: "租卡只卖算力；我们卖的是诊断、数据、评测、训练、回归和交付。你不需要自己判断该不该训、怎么测、失败了怎么解释。",
+  },
+];
+---
+
+<Layout
+  title="定价 — TailorLM"
+  description="TailorLM 定价：诊断、数据与评测包、LoRA 小试验、完整交付、月度维护。起价透明，GPU 实报实销。"
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">PRICING</p>
+      <h1 class="h1">起价透明，<br />GPU 实报实销。</h1>
+      <p class="lead">
+        按“服务费 + GPU 成本 + 风险缓冲”报价。先做诊断，再决定走到哪一步；诊断费在 30 天内启动项目可全额抵扣。
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <PricingTable includeMaintenance />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container notes-grid">
+      <div>
+        <div class="section-label"><span class="num">01</span><span class="txt">计费方式</span></div>
+        <h2 class="h2">不报“一口价，<br />训到满意”。</h2>
+        <p class="lead">
+          验收指标在训练前写进 SOW。修改轮次、云成本上限、新增需求都提前说清楚。
+        </p>
+      </div>
+      <div class="notes-list">
+        <div><span>诊断费</span><p>30 天内启动项目可全额抵扣。</p></div>
+        <div><span>付款</span><p>诊断 100% 预付；项目 50% 定金 + 50% 验收。</p></div>
+        <div><span>GPU</span><p>Shadeform 实际账单 + 15% 管理费；预付、设上限，未用完退还或抵扣。</p></div>
+        <div><span>修改</span><p>包含 2 轮修改；新增需求单独报价。</p></div>
+        <div><span>税费</span><p>价格不含税；需要发票另加 6% 增值税。</p></div>
+        <div><span>首批</span><p>前 3 个客户 20% 共创价，需授权匿名案例和反馈。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cost-grid">
+      <div>
+        <div class="section-label"><span class="num">02</span><span class="txt">成本逻辑</span></div>
+        <h2 class="h2">为什么是<br />这个价。</h2>
+      </div>
+      <div class="cost-list">
+        <div>
+          <span>人工</span>
+          <strong>¥5,000 / 天</strong>
+          <p>诊断、数据、训练、评测、报告。按实际工作日估算，不按 token 计费。</p>
+        </div>
+        <div>
+          <span>GPU</span>
+          <strong>实报实销 + 15%</strong>
+          <p>Shadeform 实际账单；启动前设预算上限，超过停止并重新授权。</p>
+        </div>
+        <div>
+          <span>风险缓冲</span>
+          <strong>20%</strong>
+          <p>实验失败、重跑、数据返工。不承诺一次成功，但承诺每一步可解释。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-wrap">
+      <div>
+        <div class="section-label"><span class="num">03</span><span class="txt">常见问题</span></div>
+        <h2 class="h2">先把账<br />算清楚。</h2>
+      </div>
+      <FAQ items={faqs} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">START HERE</p>
+        <h2 class="h2">先做诊断，<br />再谈报价。</h2>
+        <p class="lead">告诉我们场景、数据和验收标准，我们会给一个 go/no-go 和大致成本。</p>
+      </div>
+      <a class="button light" href={mailto}>预约诊断 <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero {
+    padding: 80px 0 40px;
+  }
+
+  .page-hero .eyebrow {
+    margin-bottom: 20px;
+  }
+
+  .page-hero .h1 {
+    margin-bottom: 28px;
+  }
+
+  .notes-grid,
+  .cost-grid,
+  .faq-wrap {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .notes-grid .lead {
+    margin-top: 24px;
+  }
+
+  .notes-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .notes-list div {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+
+  .notes-list span {
+    color: var(--muted);
+  }
+
+  .notes-list p {
+    color: var(--ink-2);
+  }
+
+  .cost-list {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .cost-list div {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .cost-list span {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .cost-list strong {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 24px;
+    font-weight: 500;
+    margin: 6px 0;
+  }
+
+  .cost-list p {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .cta-panel {
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 28px;
+    padding: 56px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .cta-panel .eyebrow {
+    color: rgba(247, 243, 234, 0.55);
+    margin-bottom: 18px;
+  }
+
+  .cta-panel .h2 {
+    color: var(--bg);
+  }
+
+  .cta-panel .lead {
+    color: rgba(247, 243, 234, 0.72);
+    margin-top: 20px;
+    max-width: 560px;
+    font-size: 16px;
+  }
+
+  .button.light {
+    background: var(--bg);
+    color: var(--ink);
+    border-color: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .button.light:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+
+  @media (max-width: 900px) {
+    .notes-grid,
+    .cost-grid,
+    .faq-wrap {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .cta-panel {
+      flex-direction: column;
+      align-items: start;
+      padding: 40px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-hero {
+      padding: 56px 0 24px;
+    }
+
+    .notes-list div {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    .cta-panel {
+      padding: 28px;
+    }
+  }
+</style>

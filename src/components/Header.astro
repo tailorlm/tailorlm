@@ -1,0 +1,170 @@
+---
+const path = Astro.url.pathname;
+const links = [
+  { href: "/services", label: "服务" },
+  { href: "/pricing", label: "定价" },
+  { href: "/process", label: "流程" },
+  { href: "/contact", label: "联系" },
+];
+const mailto =
+  "mailto:contact@mcocdaa.com?subject=" +
+  encodeURIComponent("TailorLM 诊断咨询");
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/" aria-label="TailorLM 首页">
+      <svg
+        class="mark"
+        width="22"
+        height="22"
+        viewBox="0 0 22 22"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path d="M3 17 17 3" stroke="currentColor" stroke-width="1.4" />
+        <path d="M7 20 20 7" stroke="currentColor" stroke-width="1.4" opacity=".45" />
+        <path d="M2 10 10 2" stroke="currentColor" stroke-width="1.4" opacity=".45" />
+      </svg>
+      <span>TailorLM</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="主导航">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class:list={["nav-link", { active: path.startsWith(link.href) }]}
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <a class="button header-cta" href={mailto}>
+      预约诊断 <span aria-hidden="true">↗</span>
+    </a>
+
+    <details class="mobile-menu">
+      <summary aria-label="打开菜单">菜单</summary>
+      <div class="mobile-panel">
+        {
+          links.map((link) => (
+            <a href={link.href} class:list={["mobile-link", { active: path.startsWith(link.href) }]}>
+              {link.label}
+            </a>
+          ))
+        }
+        <a class="button" href={mailto}>预约诊断</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    height: 72px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--font-serif);
+    font-size: 21px;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+
+  .brand .mark {
+    color: var(--accent);
+  }
+
+  .desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin-left: auto;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    color: var(--muted);
+    transition: color 0.15s ease;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    color: var(--ink);
+  }
+
+  .header-cta {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .mobile-menu {
+    display: none;
+    margin-left: auto;
+    position: relative;
+  }
+
+  .mobile-menu summary {
+    list-style: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--ink);
+    padding: 8px 0;
+  }
+
+  .mobile-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .mobile-panel {
+    position: absolute;
+    right: 0;
+    top: 42px;
+    width: 200px;
+    padding: 16px;
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(18, 60, 47, 0.08);
+    display: grid;
+    gap: 12px;
+  }
+
+  .mobile-link {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .mobile-link.active {
+    color: var(--ink);
+  }
+
+  @media (max-width: 760px) {
+    .desktop-nav,
+    .header-cta {
+      display: none;
+    }
+
+    .mobile-menu {
+      display: block;
+    }
+  }
+</style>

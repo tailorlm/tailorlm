@@ -1,0 +1,73 @@
+---
+const mailto =
+  "mailto:contact@mcocdaa.com?subject=" +
+  encodeURIComponent("TailorLM 诊断咨询");
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <div class="brand">TailorLM</div>
+      <p class="muted">量体裁模。开源 LLM 后训练、评测与交付。</p>
+    </div>
+
+    <div class="footer-links">
+      <a href={mailto}>contact@mcocdaa.com</a>
+      <a href="https://github.com/tailorlm" rel="noreferrer">GitHub</a>
+      <a href="/pricing">定价</a>
+      <a href="/contact">联系</a>
+    </div>
+
+    <div class="footer-meta">
+      <p>© 2026 TailorLM</p>
+      <p class="muted">基于自研 TrainFlow 后训练框架</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding: 56px 0;
+    background: var(--bg-soft);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 32px;
+  }
+
+  .footer-brand .brand {
+    font-family: var(--font-serif);
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .footer-links {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+    font-size: 14px;
+  }
+
+  .footer-meta {
+    font-size: 13px;
+    display: grid;
+    gap: 6px;
+    align-content: start;
+    justify-items: end;
+    text-align: right;
+  }
+
+  @media (max-width: 760px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-meta {
+      justify-items: start;
+      text-align: left;
+    }
+  }
+</style>

@@ -1,0 +1,229 @@
+---
+interface Package {
+  name: string;
+  desc: string;
+  price: string;
+  usd: string;
+  deliver: string;
+  time: string;
+  gpu: string;
+  featured?: boolean;
+}
+
+interface Props {
+  includeMaintenance?: boolean;
+}
+
+const { includeMaintenance = false } = Astro.props;
+
+const packages: Package[] = [
+  {
+    name: "诊断",
+    desc: "判断是否真的需要训练",
+    price: "¥4,800",
+    usd: "$700",
+    deliver: "需求分析、数据 readiness、基线方案、成本预估、go/no-go",
+    time: "3–5 天",
+    gpu: "无",
+  },
+  {
+    name: "数据与评测包",
+    desc: "把资料变成可训练、可验证的数据",
+    price: "¥16,800",
+    usd: "$2,500",
+    deliver: "数据集、评测集、质量报告",
+    time: "1–2 周",
+    gpu: "无",
+  },
+  {
+    name: "LoRA 小试验",
+    desc: "小规模验证方向是否有效",
+    price: "¥28,800",
+    usd: "$4,000",
+    deliver: "adapter、前后对比、失败分析",
+    time: "1–2 周",
+    gpu: "实报实销",
+  },
+  {
+    name: "完整交付",
+    desc: "可用的定制模型与验收报告",
+    price: "¥68,000 起",
+    usd: "$9,500 起",
+    deliver: "adapter/模型、评测报告、部署说明、2 轮修改",
+    time: "3–6 周",
+    gpu: "实报实销",
+    featured: true,
+  },
+];
+
+if (includeMaintenance) {
+  packages.push({
+    name: "月度维护",
+    desc: "持续迭代与回归",
+    price: "¥6,800/月 起",
+    usd: "$950/月 起",
+    deliver: "增量数据、评测、回归、基座升级",
+    time: "按月",
+    gpu: "实报实销",
+  });
+}
+---
+
+<table class="pricing-table">
+  <thead>
+    <tr>
+      <th>服务包</th>
+      <th>起价</th>
+      <th>交付</th>
+      <th>周期</th>
+      <th>GPU</th>
+    </tr>
+  </thead>
+  <tbody>
+    {
+      packages.map((pkg) => (
+        <tr class:list={[{ featured: pkg.featured }]}>
+          <td data-label="服务包">
+            <div class="package-name">{pkg.name}</div>
+            <div class="package-desc">{pkg.desc}</div>
+          </td>
+          <td data-label="起价">
+            <div class="price">{pkg.price}</div>
+            <div class="price-usd">{pkg.usd}</div>
+          </td>
+          <td data-label="交付">{pkg.deliver}</td>
+          <td data-label="周期">{pkg.time}</td>
+          <td data-label="GPU">{pkg.gpu}</td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
+
+<style>
+  .pricing-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  th {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 600;
+    padding: 0 16px 12px;
+  }
+
+  td {
+    padding: 24px 16px;
+    border-top: 1px solid var(--line);
+    vertical-align: top;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+
+  .package-name {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+
+  .package-desc {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--muted);
+    max-width: 220px;
+  }
+
+  .price {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .price-usd {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  tr.featured td {
+    background: var(--white);
+  }
+
+  tr.featured td:first-child {
+    border-left: 3px solid var(--accent);
+    border-radius: 12px 0 0 12px;
+  }
+
+  tr.featured td:last-child {
+    border-radius: 0 12px 12px 0;
+  }
+
+  @media (max-width: 820px) {
+    thead {
+      display: none;
+    }
+
+    tbody,
+    tr,
+    td {
+      display: block;
+      width: 100%;
+    }
+
+    tr {
+      padding: 20px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    tr.featured {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--accent);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 12px 0;
+    }
+
+    td {
+      border: 0;
+      padding: 4px 0;
+      display: flex;
+      gap: 16px;
+      justify-content: space-between;
+    }
+
+    td::before {
+      content: attr(data-label);
+      color: var(--muted);
+      font-size: 12px;
+      min-width: 56px;
+      flex-shrink: 0;
+    }
+
+    tr.featured td:first-child,
+    tr.featured td:last-child {
+      border: 0;
+      border-radius: 0;
+    }
+
+    .package-desc {
+      max-width: none;
+    }
+
+    td:first-child {
+      display: block;
+      padding-bottom: 8px;
+    }
+
+    td:first-child::before {
+      display: none;
+    }
+  }
+</style>
