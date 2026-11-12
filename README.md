@@ -43,7 +43,7 @@
 
 ## 联系
 
-[hello@mcocdaa.com](mailto:hello@mcocdaa.com)
+[contact@mcocdaa.com](mailto:contact@mcocdaa.com)
 
 ---
 

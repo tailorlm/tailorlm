@@ -10,6 +10,6 @@
 6. 谁验收？模型最终跑在哪里？有延迟/显存/成本限制吗？
 7. 时间和预算范围？
 
-**Email:** [hello@mcocdaa.com](mailto:hello@mcocdaa.com)
+**Email:** [contact@mcocdaa.com](mailto:contact@mcocdaa.com)
 
 > 不接：医疗诊断、招聘筛选、信贷决策、未成年人高风险服务、未脱敏个人数据、绕过模型安全限制、24/7 线上托管。
