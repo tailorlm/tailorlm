@@ -1,19 +1,40 @@
 ---
 import { mailto } from "../config";
+import { alternatePath, localePath, type Lang } from "../i18n";
 
-const path = Astro.url.pathname;
-const links = [
-  { href: "/services", label: "服务" },
-  { href: "/pricing", label: "定价" },
-  { href: "/process", label: "流程" },
-  { href: "/contact", label: "联系" },
-];
-const mailtoHref = mailto();
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "zh" } = Astro.props as Props;
+
+const nav = {
+  zh: [
+    { href: "/services", label: "服务" },
+    { href: "/pricing", label: "定价" },
+    { href: "/process", label: "流程" },
+    { href: "/contact", label: "联系" },
+  ],
+  en: [
+    { href: "/en/services", label: "Services" },
+    { href: "/en/pricing", label: "Pricing" },
+    { href: "/en/process", label: "Process" },
+    { href: "/en/contact", label: "Contact" },
+  ],
+} as const;
+
+const ctaLabel = lang === "en" ? "Book a diagnostic" : "预约诊断";
+const mailtoHref = mailto(lang === "en" ? "TailorLM diagnostic" : "TailorLM 诊断咨询");
+const switchHref = alternatePath(lang, Astro.url.pathname);
+const switchLabel = lang === "en" ? "中文" : "EN";
+const current = Astro.url.pathname;
+
+const isActive = (href: string) => current === href || current.startsWith(`${href}/`);
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="brand" href="/" aria-label="TailorLM 首页">
+    <a class="brand" href={localePath(lang, "/")} aria-label="TailorLM home">
       <svg
         class="mark"
         width="24"
@@ -40,34 +61,43 @@ const mailtoHref = mailto();
       <span>TailorLM</span>
     </a>
 
-    <nav class="desktop-nav" aria-label="主导航">
+    <nav class="desktop-nav" aria-label="Main navigation">
       {
-        links.map((link) => (
+        nav[lang].map((link) => (
           <a
             href={link.href}
-            class:list={["nav-link", { active: path.startsWith(link.href) }]}
+            class:list={["nav-link", { active: isActive(link.href) }]}
           >
             {link.label}
           </a>
         ))
       }
+      <a class="lang-switch" href={switchHref} hreflang={lang === "en" ? "zh-CN" : "en"}>
+        {switchLabel}
+      </a>
     </nav>
 
     <a class="button header-cta" href={mailtoHref}>
-      预约诊断 <span aria-hidden="true">↗</span>
+      {ctaLabel} <span aria-hidden="true">↗</span>
     </a>
 
     <details class="mobile-menu">
-      <summary aria-label="打开菜单">菜单</summary>
+      <summary aria-label="Open menu">{lang === "en" ? "Menu" : "菜单"}</summary>
       <div class="mobile-panel">
         {
-          links.map((link) => (
-            <a href={link.href} class:list={["mobile-link", { active: path.startsWith(link.href) }]}>
+          nav[lang].map((link) => (
+            <a
+              href={link.href}
+              class:list={["mobile-link", { active: isActive(link.href) }]}
+            >
               {link.label}
             </a>
           ))
         }
-        <a class="button" href={mailtoHref}>预约诊断</a>
+        <a class="mobile-link" href={switchHref}>
+          {lang === "en" ? "中文" : "English"}
+        </a>
+        <a class="button" href={mailtoHref}>{ctaLabel}</a>
       </div>
     </details>
   </div>
@@ -124,6 +154,21 @@ const mailtoHref = mailto();
 
   .nav-link:hover,
   .nav-link.active {
+    color: var(--ink);
+  }
+
+  .lang-switch {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px 9px;
+    line-height: 1.2;
+  }
+
+  .lang-switch:hover {
+    border-color: var(--ink);
     color: var(--ink);
   }
 

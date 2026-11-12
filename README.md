@@ -28,7 +28,7 @@ We do not sell GPU time, and we do not promise “train until satisfied.”
 
 ## This repository
 
-Source of the TailorLM website: Astro 7, static output, no UI framework.
+Source of the TailorLM website: Astro 7, static output, no UI framework. Chinese pages live at the root; English pages live under `/en/`.
 
 ```bash
 pnpm install

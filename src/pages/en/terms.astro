@@ -1,0 +1,55 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { site } from "../../config";
+import "../../styles/en-pages.css";
+---
+
+<Layout
+  lang="en"
+  title="Terms — TailorLM"
+  description="TailorLM terms: scope, quotes and payment, acceptance, intellectual property, data, and liability."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">TERMS</p>
+      <h1 class="h1">Terms of service</h1>
+      <p class="lead">Last updated: 2026-11-12</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container legal">
+      <h2>1. Scope</h2>
+      <p>TailorLM provides post-training, evaluation, data, and delivery services for open-source large language models. The specific scope, deliverables, timeline, acceptance metrics, and fees are defined in a signed statement of work (SOW).</p>
+
+      <h2>2. Quotes and payment</h2>
+      <p>Prices on this site are starting points; the final quote depends on scope. Diagnostics are paid 100% upfront. Projects are 50% deposit and 50% on acceptance. GPU cost is passed through at the actual bill plus 15% management, prepaid with a cap. Prices exclude applicable taxes; where tax is required, it is added to the invoice.</p>
+
+      <h2>3. Client responsibilities</h2>
+      <p>The client provides data with lawful provenance, the necessary business rules, an acceptance owner, and deployment environment information, and confirms the right to authorize us to process the data. The client may not ask us to bypass model safety controls or to use the service for unlawful purposes.</p>
+
+      <h2>4. Acceptance</h2>
+      <p>Acceptance metrics, the test set, and the acceptance owner are written into the SOW before training. We deliver against the agreed metric and regression suite. If the result does not meet the SOW, the agreed remedy may be additional data, tuning, a narrower scope, or a proportional refund.</p>
+
+      <h2>5. Intellectual property</h2>
+      <p>Client data remains the client's property. The delivered adapter or model is assigned to the client as stated in the SOW. We retain our general framework, evaluation methods, templates, and tooling. Third-party base models remain subject to their licenses.</p>
+
+      <h2>6. Data and confidentiality</h2>
+      <p>Client data does not enter git; it is stored in object storage and referenced by manifest and hash. Training and evaluation are isolated. Data is deleted or archived as agreed in the SOW. Each party keeps the other's confidential information confidential.</p>
+
+      <h2>7. Limitation of liability</h2>
+      <p>We do not guarantee that a model will never fail in every scenario, and we are not liable for losses caused by the client's use of the model in high-risk settings. Except for willful misconduct or gross negligence, our aggregate liability is limited to the service fees paid by the client.</p>
+
+      <h2>8. Termination</h2>
+      <p>Either party may terminate with 14 days' written notice. Completed work and cloud costs incurred are settled; data is deleted or archived as agreed in the SOW.</p>
+
+      <h2>9. Governing terms</h2>
+      <p>The SOW will specify the governing law and venue for the engagement. This page is a general summary, not legal advice; the signed SOW controls.</p>
+
+      <h2>10. Contact</h2>
+      <p>Terms questions: <a href={`mailto:${site.email}`}>{site.email}</a></p>
+
+      <p class="small">This page is a general summary, not legal advice. The signed SOW governs each engagement.</p>
+    </div>
+  </section>
+</Layout>

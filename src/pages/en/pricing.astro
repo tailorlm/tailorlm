@@ -1,0 +1,125 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PricingTable from "../../components/PricingTable.astro";
+import FAQ from "../../components/FAQ.astro";
+import { mailto } from "../../config";
+import "../../styles/en-pages.css";
+
+const mailtoHref = mailto("TailorLM diagnostic");
+
+const faqs = [
+  {
+    q: "Why is GPU cost not included?",
+    a: "Training time and GPU type depend on the model, the data, and how many experiments are needed. We pass through the actual Shadeform bill plus 15% management, prepaid with a cap; unused budget is refunded or credited.",
+  },
+  {
+    q: "Can we skip the diagnostic?",
+    a: "If you already have a fixed test set, a baseline, clear data rights, and an acceptance metric, we can start at the experiment. Otherwise a diagnostic is the cheaper way to avoid a training run that cannot be evaluated.",
+  },
+  {
+    q: "Is our data safe?",
+    a: "Client data never enters git. It lives in encrypted object storage, referenced by manifest and hash. Training and evaluation are isolated, and data is deleted or archived as agreed at the end of the project.",
+  },
+  {
+    q: "How long does delivery take?",
+    a: "Diagnostic: 3–5 days. Data & evaluation: 1–2 weeks. LoRA experiment: 1–2 weeks. Full delivery: 3–6 weeks. Actual timing depends on data quality, acceptance criteria, and GPU availability.",
+  },
+  {
+    q: "Do you have public case studies?",
+    a: "We do not publish unverified work. The first three clients join at a founding price; after delivery we publish a redacted case only with written permission.",
+  },
+  {
+    q: "How is this different from renting a GPU?",
+    a: "A GPU rental sells compute. We sell the diagnostic, data work, evaluation, training, regression, and delivery. You do not have to decide whether to train, how to measure it, or how to explain a failure.",
+  },
+];
+---
+
+<Layout
+  lang="en"
+  title="Pricing — TailorLM"
+  description="TailorLM pricing: diagnostic, data & evaluation, LoRA experiment, full delivery, and maintenance. Transparent starting prices; GPU billed at cost."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">PRICING</p>
+      <h1 class="h1">Transparent starting prices.<br />GPU billed at cost.</h1>
+      <p class="lead">
+        Quotes are built from service time, GPU cost, and a risk buffer. Start with a diagnostic; the fee is credited toward a project started within 30 days.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <PricingTable lang="en" includeMaintenance />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container notes-grid">
+      <div>
+        <div class="section-label"><span class="num">01</span><span class="txt">How billing works</span></div>
+        <h2 class="h2">No “one price,<br />train until satisfied”.</h2>
+        <p class="lead">
+          Acceptance criteria go into the SOW before training. Revision rounds, cloud caps, and new scope are agreed up front.
+        </p>
+      </div>
+      <div class="notes-list">
+        <div><span>Diagnostic</span><p>Credited in full toward a project started within 30 days.</p></div>
+        <div><span>Payment</span><p>Diagnostic 100% upfront; projects 50% deposit + 50% on acceptance.</p></div>
+        <div><span>GPU</span><p>Actual Shadeform bill + 15% management; prepaid, capped, unused budget refunded or credited.</p></div>
+        <div><span>Revisions</span><p>Two rounds included; new scope quoted separately.</p></div>
+        <div><span>Taxes</span><p>Prices exclude applicable taxes. Where tax is required, it is added to the invoice.</p></div>
+        <div><span>Founding clients</span><p>20% off for the first three projects, in exchange for an anonymized case and feedback.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cost-grid">
+      <div>
+        <div class="section-label"><span class="num">02</span><span class="txt">Cost logic</span></div>
+        <h2 class="h2">Why it<br />costs this.</h2>
+      </div>
+      <div class="cost-list">
+        <div>
+          <span>Service time</span>
+          <strong>$700 / day</strong>
+          <p>Diagnostic, data work, training, evaluation, and reporting. Estimated by working day, not by token.</p>
+        </div>
+        <div>
+          <span>GPU</span>
+          <strong>At cost + 15%</strong>
+          <p>Actual Shadeform bill. A budget cap is set before launch; exceeding it requires a new approval.</p>
+        </div>
+        <div>
+          <span>Risk buffer</span>
+          <strong>20%</strong>
+          <p>Failed experiments, reruns, and data rework. We do not promise first-time success, but every step is explainable.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-wrap">
+      <div>
+        <div class="section-label"><span class="num">03</span><span class="txt">FAQ</span></div>
+        <h2 class="h2">Get the numbers<br />straight.</h2>
+      </div>
+      <FAQ items={faqs} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">START HERE</p>
+        <h2 class="h2">Diagnose first,<br />then quote.</h2>
+        <p class="lead">Tell us the use case, the data, and the acceptance criteria. We will return a go/no-go and a cost range.</p>
+      </div>
+      <a class="button light" href={mailtoHref}>Book a diagnostic <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,159 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { mailto } from "../../config";
+import "../../styles/en-pages.css";
+
+const mailtoHref = mailto("TailorLM diagnostic");
+
+const services = [
+  {
+    n: "01",
+    name: "Diagnostic",
+    desc: "Decide whether training is the right fix, and what “better” should mean.",
+    price: "$700",
+    cny: "¥4,800",
+    time: "3–5 days",
+    deliverables: [
+      "Problem framing: task, frequency, impact, current workaround",
+      "Data readiness: volume, quality, rights, test set",
+      "Baseline plan: model, metric, evaluation protocol",
+      "Cost estimate: data, training, evaluation, cloud GPU",
+      "Go/no-go: train, prompt/RAG, workflow change, or stop",
+    ],
+    fit: "You think you need training, but are not sure it is worth it; prompts and RAG still leave behavior unstable.",
+    notIncluded: "Data cleaning, full training, model deployment.",
+  },
+  {
+    n: "02",
+    name: "Data & evaluation",
+    desc: "Turn raw material into trainable, testable data.",
+    price: "$2,500",
+    cny: "¥16,800",
+    time: "1–2 weeks",
+    deliverables: [
+      "Cleaning, deduplication, redaction, format validation",
+      "Train/test isolation and a held-out evaluation set",
+      "Evaluation items and scoring rules",
+      "Data quality report and rights record",
+    ],
+    fit: "You have raw material but no trainable data, no independent test set, or no confidence in data quality.",
+    notIncluded: "Training, model delivery, online deployment.",
+  },
+  {
+    n: "03",
+    name: "LoRA experiment",
+    desc: "Validate the direction on a small budget before scaling.",
+    price: "$4,000",
+    cny: "¥28,800",
+    time: "1–2 weeks",
+    deliverables: [
+      "LoRA / QLoRA / SFT experiment",
+      "Before/after comparison on the fixed test set",
+      "Failure-case analysis",
+      "Recommendation: scale, change approach, or stop",
+    ],
+    fit: "You want a signal before committing to a full dataset and training budget.",
+    notIncluded: "Full training, production delivery, ongoing maintenance. GPU billed at cost.",
+  },
+  {
+    n: "04",
+    name: "Full delivery",
+    desc: "A usable custom model, with a reproducible evaluation and deployment notes.",
+    price: "$9,500+",
+    cny: "¥68,000+",
+    time: "3–6 weeks",
+    deliverables: [
+      "Adapter or merged model",
+      "Independent evaluation report: baseline, post-training, regression, failures",
+      "Inference example and deployment notes",
+      "Known limitations and risks",
+      "Two revision rounds",
+    ],
+    fit: "You have a clear acceptance metric and need a model you can run, not a demo.",
+    notIncluded: "24/7 hosting, unlimited retraining, new scope. GPU billed at cost.",
+  },
+];
+---
+
+<Layout
+  lang="en"
+  title="Services — TailorLM"
+  description="TailorLM services: diagnostic, data & evaluation, LoRA experiment, and full delivery for open-source LLMs."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">SERVICES</p>
+      <h1 class="h1">Start with the problem,<br />not the model.</h1>
+      <p class="lead">
+        Four ways to work together. Not every problem needs training; start with a diagnostic, then go only as far as the evidence supports.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container service-list">
+      {
+        services.map((service) => (
+          <article class="service-item">
+            <div class="service-head">
+              <span class="n">{service.n}</span>
+              <div class="service-title">
+                <h2 class="h3">{service.name}</h2>
+                <p class="service-desc">{service.desc}</p>
+              </div>
+              <div class="service-price">
+                <strong>{service.price}</strong>
+                <span>{service.cny}</span>
+                <span class="time">{service.time}</span>
+              </div>
+            </div>
+            <div class="service-body">
+              <div>
+                <h4>Deliverables</h4>
+                <ul>
+                  {service.deliverables.map((item) => <li>{item}</li>)}
+                </ul>
+              </div>
+              <div>
+                <h4>Who it fits</h4>
+                <p>{service.fit}</p>
+              </div>
+              <div>
+                <h4>Not included</h4>
+                <p>{service.notIncluded}</p>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container choose-grid">
+      <div>
+        <div class="section-label"><span class="num">→</span><span class="txt">How to choose</span></div>
+        <h2 class="h2">Not sure where<br />to start?</h2>
+      </div>
+      <div class="choose-list">
+        <div><span>Not sure training is worth it</span><strong>Diagnostic</strong></div>
+        <div><span>Messy data, no test set</span><strong>Data &amp; evaluation</strong></div>
+        <div><span>Want a signal first</span><strong>LoRA experiment</strong></div>
+        <div><span>Need a production model</span><strong>Full delivery</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">START HERE</p>
+        <h2 class="h2">Tell us what<br />is failing.</h2>
+        <p class="lead">
+          Describe the task, the current model, three real failures, and what “better” means. We will tell you whether a diagnostic makes sense.
+        </p>
+      </div>
+      <a class="button light" href={mailtoHref}>Book a diagnostic <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</Layout>

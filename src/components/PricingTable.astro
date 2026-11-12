@@ -1,8 +1,10 @@
 ---
+import type { Lang } from "../i18n";
+
 interface Package {
   name: string;
   desc: string;
-  price: string;
+  cny: string;
   usd: string;
   deliver: string;
   time: string;
@@ -12,88 +14,150 @@ interface Package {
 
 interface Props {
   includeMaintenance?: boolean;
+  lang?: Lang;
 }
 
-const { includeMaintenance = false } = Astro.props;
+const { includeMaintenance = false, lang = "zh" } = Astro.props as Props;
 
-const packages: Package[] = [
-  {
-    name: "诊断",
-    desc: "判断是否真的需要训练",
-    price: "¥4,800",
-    usd: "$700",
-    deliver: "需求分析、数据 readiness、基线方案、成本预估、go/no-go",
-    time: "3–5 天",
-    gpu: "无",
+const copy = {
+  zh: {
+    headers: ["服务包", "起价", "交付", "周期", "GPU"],
+    labels: ["服务包", "起价", "交付", "周期", "GPU"],
+    packages: [
+      {
+        name: "诊断",
+        desc: "判断是否真的需要训练",
+        cny: "¥4,800",
+        usd: "$700",
+        deliver: "需求分析、数据 readiness、基线方案、成本预估、go/no-go",
+        time: "3–5 天",
+        gpu: "无",
+      },
+      {
+        name: "数据与评测包",
+        desc: "把资料变成可训练、可验证的数据",
+        cny: "¥16,800",
+        usd: "$2,500",
+        deliver: "数据集、评测集、质量报告",
+        time: "1–2 周",
+        gpu: "无",
+      },
+      {
+        name: "LoRA 小试验",
+        desc: "小规模验证方向是否有效",
+        cny: "¥28,800",
+        usd: "$4,000",
+        deliver: "adapter、前后对比、失败分析",
+        time: "1–2 周",
+        gpu: "实报实销",
+      },
+      {
+        name: "完整交付",
+        desc: "可用的定制模型与验收报告",
+        cny: "¥68,000 起",
+        usd: "$9,500 起",
+        deliver: "adapter/模型、评测报告、部署说明、2 轮修改",
+        time: "3–6 周",
+        gpu: "实报实销",
+        featured: true,
+      },
+    ] as Package[],
+    maintenance: {
+      name: "月度维护",
+      desc: "持续迭代与回归",
+      cny: "¥6,800/月 起",
+      usd: "$950/月 起",
+      deliver: "增量数据、评测、回归、基座升级",
+      time: "按月",
+      gpu: "实报实销",
+    } as Package,
   },
-  {
-    name: "数据与评测包",
-    desc: "把资料变成可训练、可验证的数据",
-    price: "¥16,800",
-    usd: "$2,500",
-    deliver: "数据集、评测集、质量报告",
-    time: "1–2 周",
-    gpu: "无",
+  en: {
+    headers: ["Service", "From", "Deliverables", "Timeline", "GPU"],
+    labels: ["Service", "From", "Deliverables", "Timeline", "GPU"],
+    packages: [
+      {
+        name: "Diagnostic",
+        desc: "Decide whether training is the right fix",
+        cny: "¥4,800",
+        usd: "$700",
+        deliver: "Scope, data readiness, baseline plan, cost estimate, go/no-go",
+        time: "3–5 days",
+        gpu: "None",
+      },
+      {
+        name: "Data & evaluation",
+        desc: "Turn raw material into trainable, testable data",
+        cny: "¥16,800",
+        usd: "$2,500",
+        deliver: "Dataset, held-out test set, quality report",
+        time: "1–2 weeks",
+        gpu: "None",
+      },
+      {
+        name: "LoRA experiment",
+        desc: "Validate the direction on a small budget",
+        cny: "¥28,800",
+        usd: "$4,000",
+        deliver: "Adapter, before/after comparison, failure analysis",
+        time: "1–2 weeks",
+        gpu: "At cost",
+      },
+      {
+        name: "Full delivery",
+        desc: "A usable custom model and an acceptance report",
+        cny: "¥68,000+",
+        usd: "$9,500+",
+        deliver: "Adapter/model, evaluation report, deployment notes, 2 revisions",
+        time: "3–6 weeks",
+        gpu: "At cost",
+        featured: true,
+      },
+    ] as Package[],
+    maintenance: {
+      name: "Monthly maintenance",
+      desc: "Continuous iteration and regression",
+      cny: "¥6,800/mo+",
+      usd: "$950/mo+",
+      deliver: "Incremental data, evaluation, regression, base-model upgrades",
+      time: "Monthly",
+      gpu: "At cost",
+    } as Package,
   },
-  {
-    name: "LoRA 小试验",
-    desc: "小规模验证方向是否有效",
-    price: "¥28,800",
-    usd: "$4,000",
-    deliver: "adapter、前后对比、失败分析",
-    time: "1–2 周",
-    gpu: "实报实销",
-  },
-  {
-    name: "完整交付",
-    desc: "可用的定制模型与验收报告",
-    price: "¥68,000 起",
-    usd: "$9,500 起",
-    deliver: "adapter/模型、评测报告、部署说明、2 轮修改",
-    time: "3–6 周",
-    gpu: "实报实销",
-    featured: true,
-  },
-];
+} as const;
+
+const t = copy[lang];
+const packages: Package[] = [...t.packages];
 
 if (includeMaintenance) {
-  packages.push({
-    name: "月度维护",
-    desc: "持续迭代与回归",
-    price: "¥6,800/月 起",
-    usd: "$950/月 起",
-    deliver: "增量数据、评测、回归、基座升级",
-    time: "按月",
-    gpu: "实报实销",
-  });
+  packages.push(t.maintenance);
 }
+
+const primaryPrice = (pkg: Package) => (lang === "en" ? pkg.usd : pkg.cny);
+const secondaryPrice = (pkg: Package) => (lang === "en" ? pkg.cny : pkg.usd);
 ---
 
 <table class="pricing-table">
   <thead>
     <tr>
-      <th>服务包</th>
-      <th>起价</th>
-      <th>交付</th>
-      <th>周期</th>
-      <th>GPU</th>
+      {t.headers.map((header) => <th>{header}</th>)}
     </tr>
   </thead>
   <tbody>
     {
       packages.map((pkg) => (
         <tr class:list={[{ featured: pkg.featured }]}>
-          <td data-label="服务包">
+          <td data-label={t.labels[0]}>
             <div class="package-name">{pkg.name}</div>
             <div class="package-desc">{pkg.desc}</div>
           </td>
-          <td data-label="起价">
-            <div class="price">{pkg.price}</div>
-            <div class="price-usd">{pkg.usd}</div>
+          <td data-label={t.labels[1]}>
+            <div class="price">{primaryPrice(pkg)}</div>
+            <div class="price-usd">{secondaryPrice(pkg)}</div>
           </td>
-          <td data-label="交付">{pkg.deliver}</td>
-          <td data-label="周期">{pkg.time}</td>
-          <td data-label="GPU">{pkg.gpu}</td>
+          <td data-label={t.labels[2]}>{pkg.deliver}</td>
+          <td data-label={t.labels[3]}>{pkg.time}</td>
+          <td data-label={t.labels[4]}>{pkg.gpu}</td>
         </tr>
       ))
     }

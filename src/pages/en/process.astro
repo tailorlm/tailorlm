@@ -1,0 +1,187 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { mailto } from "../../config";
+import "../../styles/en-pages.css";
+
+const mailtoHref = mailto("TailorLM diagnostic");
+
+const steps = [
+  {
+    n: "00",
+    name: "Requirements",
+    time: "1–3 days",
+    question: "What is failing, and what would “better” mean?",
+    evidence: "Three real failures, data rights, acceptance metric, budget",
+    exit: "No quote without a measurable target.",
+  },
+  {
+    n: "01",
+    name: "Baseline",
+    time: "2–5 days",
+    question: "How does the current model actually perform?",
+    evidence: "Fixed test set, baseline outputs, failure taxonomy",
+    exit: "No training without a recorded baseline.",
+  },
+  {
+    n: "02",
+    name: "Small experiment",
+    time: "1–2 weeks",
+    question: "Is there a measurable signal in the right direction?",
+    evidence: "Small high-quality dataset, before/after comparison",
+    exit: "No scale-up without a signal.",
+  },
+  {
+    n: "03",
+    name: "Full training",
+    time: "1–4 weeks",
+    question: "Can the signal hold at production scale?",
+    evidence: "Frozen config, seed, data manifest, training log",
+    exit: "No launch without client budget approval.",
+  },
+  {
+    n: "04",
+    name: "Acceptance",
+    time: "2–5 days",
+    question: "Does it hit the metric without unacceptable regression?",
+    evidence: "Held-out evaluation, regression suite, failure cases",
+    exit: "No delivery without a signed acceptance.",
+  },
+  {
+    n: "05",
+    name: "Productize",
+    time: "Ongoing",
+    question: "What can be reused on the next project?",
+    evidence: "Reusable eval, data recipe, report template, or adapter recipe",
+    exit: "At least one reusable asset per project.",
+  },
+];
+
+const deliverables = [
+  "01-requirements/ — scope, acceptance metric, data rights",
+  "02-data/ — data manifest, cleaning log, held-out test set",
+  "03-training-config/ — reproducible config, versions, seed",
+  "04-model-or-adapter/ — adapter or merged model (pointer)",
+  "05-evaluation/ — baseline/post-training comparison, regression, failures",
+  "06-inference-example/ — minimal runnable example",
+  "07-deployment-guide/ — hardware, latency, cost, deployment notes",
+  "08-limitations/ — known limits, failure modes, risks",
+];
+---
+
+<Layout
+  lang="en"
+  title="Process — TailorLM"
+  description="How TailorLM runs a post-training project: six gates from requirements and baseline to experiment, delivery, and acceptance."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">PROCESS</p>
+      <h1 class="h1">Six gates.<br />No skipping the baseline.</h1>
+      <p class="lead">
+        Every project moves through the same gates. If a gate fails, we stop, change the approach, or shrink the scope — we do not train through it.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="timeline">
+        {
+          steps.map((step) => (
+            <article class="step">
+              <span class="n">{step.n}</span>
+              <div class="step-title">
+                <h2>{step.name}</h2>
+                <span class="time">{step.time}</span>
+              </div>
+              <div class="step-cell">
+                <h4>Question</h4>
+                <p>{step.question}</p>
+              </div>
+              <div class="step-cell">
+                <h4>Evidence</h4>
+                <p>{step.evidence}</p>
+              </div>
+              <div class="step-cell">
+                <h4>Exit rule</h4>
+                <p>{step.exit}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split-grid">
+      <div>
+        <div class="section-label"><span class="num">→</span><span class="txt">Deliverables</span></div>
+        <h2 class="h2">What “done”<br />looks like.</h2>
+        <p class="lead">
+          The exact package depends on the service tier. A full delivery includes the artifacts below; a diagnostic or experiment delivers the relevant subset.
+        </p>
+      </div>
+      <ul class="list">
+        {deliverables.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-label"><span class="num">→</span><span class="txt">Roles and change control</span></div>
+      <div class="split-grid">
+        <div>
+          <h2 class="h2">Who does what.</h2>
+          <ul class="list">
+            <li><strong>Owner</strong> — positioning, pricing, contract, client relationship, final acceptance.</li>
+            <li><strong>AI operator</strong> — diagnostic, data, training, evaluation, report, project record.</li>
+            <li><strong>Client</strong> — data, business acceptance, deployment environment.</li>
+          </ul>
+        </div>
+        <div>
+          <h2 class="h2">What does not move.</h2>
+          <ul class="list">
+            <li>Acceptance metrics are frozen before training.</li>
+            <li>New scope is quoted separately; it does not enter the original project.</li>
+            <li>Cloud spend above the cap requires new approval.</li>
+            <li>Evaluation data never enters the training set.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container acceptance-panel">
+      <div>
+        <p class="eyebrow">ACCEPTANCE</p>
+        <h2 class="h2">Measured,<br />not asserted.</h2>
+        <p class="lead">
+          A project is accepted on the held-out test set agreed in the SOW: the target metric, the regression suite, and a review of failure cases.
+        </p>
+      </div>
+      <ul class="metric-list">
+        <li><span>Primary metric</span><strong>Written before training</strong></li>
+        <li><span>Test set</span><strong>Held out and frozen</strong></li>
+        <li><span>Regression</span><strong>No silent capability loss</strong></li>
+        <li><span>Failure cases</span><strong>Reviewed and documented</strong></li>
+        <li><span>Sign-off</span><strong>Client acceptance</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">START HERE</p>
+        <h2 class="h2">Bring a real<br />failure case.</h2>
+        <p class="lead">
+          The fastest way to start is three examples where the current model failed, plus the result you expected. We will tell you which gate applies.
+        </p>
+      </div>
+      <a class="button light" href={mailtoHref}>Book a diagnostic <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</Layout>

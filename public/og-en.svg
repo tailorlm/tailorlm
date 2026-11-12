@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f7f3ea"/>
+
+  <g transform="translate(80 100) scale(0.8)">
+    <path d="M38 18H18V82H38M62 18H82V82H62" fill="none" stroke="#123c2f" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter"/>
+    <path d="M18 34H27.5M18 66H27.5M82 34H72.5M82 66H72.5" fill="none" stroke="#123c2f" stroke-width="4.3" stroke-linecap="butt"/>
+    <path d="M21 50H32.5M79 50H67.5" fill="none" stroke="#d97745" stroke-width="4.3" stroke-linecap="butt"/>
+  </g>
+
+  <text x="170" y="190" font-family="Fraunces Variable, Georgia, 'Times New Roman', serif" font-size="76" fill="#123c2f">TailorLM</text>
+  <path d="M80 232H220" stroke="#d97745" stroke-width="3"/>
+
+  <text x="80" y="330" font-family="Fraunces Variable, Georgia, 'Times New Roman', serif" font-size="72" fill="#123c2f">Custom models,</text>
+  <text x="80" y="410" font-family="Fraunces Variable, Georgia, 'Times New Roman', serif" font-size="72" fill="#123c2f">fitted to your business.</text>
+
+  <text x="80" y="482" font-family="Inter Variable, 'PingFang SC', sans-serif" font-size="30" fill="#6c6a61">Post-training for open-source LLMs</text>
+  <text x="80" y="548" font-family="Inter Variable, 'PingFang SC', sans-serif" font-size="22" fill="#6c6a61">Diagnose first. Train only when the evidence supports it.</text>
+
+  <g transform="translate(880 195) scale(2.6)">
+    <path d="M38 18H18V82H38M62 18H82V82H62" fill="none" stroke="#123c2f" stroke-width="6" stroke-linecap="butt" stroke-linejoin="miter"/>
+    <path d="M18 34H27.5M18 66H27.5M82 34H72.5M82 66H72.5" fill="none" stroke="#123c2f" stroke-width="4.3" stroke-linecap="butt"/>
+    <path d="M21 50H32.5M79 50H67.5" fill="none" stroke="#d97745" stroke-width="4.3" stroke-linecap="butt"/>
+  </g>
+</svg>

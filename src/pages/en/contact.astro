@@ -1,0 +1,101 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { site, mailto } from "../../config";
+import "../../styles/en-pages.css";
+
+const intakeBody = `1. What is the product, and who is it for?
+2. Where does the model fail? Three real examples:
+3. Current model / setup:
+4. Data: volume, format, rights, labels
+5. Acceptance metric: current value and target
+6. Who signs off, deployment environment, latency / VRAM / cost limits
+7. Timeline and budget range:`;
+
+const mailtoHref = mailto("TailorLM diagnostic", intakeBody);
+
+const questions = [
+  "What is the product, and who is it for?",
+  "Where does the model fail? Give three real examples.",
+  "What model or setup are you using? Have you tried prompt engineering, RAG, or fine-tuning?",
+  "How much data do you have, in what format, and are the rights clear?",
+  "What metric defines success, and what is the current value?",
+  "Who signs off? Where will the model run, and what are the latency, VRAM, and cost limits?",
+  "What are the timeline and budget range?",
+];
+---
+
+<Layout
+  lang="en"
+  title="Contact — TailorLM"
+  description="Book a TailorLM diagnostic. Tell us the use case, the failures, the data, and the acceptance criteria."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">CONTACT</p>
+      <h1 class="h1">Diagnose first.<br />Then decide whether to train.</h1>
+      <p class="lead">
+        Tell us where the model fails, what data you have, and what “better” means. If you do not have a test set yet, the diagnostic will help define one.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container contact-grid">
+      <div class="contact-card">
+        <p class="eyebrow">EMAIL</p>
+        <a class="email" href={mailtoHref}>{site.email}</a>
+        <p class="muted">
+          The link opens an email with the questions below prefilled. You can also copy the address and describe the use case in your own words.
+        </p>
+        <a class="button light" href={mailtoHref}>Write a diagnostic email <span aria-hidden="true">↗</span></a>
+        <div class="contact-meta">
+          <div><span>Response</span><strong>1–2 business days</strong></div>
+          <div><span>Diagnostic</span><strong>3–5 days</strong></div>
+          <div><span>From</span><strong>$700</strong></div>
+        </div>
+      </div>
+
+      <div class="intake">
+        <div class="section-label"><span class="num">01</span><span class="txt">What to include</span></div>
+        <h2 class="h3">Seven questions that speed up the first call.</h2>
+        <ol>
+          {questions.map((question) => <li>{question}</li>)}
+        </ol>
+        <p class="small muted note">
+          Please do not send unredacted client data, chat logs, or secrets in the first email. Start with the use case, metric, and data rights; we will set up a secure channel if the data needs review.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container policy-grid">
+      <article class="policy-card">
+        <span class="n">01</span>
+        <h3>Data never enters git</h3>
+        <p>Client data lives in object storage; the repository stores only the manifest, hash, and pointer. Data is deleted or archived as agreed at the end.</p>
+      </article>
+      <article class="policy-card">
+        <span class="n">02</span>
+        <h3>Training and evaluation are isolated</h3>
+        <p>The test set never enters training. Data is not mixed across clients or reused for another project.</p>
+      </article>
+      <article class="policy-card">
+        <span class="n">03</span>
+        <h3>Acceptance is in the SOW</h3>
+        <p>Metrics, test set, revision rounds, and cloud caps are written down before work starts. No “it feels better” acceptance.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">NOT SURE YET?</p>
+        <h2 class="h2">Not sure training<br />is the answer?</h2>
+        <p class="lead">Start with a diagnostic. If prompt engineering, RAG, or a workflow change is enough, we will say so.</p>
+      </div>
+      <a class="button light" href={mailtoHref}>Book a diagnostic <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</Layout>

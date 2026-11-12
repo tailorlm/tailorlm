@@ -5,34 +5,57 @@ import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { site } from "../config";
+import { alternatePath, languages, type Lang } from "../i18n";
 
 interface Props {
   title?: string;
   description?: string;
+  lang?: Lang;
 }
 
+const { lang = "zh" } = Astro.props as Props;
+
+const copy = {
+  zh: {
+    title: "TailorLM — 开源 LLM 后训练与评测服务",
+    description:
+      "TailorLM 为有明确任务和数据的团队做开源 LLM 后训练：先诊断，再训练，用可复现的评测验收。",
+  },
+  en: {
+    title: "TailorLM — Post-training for open-source LLMs",
+    description:
+      "TailorLM is a post-training studio for open-source LLMs. We diagnose first, train only when the evidence supports it, and accept on a held-out test set.",
+  },
+} as const;
+
 const {
-  title = "TailorLM — 开源 LLM 后训练与评测服务",
-  description = "TailorLM 为有明确任务和数据的团队做开源 LLM 后训练：先诊断，再训练，用可复现的评测验收。",
-} = Astro.props;
+  title = copy[lang].title,
+  description = copy[lang].description,
+} = Astro.props as Props;
 
 const origin = Astro.site ?? site.url;
 const canonical = new URL(Astro.url.pathname, origin);
-const ogImage = new URL("/og.png", origin);
+const ogImage = new URL(lang === "en" ? "/og-en.png" : "/og.png", origin);
+
+const zhPath = lang === "en" ? alternatePath("en", Astro.url.pathname) : Astro.url.pathname;
+const enPath = lang === "zh" ? alternatePath("zh", Astro.url.pathname) : Astro.url.pathname;
+const zhUrl = new URL(zhPath, origin);
+const enUrl = new URL(enPath, origin);
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: site.name,
-  url: site.url,
+  url: canonical,
   email: site.email,
   description,
+  inLanguage: languages[lang].htmlLang,
   sameAs: [site.github],
 };
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang={languages[lang].htmlLang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -41,12 +64,16 @@ const jsonLd = {
     <meta name="robots" content="index,follow" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="zh-CN" href={zhUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={enUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:locale" content={languages[lang].ogLocale} />
+    <meta property="og:locale:alternate" content={languages[lang === "zh" ? "en" : "zh"].ogLocale} />
     <meta property="og:site_name" content={site.name} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -56,10 +83,10 @@ const jsonLd = {
     <title>{title}</title>
   </head>
   <body>
-    <Header />
+    <Header lang={lang} />
     <main>
       <slot />
     </main>
-    <Footer />
+    <Footer lang={lang} />
   </body>
 </html>

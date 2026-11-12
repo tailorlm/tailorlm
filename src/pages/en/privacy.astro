@@ -1,0 +1,51 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { site } from "../../config";
+import "../../styles/en-pages.css";
+---
+
+<Layout
+  lang="en"
+  title="Privacy — TailorLM"
+  description="TailorLM privacy policy: what we collect, why, how long we keep it, and your rights."
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">PRIVACY</p>
+      <h1 class="h1">Privacy policy</h1>
+      <p class="lead">Last updated: 2026-11-12</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container legal">
+      <h2>1. What we collect</h2>
+      <p>When you contact us by email or through this site, we collect the information you choose to provide: name, company, email address, use case, data description, budget, and timeline.</p>
+      <p>Our hosting provider may keep standard access logs such as IP address, browser, time, and request path for security and troubleshooting.</p>
+
+      <h2>2. Why we collect it</h2>
+      <p>To reply to your inquiry, decide whether a project is a fit, prepare a diagnostic and quote, perform the contract, and keep the site secure.</p>
+
+      <h2>3. How long we keep it</h2>
+      <p>Inquiry information is kept for no more than 12 months after contact. Project data is kept and deleted according to the SOW. Server logs follow the hosting provider's default retention period.</p>
+
+      <h2>4. Sharing</h2>
+      <p>We do not sell your information. We may use cloud GPU, object storage, email, and hosting providers to deliver the service; they receive only what is necessary and are expected to protect it.</p>
+
+      <h2>5. Cookies and analytics</h2>
+      <p>This is a static site. We do not use advertising cookies or third-party behavioral analytics. Fonts are bundled with the site and are not requested from a third-party font service.</p>
+
+      <h2>6. Your rights</h2>
+      <p>You may ask to access, correct, or delete the contact information you provided. Email <a href={`mailto:${site.email}`}>{site.email}</a>. If your jurisdiction grants additional rights, say so in the request and we will handle it under the applicable law.</p>
+
+      <h2>7. Security</h2>
+      <p>Client project data does not enter git. It is stored in object storage and referenced by manifest and hash; training and evaluation are isolated; data is deleted as agreed at the end of the project. Please do not send unredacted personal data or secrets in the first email.</p>
+
+      <h2>8. Changes</h2>
+      <p>If this policy changes, we will update the date on this page. Material changes will be communicated through the contact details you provided.</p>
+
+      <h2>9. Contact</h2>
+      <p>Privacy questions: <a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,202 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PricingTable from "../../components/PricingTable.astro";
+import FAQ from "../../components/FAQ.astro";
+import { mailto } from "../../config";
+import "../../styles/en-pages.css";
+
+const mailtoHref = mailto("TailorLM diagnostic");
+
+const faqs = [
+  {
+    q: "Why diagnose before training?",
+    a: "Not every problem is a training problem. The diagnostic separates a knowledge gap from a behavior gap and a workflow gap. If prompt engineering, retrieval, or a process change is enough, we will say so instead of selling training.",
+  },
+  {
+    q: "Do you have public case studies?",
+    a: "We do not publish unverified work. The first three clients join at a founding price; after delivery we publish a redacted case only with written permission.",
+  },
+  {
+    q: "Is our data safe?",
+    a: "Client data never enters git. It lives in encrypted object storage, referenced by manifest and hash. Training and evaluation are isolated, and data is deleted or archived as agreed at the end of the project. Please do not send unredacted data or secrets in the first email.",
+  },
+];
+---
+
+<Layout
+  lang="en"
+  title="TailorLM — Post-training for open-source LLMs"
+  description="TailorLM is a post-training studio for open-source LLMs. Diagnose first, train only when the evidence supports it, and accept on a held-out test set."
+>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">LLM POST-TRAINING STUDIO</p>
+        <h1 class="h1">Your model,<br />fitted to your product.</h1>
+        <p class="lead">
+          TailorLM helps teams with a clear task and real data post-train open-source LLMs.
+          Diagnose first, then train; accept on a reproducible test set.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href={mailtoHref}>Book a diagnostic <span aria-hidden="true">↗</span></a>
+          <a class="button secondary" href="/en/pricing">Services &amp; pricing</a>
+        </div>
+        <p class="small muted hero-note">Founding clients: 20% off the first three projects · diagnostic fee credited</p>
+      </div>
+
+      <aside class="hero-card" aria-label="Diagnostic">
+        <div class="card-head"><span>TAILORLM / DIAGNOSTIC</span><span>01</span></div>
+        <h2 class="card-title">Diagnose first.<br />Then train.</h2>
+        <ul class="check-list">
+          <li>Is this a training problem?</li>
+          <li>Is the data sufficient, and are the rights clear?</li>
+          <li>What metric proves it worked?</li>
+          <li>What will it cost?</li>
+        </ul>
+        <div class="card-foot"><span>3–5 days</span><span>From $700</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-label"><span class="num">01</span><span class="txt">What usually goes wrong</span></div>
+      <div class="grid-4 problem-grid">
+        <article class="problem-card">
+          <span class="n">A</span>
+          <h3>It doesn't sound like your brand</h3>
+          <p>Tone, forms of address, and boundaries drift; it sounds like a generic assistant.</p>
+        </article>
+        <article class="problem-card">
+          <span class="n">B</span>
+          <h3>It drifts in long conversations</h3>
+          <p>By turn ten it forgets who it is, what it can do, and what it must not do.</p>
+        </article>
+        <article class="problem-card">
+          <span class="n">C</span>
+          <h3>Structured output and tool calls are unstable</h3>
+          <p>JSON, arguments, and refusal boundaries fail; retries don't fix it.</p>
+        </article>
+        <article class="problem-card">
+          <span class="n">D</span>
+          <h3>Prompt and RAG were already tried</h3>
+          <p>Knowledge improved, but behavior and voice are still inconsistent.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container deliver-grid">
+      <div class="deliver-intro">
+        <div class="section-label"><span class="num">02</span><span class="txt">What you get</span></div>
+        <h2 class="h2">Not “training finished”.<br />“It measurably got better.”</h2>
+        <p class="lead">
+          The business metric, the regression result, and a model you can actually run matter more than a loss curve.
+        </p>
+      </div>
+
+      <div class="deliver-list">
+        <article class="deliver-item">
+          <span class="n">01</span>
+          <div>
+            <h3>One business metric</h3>
+            <p>From A to B, written into the SOW before training; no moving the goalposts.</p>
+          </div>
+        </article>
+        <article class="deliver-item">
+          <span class="n">02</span>
+          <div>
+            <h3>A fixed test set</h3>
+            <p>The same questions and rubric before and after; reproducible.</p>
+          </div>
+        </article>
+        <article class="deliver-item">
+          <span class="n">03</span>
+          <div>
+            <h3>Regression testing</h3>
+            <p>The target improves without the model getting noticeably worse elsewhere.</p>
+          </div>
+        </article>
+        <article class="deliver-item">
+          <span class="n">04</span>
+          <div>
+            <h3>Artifacts you can use</h3>
+            <p>Adapter or model, inference example, deployment notes, failure cases, and limitations.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-label"><span class="num">03</span><span class="txt">How it runs</span></div>
+      <div class="process-grid">
+        <article class="process-step">
+          <span class="n">01</span>
+          <h3>Diagnose</h3>
+          <p>Decide whether training is worth it; define metrics and budget.</p>
+          <span class="time">3–5 days</span>
+        </article>
+        <article class="process-step">
+          <span class="n">02</span>
+          <h3>Baseline &amp; data</h3>
+          <p>Build the test set, measure the current model, clean the training data.</p>
+          <span class="time">1–2 weeks</span>
+        </article>
+        <article class="process-step">
+          <span class="n">03</span>
+          <h3>Experiment</h3>
+          <p>Validate the direction on a small, high-quality sample.</p>
+          <span class="time">1–2 weeks</span>
+        </article>
+        <article class="process-step">
+          <span class="n">04</span>
+          <h3>Train &amp; deliver</h3>
+          <p>Full training, evaluation, regression, packaging, and deployment notes.</p>
+          <span class="time">3–6 weeks</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-label"><span class="num">04</span><span class="txt">Services</span></div>
+        <div class="section-head-row">
+          <h2 class="h2">Start with a diagnostic.<br />Go only as far as the evidence.</h2>
+          <a class="text-link" href="/en/pricing">Full pricing →</a>
+        </div>
+      </div>
+      <PricingTable lang="en" />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-panel">
+        <div>
+          <p class="eyebrow">FOUNDING CLIENTS</p>
+          <h2 class="h2">Build the first case<br />with us.</h2>
+          <p class="lead">
+            The first three clients get 20% off in exchange for an anonymized case and feedback.
+            Cases are published only with written permission.
+          </p>
+        </div>
+        <a class="button light" href={mailtoHref}>Talk about your use case <span aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-wrap">
+      <div>
+        <div class="section-label"><span class="num">05</span><span class="txt">FAQ</span></div>
+        <h2 class="h2">Questions,<br />answered first.</h2>
+      </div>
+      <FAQ items={faqs} />
+    </div>
+  </section>
+</Layout>

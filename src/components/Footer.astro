@@ -1,28 +1,55 @@
 ---
 import { site, mailto } from "../config";
+import { localePath, type Lang } from "../i18n";
 
-const mailtoHref = mailto();
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = "zh" } = Astro.props as Props;
+
+const copy = {
+  zh: {
+    tagline: "量体裁模。开源 LLM 后训练、评测与交付。",
+    pricing: "定价",
+    contact: "联系",
+    privacy: "隐私政策",
+    terms: "服务条款",
+    stack: "基于自研 TrainFlow 后训练框架",
+  },
+  en: {
+    tagline: "Custom models, fitted to your business.",
+    pricing: "Pricing",
+    contact: "Contact",
+    privacy: "Privacy",
+    terms: "Terms",
+    stack: "Powered by TrainFlow",
+  },
+} as const;
+
+const t = copy[lang];
+const mailtoHref = mailto(lang === "en" ? "TailorLM diagnostic" : "TailorLM 诊断咨询");
 ---
 
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-brand">
       <div class="brand">TailorLM</div>
-      <p class="muted">量体裁模。开源 LLM 后训练、评测与交付。</p>
+      <p class="muted">{t.tagline}</p>
     </div>
 
     <div class="footer-links">
       <a href={mailtoHref}>{site.email}</a>
       <a href={site.github} rel="noreferrer">GitHub</a>
-      <a href="/pricing">定价</a>
-      <a href="/contact">联系</a>
-      <a href="/privacy">隐私政策</a>
-      <a href="/terms">服务条款</a>
+      <a href={localePath(lang, "/pricing")}>{t.pricing}</a>
+      <a href={localePath(lang, "/contact")}>{t.contact}</a>
+      <a href={localePath(lang, "/privacy")}>{t.privacy}</a>
+      <a href={localePath(lang, "/terms")}>{t.terms}</a>
     </div>
 
     <div class="footer-meta">
       <p>© 2026 {site.name}</p>
-      <p class="muted">基于自研 TrainFlow 后训练框架</p>
+      <p class="muted">{t.stack}</p>
       {
         site.icp && (
           <p class="icp">
