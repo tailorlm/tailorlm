@@ -17,7 +17,7 @@ const {
 
 const origin = Astro.site ?? Astro.url.origin;
 const canonical = new URL(Astro.url.pathname, origin);
-const ogImage = new URL("/og.svg", origin);
+const ogImage = new URL("/og.png", origin);
 ---
 
 <!doctype html>
@@ -36,6 +36,9 @@ const ogImage = new URL("/og.svg", origin);
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <title>{title}</title>
   </head>
   <body>
