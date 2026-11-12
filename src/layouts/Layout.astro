@@ -4,6 +4,7 @@ import "@fontsource-variable/inter";
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import { site } from "../config";
 
 interface Props {
   title?: string;
@@ -15,9 +16,19 @@ const {
   description = "TailorLM 为有明确任务和数据的团队做开源 LLM 后训练：先诊断，再训练，用可复现的评测验收。",
 } = Astro.props;
 
-const origin = Astro.site ?? Astro.url.origin;
+const origin = Astro.site ?? site.url;
 const canonical = new URL(Astro.url.pathname, origin);
 const ogImage = new URL("/og.png", origin);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: site.name,
+  url: site.url,
+  email: site.email,
+  description,
+  sameAs: [site.github],
+};
 ---
 
 <!doctype html>
@@ -35,10 +46,13 @@ const ogImage = new URL("/og.png", origin);
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:site_name" content={site.name} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <title>{title}</title>
   </head>
   <body>
