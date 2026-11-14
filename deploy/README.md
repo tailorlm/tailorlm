@@ -31,6 +31,12 @@ docker run -d --name tailorlm-site -p 8080:80 --restart unless-stopped tailorlm-
 
 Put a reverse proxy in front of `127.0.0.1:8080` and terminate TLS with Caddy or Nginx + certbot.
 
+## Cloudflare Pages / Static CDN
+
+- Build command: `pnpm build` (Node 22)
+- Output directory: `dist`
+- Security and cache headers are configured in [`public/_headers`](../public/_headers) and copied to `dist/_headers` during build.
+
 ## Checks
 
 ```bash
