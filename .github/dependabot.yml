@@ -1,0 +1,52 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: "cron"
+      cronjob: "0 4 1 * *"
+      timezone: "Asia/Shanghai"
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
+      semver-minor-days: 7
+      semver-patch-days: 3
+    open-pull-requests-limit: 5
+    groups:
+      npm-minor-patch:
+        patterns: ['*']
+        update-types: ['minor', 'patch']
+    commit-message:
+      prefix: 'chore(deps)'
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: "cron"
+      cronjob: "0 4 1 * *"
+      timezone: "Asia/Shanghai"
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    groups:
+      actions:
+        patterns: ['*']
+        update-types: ['minor', 'patch']
+    commit-message:
+      prefix: 'chore(deps)'
+
+  - package-ecosystem: docker
+    directory: /
+    schedule:
+      interval: "cron"
+      cronjob: "0 4 1 * *"
+      timezone: "Asia/Shanghai"
+    cooldown:
+      default-days: 7
+    ignore:
+      - dependency-name: node
+        update-types: ['version-update:semver-major']
+      - dependency-name: nginx
+        update-types: ['version-update:semver-major']
+    commit-message:
+      prefix: 'chore(deps)'
