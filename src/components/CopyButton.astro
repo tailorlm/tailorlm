@@ -1,0 +1,42 @@
+---
+interface Props {
+  copy: string;
+  done: string;
+  variantClass: string;
+}
+
+const { copy, done, variantClass } = Astro.props as Props;
+---
+
+<button type="button" class={`button ${variantClass} copy-btn`} data-copy={copy} data-done={done}>
+  <slot />
+</button>
+
+<script>
+  for (const btn of document.querySelectorAll<HTMLButtonElement>(".copy-btn")) {
+    const label = btn.textContent?.trim() ?? "";
+    let timer: number | undefined;
+    btn.addEventListener("click", async () => {
+      const value = btn.dataset.copy ?? "";
+      if (!value) return;
+      try {
+        await navigator.clipboard.writeText(value);
+      } catch {
+        const area = document.createElement("textarea");
+        area.value = value;
+        area.setAttribute("readonly", "");
+        area.style.position = "fixed";
+        area.style.opacity = "0";
+        document.body.appendChild(area);
+        area.select();
+        document.execCommand("copy");
+        document.body.removeChild(area);
+      }
+      window.clearTimeout(timer);
+      btn.textContent = btn.dataset.done ?? label;
+      timer = window.setTimeout(() => {
+        btn.textContent = label;
+      }, 1800);
+    });
+  }
+</script>

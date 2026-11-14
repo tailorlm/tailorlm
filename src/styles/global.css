@@ -179,6 +179,28 @@ img {
   color: var(--ink);
 }
 
+button.button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.button.ghost-light {
+  background: transparent;
+  color: var(--bg);
+  border-color: rgba(247, 243, 234, 0.32);
+}
+
+.button.ghost-light:hover {
+  background: rgba(247, 243, 234, 0.12);
+  border-color: var(--bg);
+  color: var(--bg);
+}
+
+.copy-template-btn {
+  padding: 10px 16px;
+  font-size: 13px;
+}
+
 .card {
   background: var(--white);
   border: 1px solid var(--line);

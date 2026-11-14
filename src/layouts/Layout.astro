@@ -11,9 +11,10 @@ interface Props {
   title?: string;
   description?: string;
   lang?: Lang;
+  noindex?: boolean;
 }
 
-const { lang = "zh" } = Astro.props as Props;
+const { lang = "zh", noindex = false } = Astro.props as Props;
 
 const copy = {
   zh: {
@@ -61,12 +62,20 @@ const jsonLd = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#f7f3ea" />
-    <meta name="robots" content="index,follow" />
+    <meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow"} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="zh-CN" href={zhUrl} />
-    <link rel="alternate" hreflang="en" href={enUrl} />
-    <link rel="alternate" hreflang="x-default" href={enUrl} />
+    <link rel="icon" type="image/png" sizes="32x32" href="/brand/tailorlm-favicon-32.png" />
+    <link rel="apple-touch-icon" href="/brand/tailorlm-avatar-light-512.png" />
+    {
+      !noindex && (
+        <>
+          <link rel="canonical" href={canonical} />
+          <link rel="alternate" hreflang="zh-CN" href={zhUrl} />
+          <link rel="alternate" hreflang="en" href={enUrl} />
+          <link rel="alternate" hreflang="x-default" href={enUrl} />
+        </>
+      )
+    }
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />

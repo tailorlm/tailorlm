@@ -486,6 +486,18 @@
   font-size: 14px;
 }
 
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.intake-actions {
+  margin-top: 16px;
+}
+
 .contact-meta {
   display: grid;
   gap: 12px;

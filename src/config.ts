@@ -8,9 +8,9 @@ export const site = {
 } as const;
 
 export function mailto(subject = "TailorLM 诊断咨询", body = ""): string {
-  const params = new URLSearchParams({ subject });
+  const parts = [`subject=${encodeURIComponent(subject)}`];
   if (body) {
-    params.set("body", body);
+    parts.push(`body=${encodeURIComponent(body.replace(/\r?\n/g, "\r\n"))}`);
   }
-  return `mailto:${site.email}?${params.toString()}`;
+  return `mailto:${site.email}?${parts.join("&")}`;
 }

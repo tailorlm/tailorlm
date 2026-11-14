@@ -8,7 +8,7 @@
 
 TailorLM is a post-training studio for open-source LLMs. We start with a diagnostic, then build the data, evaluation, and training plan that fits the task. Acceptance is measured on a held-out test set — not on a loss curve.
 
-[中文](#中文) · [Services](#services) · [How we work](#how-we-work) · [Contact](#contact)
+[Website](https://tailorlm.mcocdaa.com/en/) · [中文站](https://tailorlm.mcocdaa.com/) · [中文](#中文) · [Services](#services) · [How we work](#how-we-work) · [Contact](#contact)
 
 ## Services
 
@@ -53,4 +53,4 @@ Deployment: see [`deploy/README.md`](deploy/README.md).
 
 ## Contact
 
-contact@mcocdaa.com · [github.com/tailorlm](https://github.com/tailorlm)
+[tailorlm.mcocdaa.com](https://tailorlm.mcocdaa.com) · contact@mcocdaa.com · [github.com/tailorlm](https://github.com/tailorlm)

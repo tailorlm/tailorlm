@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import CopyButton from "../components/CopyButton.astro";
 import { site, mailto } from "../config";
 
 const intakeBody = `1. 产品是什么：
@@ -45,7 +46,12 @@ const questions = [
         <p class="muted">
           点击会打开一封预填好问题的邮件。也可以直接复制邮箱，写清楚你的场景即可。
         </p>
-        <a class="button light" href={mailtoHref}>写一封诊断邮件 <span aria-hidden="true">↗</span></a>
+        <div class="contact-actions">
+          <a class="button light" href={mailtoHref}>写一封诊断邮件 <span aria-hidden="true">↗</span></a>
+          <CopyButton copy={site.email} done="已复制邮箱 ✓" variantClass="ghost-light">
+            复制邮箱
+          </CopyButton>
+        </div>
         <div class="contact-meta">
           <div><span>响应时间</span><strong>1–2 个工作日</strong></div>
           <div><span>诊断周期</span><strong>3–5 天</strong></div>
@@ -59,6 +65,15 @@ const questions = [
         <ol>
           {questions.map((question) => <li>{question}</li>)}
         </ol>
+        <div class="intake-actions">
+          <CopyButton
+            copy={intakeBody}
+            done="已复制问题模板 ✓"
+            variantClass="secondary copy-template-btn"
+          >
+            复制七个问题模板
+          </CopyButton>
+        </div>
         <p class="small muted note">
           首封邮件请不要发送未脱敏的客户数据、聊天记录或密钥。先聊场景、指标和数据权属；需要看数据时再走安全渠道。
         </p>
@@ -148,9 +163,16 @@ const questions = [
     font-size: 14px;
   }
 
-  .contact-card .button {
-    justify-self: start;
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
     margin-top: 8px;
+  }
+
+  .intake-actions {
+    margin-top: 16px;
   }
 
   .button.light {

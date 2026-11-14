@@ -2,13 +2,16 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="404 — TailorLM" description="This page does not exist. 这个页面不存在。">
+<Layout title="404 — TailorLM" description="This page does not exist. 这个页面不存在。" noindex={true}>
   <section class="not-found">
     <div class="container">
       <p class="eyebrow">404</p>
       <h1 class="h1">这个页面<br />不存在。</h1>
       <p class="lead">This page does not exist. 可能是链接过期，或者这一页还没写。</p>
-      <a class="button" href="/">回首页 / Back home <span aria-hidden="true">↗</span></a>
+      <div class="not-found-actions">
+        <a class="button" href="/">回中文首页 <span aria-hidden="true">↗</span></a>
+        <a class="button secondary" href="/en/">English home <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
   </section>
 </Layout>
@@ -28,5 +31,11 @@ import Layout from "../layouts/Layout.astro";
 
   .not-found .lead {
     margin-bottom: 32px;
+  }
+
+  .not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 </style>

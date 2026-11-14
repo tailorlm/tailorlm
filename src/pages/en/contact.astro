@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import CopyButton from "../../components/CopyButton.astro";
 import { site, mailto } from "../../config";
 import "../../styles/en-pages.css";
 
@@ -47,7 +48,12 @@ const questions = [
         <p class="muted">
           The link opens an email with the questions below prefilled. You can also copy the address and describe the use case in your own words.
         </p>
-        <a class="button light" href={mailtoHref}>Write a diagnostic email <span aria-hidden="true">↗</span></a>
+        <div class="contact-actions">
+          <a class="button light" href={mailtoHref}>Write a diagnostic email <span aria-hidden="true">↗</span></a>
+          <CopyButton copy={site.email} done="Email copied ✓" variantClass="ghost-light">
+            Copy email
+          </CopyButton>
+        </div>
         <div class="contact-meta">
           <div><span>Response</span><strong>1–2 business days</strong></div>
           <div><span>Diagnostic</span><strong>3–5 days</strong></div>
@@ -61,6 +67,15 @@ const questions = [
         <ol>
           {questions.map((question) => <li>{question}</li>)}
         </ol>
+        <div class="intake-actions">
+          <CopyButton
+            copy={intakeBody}
+            done="Template copied ✓"
+            variantClass="secondary copy-template-btn"
+          >
+            Copy 7-question template
+          </CopyButton>
+        </div>
         <p class="small muted note">
           Please do not send unredacted client data, chat logs, or secrets in the first email. Start with the use case, metric, and data rights; we will set up a secure channel if the data needs review.
         </p>
