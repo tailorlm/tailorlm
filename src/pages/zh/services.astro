@@ -10,7 +10,7 @@ const services = [
     name: "问题评估（免费）",
     desc: "看 3 个真实失败例子，先免费判断问题是不是训练能解决的。",
     price: "免费 ¥0",
-    usd: "$0 · 先咨询后评估",
+    sub: "先咨询后评估",
     time: "1–2 个工作日",
     deliverables: [
       "需求拆解：区分是知识不足（RAG）、行为风格（SFT）还是工作流问题",
@@ -26,7 +26,7 @@ const services = [
     name: "基线与评测包",
     desc: "把模糊需求变成 30–50 题固定测试集，并跑出原模型的真实基线分数。",
     price: "限时 ¥10",
-    usd: "原价 ¥100 · $2（reg. $15）",
+    sub: "原价 ¥100",
     time: "排队 3–7 天",
     deliverables: [
       "30–50 题独立 held-out 评测集与自动评分规则",
@@ -42,7 +42,7 @@ const services = [
     name: "LoRA 小试验",
     desc: "小规模高质量防泄漏数据验证训练方向是否有可测信号，再决定要不要扩大。",
     price: "限时 ¥99",
-    usd: "原价 ¥299 · $15（reg. $45）",
+    sub: "原价 ¥299",
     time: "排队 5–10 天",
     deliverables: [
       "小规模高质量数据构建 / 去重与防评测泄漏检查",
@@ -58,7 +58,7 @@ const services = [
     name: "完整交付",
     desc: "可用的定制模型，加上独立评测、通用回归报告、部署脚本和已知局限。",
     price: "限时 ¥299 起",
-    usd: "原价 ¥999 起 · $45+（reg. $149+）",
+    sub: "原价 ¥999 起",
     time: "1–3 周",
     deliverables: [
       "完整训练数据集构建/脱敏与 LoRA adapter / 合并模型",
@@ -100,7 +100,7 @@ const services = [
               </div>
               <div class="service-price">
                 <strong>{service.price}</strong>
-                <span>{service.usd}</span>
+                <span>{service.sub}</span>
                 <span class="time">{service.time}</span>
               </div>
             </div>
