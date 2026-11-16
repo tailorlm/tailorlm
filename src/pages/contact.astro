@@ -11,7 +11,7 @@ const intakeBody = `1. 产品是什么：
 6. 谁验收、部署环境、延迟/显存/成本限制：
 7. 时间和预算范围：`;
 
-const mailtoHref = mailto("TailorLM 诊断咨询", intakeBody);
+const mailtoHref = mailto("TailorLM 免费问题评估", intakeBody);
 
 const questions = [
   "你的产品是什么，用户是谁？",
@@ -26,14 +26,14 @@ const questions = [
 
 <Layout
   title="联系 — TailorLM"
-  description="预约 TailorLM 诊断：告诉我们你的场景、数据和验收标准。先判断是否值得训练，再决定是否合作。"
+  description="免费让 TailorLM 看一眼问题：发送你的场景和 3 个真实失败例子，1–2 个工作日内获 Go/No-Go 与预算区间。"
 >
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">CONTACT</p>
-      <h1 class="h1">先做诊断，<br />再决定是否训练。</h1>
+      <h1 class="h1">先免费看问题，<br />再决定是否训练。</h1>
       <p class="lead">
-        告诉我们模型现在哪里不好、数据大概什么情况、什么结果算成功。没有测试集也没关系，诊断会帮你一起定义。
+        告诉我们模型现在哪里不好、数据大概什么情况、什么结果算成功。发 3 个真实失败例子即可，评估本身完全免费（¥0）；需要建尺子跑基线再走限时 ¥10 排队包。
       </p>
     </div>
   </section>
@@ -44,18 +44,18 @@ const questions = [
         <p class="eyebrow">EMAIL</p>
         <a class="email" href={mailtoHref}>{site.email}</a>
         <p class="muted">
-          点击会打开一封预填好问题的邮件。也可以直接复制邮箱，写清楚你的场景即可。
+          点击会打开一封预填好问题的邮件。限时价采取全异步邮件排队处理，问题写得越清晰、意向档位越高排单越快。
         </p>
         <div class="contact-actions">
-          <a class="button light" href={mailtoHref}>写一封诊断邮件 <span aria-hidden="true">↗</span></a>
+          <a class="button light" href={mailtoHref}>发邮件免费评估 <span aria-hidden="true">↗</span></a>
           <CopyButton copy={site.email} done="已复制邮箱 ✓" variantClass="ghost-light">
             复制邮箱
           </CopyButton>
         </div>
         <div class="contact-meta">
           <div><span>响应时间</span><strong>1–2 个工作日</strong></div>
-          <div><span>诊断周期</span><strong>3–5 天</strong></div>
-          <div><span>诊断费</span><strong>¥4,800 起</strong></div>
+          <div><span>问题评估</span><strong>¥0 免费</strong></div>
+          <div><span>基线与评测包</span><strong>限时 ¥10（原价 ¥100）</strong></div>
         </div>
       </div>
 
@@ -106,9 +106,9 @@ const questions = [
       <div>
         <p class="eyebrow">NOT SURE YET?</p>
         <h2 class="h2">不确定要不要训练？</h2>
-        <p class="lead">先做诊断。如果 Prompt、RAG 或工作流能解决，我们会直接说。</p>
+        <p class="lead">先把 3 个失败例子发过来免费看看。如果 Prompt、RAG 或工作流能解决，我们会直接说。</p>
       </div>
-      <a class="button light" href={mailtoHref}>预约诊断 <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={mailtoHref}>免费评估问题 <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>

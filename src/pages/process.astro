@@ -2,56 +2,48 @@
 import Layout from "../layouts/Layout.astro";
 import { mailto } from "../config";
 
-const mailtoHref = mailto();
+const mailtoHref = mailto("TailorLM 免费问题评估");
 
 const steps = [
   {
     n: "01",
-    name: "需求诊断",
-    time: "3–5 天",
-    we: "访谈、数据 readiness、基线方案、成本预估、go/no-go。",
+    name: "免费问题评估",
+    time: "1–2 个工作日 · ¥0",
+    we: "审阅失败案例、区分 Prompt/RAG 还是后训练、估算基线/试验成本、给 Go/No-Go。",
     you: "3 个真实失败例子、当前方案、数据情况、验收人。",
-    out: "诊断报告、方案、预算。",
+    out: "免费 Go/No-Go 判断与建议路线。",
   },
   {
     n: "02",
-    name: "数据与评测集",
-    time: "1–2 周",
-    we: "清洗、去重、脱敏、格式校验；训练/评测隔离；评分规则。",
-    you: "原始资料、数据权属、业务规则。",
-    out: "数据集、评测集、质量报告。",
+    name: "基线与评测集",
+    time: "排队 3–7 天 · 限时 ¥10",
+    we: "定义 30–50 题固定测试集与评分规则；跑通原模型基线；输出维度拆解。",
+    you: "业务规则与待测边界案例。",
+    out: "独立评测集 + 基线跑分报告。",
   },
   {
     n: "03",
-    name: "基线",
-    time: "2–3 天",
-    we: "用固定测试集测原模型；记录失败案例、延迟、成本。",
-    you: "模型访问方式、推理环境。",
-    out: "baseline 报告。",
+    name: "LoRA 小试验",
+    time: "排队 5–10 天 · 限时 ¥99",
+    we: "清洗/去重/防泄漏构建小样本；做 LoRA/SFT；输出同题前后对比与失败分析。",
+    you: "授权脱敏原始资料与小试验预算。",
+    out: "小试验 adapter 与是否扩大建议。",
   },
   {
     n: "04",
-    name: "小试验",
-    time: "1–2 周",
-    we: "少量高质量数据做 LoRA/QLoRA；前后对比；失败分析。",
-    you: "确认预算和扩大条件。",
-    out: "adapter、实验报告、是否扩大的建议。",
-  },
-  {
-    n: "05",
     name: "正式训练",
     time: "1–3 周",
-    we: "可复现配置、TrainFlow 训练、日志、checkpoint、成本记录。",
+    we: "可复现配置、TrainFlow 训练、防退化回归准备、成本记录。",
     you: "云预算上限、验收人。",
     out: "adapter/模型、训练记录、成本明细。",
   },
   {
-    n: "06",
+    n: "05",
     name: "评测与交付",
-    time: "1 周",
-    we: "固定测试集评测、回归、失败案例、部署说明、交付打包。",
+    time: "完整交付 · 限时 ¥299 起",
+    we: "固定测试集评测、通用能力回归、失败案例、推理示例与部署说明。",
     you: "验收签字。",
-    out: "最终报告、adapter、推理示例、部署说明、局限。",
+    out: "最终报告、adapter、部署包与已知局限。",
   },
 ];
 
@@ -66,14 +58,14 @@ const gates = [
 
 <Layout
   title="流程 — TailorLM"
-  description="TailorLM 的交付流程：诊断、数据与评测集、基线、小试验、正式训练、评测与交付。每一步都有通过条件。"
+  description="TailorLM 的交付流程：免费问题评估、基线与评测集、LoRA 小试验、正式训练、评测与交付。每一步都有通过条件。"
 >
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">PROCESS</p>
-      <h1 class="h1">先诊断，<br />再训练。</h1>
+      <h1 class="h1">先免费看问题，<br />再决定训练。</h1>
       <p class="lead">
-        六个步骤，每一步都有交付和停止条件。没有基线不训练，没有验收指标不接单，没有小试验信号不扩大。
+        五个步骤，每一步都有交付和停止条件。没有基线不训练，没有验收指标不接单，没有小试验信号不扩大。
       </p>
     </div>
   </section>
@@ -146,7 +138,7 @@ const gates = [
         <div class="section-label"><span class="num">02</span><span class="txt">我们交付</span></div>
         <h2 class="h3">能验收的结果，不是 loss 曲线。</h2>
         <ul class="list">
-          <li>诊断报告和 go/no-go；</li>
+          <li>Go/No-Go 判断与预算建议；</li>
           <li>数据集、评测集和评分规则；</li>
           <li>基线、训练后对比、回归和失败案例；</li>
           <li>adapter/模型、推理示例、部署说明；</li>
@@ -197,11 +189,11 @@ const gates = [
   <section class="section">
     <div class="container cta-panel">
       <div>
-        <p class="eyebrow">START HERE</p>
-        <h2 class="h2">从诊断开始。</h2>
-        <p class="lead">先判断值不值得训练，再决定要不要往下走。</p>
+        <p class="eyebrow">START FREE</p>
+        <h2 class="h2">从免费看问题开始。</h2>
+        <p class="lead">先零成本判断值不值得训练，再用 ¥10 基线包把标准尺子立起来。</p>
       </div>
-      <a class="button light" href={mailtoHref}>预约诊断 <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={mailtoHref}>免费评估问题 <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>

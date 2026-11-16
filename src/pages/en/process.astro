@@ -3,55 +3,55 @@ import Layout from "../../layouts/Layout.astro";
 import { mailto } from "../../config";
 import "../../styles/en-pages.css";
 
-const mailtoHref = mailto("TailorLM diagnostic");
+const mailtoHref = mailto("TailorLM free problem review");
 
 const steps = [
   {
     n: "00",
-    name: "Requirements",
-    time: "1–3 days",
-    question: "What is failing, and what would “better” mean?",
-    evidence: "Three real failures, data rights, acceptance metric, budget",
-    exit: "No quote without a measurable target.",
+    name: "Free problem review",
+    time: "1–2 business days · $0",
+    question: "Is this a training problem or a prompt/RAG/workflow problem?",
+    evidence: "Three real failures, data rights summary, rough budget",
+    exit: "If Prompt/RAG solves it, we tell you not to train.",
   },
   {
     n: "01",
-    name: "Baseline",
-    time: "2–5 days",
-    question: "How does the current model actually perform?",
-    evidence: "Fixed test set, baseline outputs, failure taxonomy",
+    name: "Baseline & eval pack",
+    time: "3–7 days (queued) · $2",
+    question: "How does the current model actually perform on a fixed rubric?",
+    evidence: "30–50 held-out test cases, automated scores, failure taxonomy",
     exit: "No training without a recorded baseline.",
   },
   {
     n: "02",
-    name: "Small experiment",
-    time: "1–2 weeks",
+    name: "LoRA experiment",
+    time: "5–10 days (queued) · $15",
     question: "Is there a measurable signal in the right direction?",
-    evidence: "Small high-quality dataset, before/after comparison",
+    evidence: "Small leak-checked dataset, before/after comparison on the same set",
     exit: "No scale-up without a signal.",
   },
   {
     n: "03",
     name: "Full training",
-    time: "1–4 weeks",
-    question: "Can the signal hold at production scale?",
-    evidence: "Frozen config, seed, data manifest, training log",
-    exit: "No launch without client budget approval.",
+    time: "1–3 weeks",
+    question: "Can the signal hold across edge cases without general regression?",
+    evidence: "Frozen config, seed, data manifest, training & VRAM log",
+    exit: "No cloud launch without budget cap approval.",
   },
   {
     n: "04",
-    name: "Acceptance",
-    time: "2–5 days",
-    question: "Does it hit the metric without unacceptable regression?",
-    evidence: "Held-out evaluation, regression suite, failure cases",
+    name: "Acceptance & delivery",
+    time: "$45+ limited",
+    question: "Does it hit the SOW metric and pass the --no-system regression check?",
+    evidence: "Held-out evaluation, general regression, inference & deploy notes",
     exit: "No delivery without a signed acceptance.",
   },
   {
     n: "05",
     name: "Productize",
     time: "Ongoing",
-    question: "What can be reused on the next project?",
-    evidence: "Reusable eval, data recipe, report template, or adapter recipe",
+    question: "What can be reused cleanly on the next project?",
+    evidence: "Reusable eval rubric, data recipe, report template, or guardrails",
     exit: "At least one reusable asset per project.",
   },
 ];
@@ -119,7 +119,7 @@ const deliverables = [
         <div class="section-label"><span class="num">→</span><span class="txt">Deliverables</span></div>
         <h2 class="h2">What “done”<br />looks like.</h2>
         <p class="lead">
-          The exact package depends on the service tier. A full delivery includes the artifacts below; a diagnostic or experiment delivers the relevant subset.
+          The exact package depends on the service tier. A full delivery includes all artifacts below; a queued baseline pack or experiment delivers the relevant subset.
         </p>
       </div>
       <ul class="list">
@@ -136,7 +136,7 @@ const deliverables = [
           <h2 class="h2">Who does what.</h2>
           <ul class="list">
             <li><strong>Owner</strong> — positioning, pricing, contract, client relationship, final acceptance.</li>
-            <li><strong>AI operator</strong> — diagnostic, data, training, evaluation, report, project record.</li>
+            <li><strong>AI operator</strong> — problem triage, data, training, evaluation, report, project record.</li>
             <li><strong>Client</strong> — data, business acceptance, deployment environment.</li>
           </ul>
         </div>
@@ -181,7 +181,7 @@ const deliverables = [
           The fastest way to start is three examples where the current model failed, plus the result you expected. We will tell you which gate applies.
         </p>
       </div>
-      <a class="button light" href={mailtoHref}>Book a diagnostic <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={mailtoHref}>Free problem review <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>

@@ -5,16 +5,20 @@ import FAQ from "../../components/FAQ.astro";
 import { mailto } from "../../config";
 import "../../styles/en-pages.css";
 
-const mailtoHref = mailto("TailorLM diagnostic");
+const mailtoHref = mailto("TailorLM free problem review");
 
 const faqs = [
   {
-    q: "Why diagnose before training?",
-    a: "Not every problem is a training problem. The diagnostic separates a knowledge gap from a behavior gap and a workflow gap. If prompt engineering, retrieval, or a process change is enough, we will say so instead of selling training.",
+    q: "Why review the problem for free before training?",
+    a: "Not every problem should be solved by training. Send three real failure examples and we will tell you whether the gap is missing knowledge (RAG), model behavior (SFT), or workflow design. If prompt engineering or RAG is enough, we will say so instead of selling training.",
+  },
+  {
+    q: "How is the $2 limited queued baseline pack sustainable?",
+    a: "It is delivered asynchronously over email in a queue (no live calls), scoped to 30–50 held-out cases scored with our automated pipeline on an open-source base model or your API (one per client). Priority goes to higher-paid tiers and cleanly scoped requests.",
   },
   {
     q: "Do you have public case studies?",
-    a: "We do not publish unverified work. The first three clients join at a founding price; after delivery we publish a redacted case only with written permission.",
+    a: "We do not publish unverified work. Client projects are published in redacted form only after delivery and written permission.",
   },
   {
     q: "Is our data safe?",
@@ -26,7 +30,7 @@ const faqs = [
 <Layout
   lang="en"
   title="TailorLM — Post-training for open-source LLMs"
-  description="TailorLM is a post-training studio for open-source LLMs. Diagnose first, train only when the evidence supports it, and accept on a held-out test set."
+  description="TailorLM is a post-training studio for open-source LLMs. Start with a free problem review, run a $2 limited queued baseline, and accept on a held-out test set."
 >
   <section class="hero">
     <div class="container hero-grid">
@@ -35,25 +39,25 @@ const faqs = [
         <h1 class="h1">Your model,<br />fitted to your product.</h1>
         <p class="lead">
           TailorLM helps teams with a clear task and real data post-train open-source LLMs.
-          Diagnose first, then train; accept on a reproducible test set.
+          Start with a free problem review, lock a $2 baseline test set, and accept on reproducible metrics.
         </p>
         <div class="hero-actions">
-          <a class="button" href={mailtoHref}>Book a diagnostic <span aria-hidden="true">↗</span></a>
+          <a class="button" href={mailtoHref}>Free review <span aria-hidden="true">↗</span></a>
           <a class="button secondary" href="/en/pricing">Services &amp; pricing</a>
         </div>
-        <p class="small muted hero-note">Founding clients: 20% off the first three projects · diagnostic fee credited</p>
+        <p class="small muted hero-note">Free Go/No-Go problem review · Baseline &amp; eval pack $2 limited queued (reg. $15)</p>
       </div>
 
-      <aside class="hero-card" aria-label="Diagnostic">
-        <div class="card-head"><span>TAILORLM / DIAGNOSTIC</span><span>01</span></div>
-        <h2 class="card-title">Diagnose first.<br />Then train.</h2>
+      <aside class="hero-card" aria-label="Free review">
+        <div class="card-head"><span>TAILORLM / FREE REVIEW</span><span>01</span></div>
+        <h2 class="card-title">Free review first.<br />Then decide.</h2>
         <ul class="check-list">
-          <li>Is this a training problem?</li>
-          <li>Is the data sufficient, and are the rights clear?</li>
-          <li>What metric proves it worked?</li>
-          <li>What will it cost?</li>
+          <li>Send 3 real failures — check for free if training is the right fix</li>
+          <li>Check data volume and rights</li>
+          <li>Define the test set and acceptance metric</li>
+          <li>Get an honest cost range before spending anything</li>
         </ul>
-        <div class="card-foot"><span>3–5 days</span><span>From $700</span></div>
+        <div class="card-foot"><span>1–2 business days</span><span>Free ($0)</span></div>
       </aside>
     </div>
   </section>
@@ -135,27 +139,27 @@ const faqs = [
       <div class="process-grid">
         <article class="process-step">
           <span class="n">01</span>
-          <h3>Diagnose</h3>
-          <p>Decide whether training is worth it; define metrics and budget.</p>
-          <span class="time">3–5 days</span>
+          <h3>Free review</h3>
+          <p>Check 3 failure cases; decide whether training makes sense.</p>
+          <span class="time">1–2 business days · $0</span>
         </article>
         <article class="process-step">
           <span class="n">02</span>
-          <h3>Baseline &amp; data</h3>
-          <p>Build the test set, measure the current model, clean the training data.</p>
-          <span class="time">1–2 weeks</span>
+          <h3>Baseline &amp; eval</h3>
+          <p>Build 30–50 held-out cases and measure the base model.</p>
+          <span class="time">3–7 days (queued) · $2</span>
         </article>
         <article class="process-step">
           <span class="n">03</span>
-          <h3>Experiment</h3>
-          <p>Validate the direction on a small, high-quality sample.</p>
-          <span class="time">1–2 weeks</span>
+          <h3>LoRA experiment</h3>
+          <p>Validate training signal on a small leak-checked dataset.</p>
+          <span class="time">5–10 days (queued) · $15</span>
         </article>
         <article class="process-step">
           <span class="n">04</span>
-          <h3>Train &amp; deliver</h3>
-          <p>Full training, evaluation, regression, packaging, and deployment notes.</p>
-          <span class="time">3–6 weeks</span>
+          <h3>Full delivery</h3>
+          <p>Full training, eval, general regression, packaging, and deploy notes.</p>
+          <span class="time">1–3 weeks · $45+</span>
         </article>
       </div>
     </div>
@@ -166,7 +170,7 @@ const faqs = [
       <div class="section-head">
         <div class="section-label"><span class="num">04</span><span class="txt">Services</span></div>
         <div class="section-head-row">
-          <h2 class="h2">Start with a diagnostic.<br />Go only as far as the evidence.</h2>
+          <h2 class="h2">Start free.<br />Scale only with evidence.</h2>
           <a class="text-link" href="/en/pricing">Full pricing →</a>
         </div>
       </div>
@@ -178,14 +182,13 @@ const faqs = [
     <div class="container">
       <div class="cta-panel">
         <div>
-          <p class="eyebrow">FOUNDING CLIENTS</p>
-          <h2 class="h2">Build the first case<br />with us.</h2>
+          <p class="eyebrow">LIMITED QUEUE</p>
+          <h2 class="h2">Pay $0 to check fit.<br />$2 to build a ruler.</h2>
           <p class="lead">
-            The first three clients get 20% off in exchange for an anonymized case and feedback.
-            Cases are published only with written permission.
+            Limited-time queued prices run asynchronously by email. Higher-paid tiers and clearly scoped tasks take priority; regular prices skip the queue.
           </p>
         </div>
-        <a class="button light" href={mailtoHref}>Talk about your use case <span aria-hidden="true">↗</span></a>
+        <a class="button light" href={mailtoHref}>Free problem review <span aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>

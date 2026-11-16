@@ -3,74 +3,72 @@ import Layout from "../../layouts/Layout.astro";
 import { mailto } from "../../config";
 import "../../styles/en-pages.css";
 
-const mailtoHref = mailto("TailorLM diagnostic");
+const mailtoHref = mailto("TailorLM free problem review");
 
 const services = [
   {
     n: "01",
-    name: "Diagnostic",
-    desc: "Decide whether training is the right fix, and what “better” should mean.",
-    price: "$700",
-    cny: "¥4,800",
-    time: "3–5 days",
+    name: "Problem review (Free)",
+    desc: "Review 3 real failure examples for free before spending anything.",
+    price: "Free ($0)",
+    cny: "¥0 · No upfront fee",
+    time: "1–2 business days",
     deliverables: [
-      "Problem framing: task, frequency, impact, current workaround",
-      "Data readiness: volume, quality, rights, test set",
-      "Baseline plan: model, metric, evaluation protocol",
-      "Cost estimate: data, training, evaluation, cloud GPU",
-      "Go/no-go: train, prompt/RAG, workflow change, or stop",
+      "Root-cause triage: knowledge gap (RAG), behavior/tone (SFT), or workflow issue",
+      "Initial testability and data readiness check",
+      "Recommended next package and realistic budget range",
+      "Honest Go/No-Go: if prompts/RAG are enough, we tell you not to train",
     ],
-    fit: "You think you need training, but are not sure it is worth it; prompts and RAG still leave behavior unstable.",
-    notIncluded: "Data cleaning, full training, model deployment.",
+    fit: "You see model failures and want an experienced, free second opinion on whether fine-tuning makes sense.",
+    notIncluded: "Running model inference, writing full test sets, data cleaning, or training.",
   },
   {
     n: "02",
-    name: "Data & evaluation",
-    desc: "Turn raw material into trainable, testable data.",
-    price: "$2,500",
-    cny: "¥16,800",
-    time: "1–2 weeks",
+    name: "Baseline & eval pack",
+    desc: "Turn real failure cases into a fixed 30–50 case test set and measured baseline score.",
+    price: "$2 limited",
+    cny: "¥10（reg. $15 / ¥100）",
+    time: "3–7 days (queued)",
     deliverables: [
-      "Cleaning, deduplication, redaction, format validation",
-      "Train/test isolation and a held-out evaluation set",
-      "Evaluation items and scoring rules",
-      "Data quality report and rights record",
+      "30–50 held-out test cases and automated scoring rubric",
+      "Measured baseline score using an open-source base model or your API",
+      "Dimension breakdown and representative failure cases",
+      "Fee credited in full toward full delivery within 30 days",
     ],
-    fit: "You have raw material but no trainable data, no independent test set, or no confidence in data quality.",
-    notIncluded: "Training, model delivery, online deployment.",
+    fit: "You want a real held-out ruler and baseline numbers at minimal cost before investing in training.",
+    notIncluded: "Async email queue delivery only (no live calls); 1 per client; large-scale cleaning or model training.",
   },
   {
     n: "03",
     name: "LoRA experiment",
-    desc: "Validate the direction on a small budget before scaling.",
-    price: "$4,000",
-    cny: "¥28,800",
-    time: "1–2 weeks",
+    desc: "Validate the training direction on a small, leak-checked sample before scaling.",
+    price: "$15 limited",
+    cny: "¥99（reg. $45 / ¥299）",
+    time: "5–10 days (queued)",
     deliverables: [
-      "LoRA / QLoRA / SFT experiment",
+      "Small high-quality dataset curation / deduplication / anti-leak check",
+      "LoRA / QLoRA / SFT training run and experiment log",
       "Before/after comparison on the fixed test set",
-      "Failure-case analysis",
-      "Recommendation: scale, change approach, or stop",
+      "Failure analysis and scale / adjust / stop recommendation",
     ],
-    fit: "You want a signal before committing to a full dataset and training budget.",
-    notIncluded: "Full training, production delivery, ongoing maintenance. GPU billed at cost.",
+    fit: "You want empirical signal that LoRA improves your metric before committing to full delivery.",
+    notIncluded: "Full production polish, multiple revision rounds, or ongoing maintenance. GPU billed at 0% markup (no cloud fee on local runs).",
   },
   {
     n: "04",
     name: "Full delivery",
-    desc: "A usable custom model, with a reproducible evaluation and deployment notes.",
-    price: "$9,500+",
-    cny: "¥68,000+",
-    time: "3–6 weeks",
+    desc: "A production-ready custom model, with held-out evaluation, general regression, and deployment notes.",
+    price: "$45+ limited",
+    cny: "¥299+（reg. $149+ / ¥999+）",
+    time: "1–3 weeks",
     deliverables: [
-      "Adapter or merged model",
-      "Independent evaluation report: baseline, post-training, regression, failures",
-      "Inference example and deployment notes",
-      "Known limitations and risks",
-      "Two revision rounds",
+      "Curated redacted training dataset + LoRA adapter or merged model",
+      "Independent evaluation report + general capability regression check",
+      "Minimal runnable inference example & hardware/deployment notes",
+      "Known limitations list + two revision rounds tied to eval findings",
     ],
-    fit: "You have a clear acceptance metric and need a model you can run, not a demo.",
-    notIncluded: "24/7 hosting, unlimited retraining, new scope. GPU billed at cost.",
+    fit: "You have an acceptance target and need reproducible artifacts you can ship in production.",
+    notIncluded: "24/7 hosting, unlimited retraining, or uncontracted scope. Cloud GPU passed through at cost (0% markup).",
   },
 ];
 ---
@@ -78,14 +76,14 @@ const services = [
 <Layout
   lang="en"
   title="Services — TailorLM"
-  description="TailorLM services: diagnostic, data & evaluation, LoRA experiment, and full delivery for open-source LLMs."
+  description="TailorLM services: free problem review ($0), $2 limited queued baseline & eval pack (reg. $15), $15 LoRA experiment (reg. $45), $45+ full delivery (reg. $149+)."
 >
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">SERVICES</p>
-      <h1 class="h1">Start with the problem,<br />not the model.</h1>
+      <h1 class="h1">Free review first.<br />Then let numbers lead.</h1>
       <p class="lead">
-        Four ways to work together. Not every problem needs training; start with a diagnostic, then go only as far as the evidence supports.
+        Not every problem needs training. Send three real failures for a free Go/No-Go, spend $2 to lock a baseline ruler in the async queue, and scale only when evidence shows up.
       </p>
     </div>
   </section>
@@ -136,10 +134,10 @@ const services = [
         <h2 class="h2">Not sure where<br />to start?</h2>
       </div>
       <div class="choose-list">
-        <div><span>Not sure training is worth it</span><strong>Diagnostic</strong></div>
-        <div><span>Messy data, no test set</span><strong>Data &amp; evaluation</strong></div>
-        <div><span>Want a signal first</span><strong>LoRA experiment</strong></div>
-        <div><span>Need a production model</span><strong>Full delivery</strong></div>
+        <div><span>Not sure training is worth it</span><strong>Problem review (Free $0)</strong></div>
+        <div><span>No test set or baseline score yet</span><strong>Baseline &amp; eval pack ($2 queued)</strong></div>
+        <div><span>Want quick empirical signal</span><strong>LoRA experiment ($15 queued)</strong></div>
+        <div><span>Need a production model &amp; regression check</span><strong>Full delivery ($45+)</strong></div>
       </div>
     </div>
   </section>
@@ -147,13 +145,13 @@ const services = [
   <section class="section">
     <div class="container cta-panel">
       <div>
-        <p class="eyebrow">START HERE</p>
-        <h2 class="h2">Tell us what<br />is failing.</h2>
+        <p class="eyebrow">START FREE</p>
+        <h2 class="h2">Send three real<br />failure examples.</h2>
         <p class="lead">
-          Describe the task, the current model, three real failures, and what “better” means. We will tell you whether a diagnostic makes sense.
+          Describe the task, current model, and three real failures. We will review it for free within 1–2 business days and tell you if fine-tuning fits.
         </p>
       </div>
-      <a class="button light" href={mailtoHref}>Book a diagnostic <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={mailtoHref}>Free problem review <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>

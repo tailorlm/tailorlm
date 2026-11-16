@@ -12,7 +12,7 @@ const intakeBody = `1. What is the product, and who is it for?
 6. Who signs off, deployment environment, latency / VRAM / cost limits
 7. Timeline and budget range:`;
 
-const mailtoHref = mailto("TailorLM diagnostic", intakeBody);
+const mailtoHref = mailto("TailorLM free problem review", intakeBody);
 
 const questions = [
   "What is the product, and who is it for?",
@@ -28,14 +28,14 @@ const questions = [
 <Layout
   lang="en"
   title="Contact — TailorLM"
-  description="Book a TailorLM diagnostic. Tell us the use case, the failures, the data, and the acceptance criteria."
+  description="Get a free TailorLM problem review. Send 3 real failure examples and your data summary to get a Go/No-Go and budget range."
 >
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">CONTACT</p>
-      <h1 class="h1">Diagnose first.<br />Then decide whether to train.</h1>
+      <h1 class="h1">Free review first.<br />Train only if it makes sense.</h1>
       <p class="lead">
-        Tell us where the model fails, what data you have, and what “better” means. If you do not have a test set yet, the diagnostic will help define one.
+        Send 3 real model failures, your data summary, and what “better” looks like. The initial problem review is free ($0); if you want a test set and measured score, move to the $2 queued baseline pack.
       </p>
     </div>
   </section>
@@ -46,18 +46,18 @@ const questions = [
         <p class="eyebrow">EMAIL</p>
         <a class="email" href={mailtoHref}>{site.email}</a>
         <p class="muted">
-          The link opens an email with the questions below prefilled. You can also copy the address and describe the use case in your own words.
+          The link opens an email with the 7 questions prefilled. Limited prices run via async email queue, prioritized by tier and clarity of scope.
         </p>
         <div class="contact-actions">
-          <a class="button light" href={mailtoHref}>Write a diagnostic email <span aria-hidden="true">↗</span></a>
+          <a class="button light" href={mailtoHref}>Send 3 failure cases <span aria-hidden="true">↗</span></a>
           <CopyButton copy={site.email} done="Email copied ✓" variantClass="ghost-light">
             Copy email
           </CopyButton>
         </div>
         <div class="contact-meta">
           <div><span>Response</span><strong>1–2 business days</strong></div>
-          <div><span>Diagnostic</span><strong>3–5 days</strong></div>
-          <div><span>From</span><strong>$700</strong></div>
+          <div><span>Problem review</span><strong>Free ($0)</strong></div>
+          <div><span>Baseline pack</span><strong>$2 limited (reg. $15)</strong></div>
         </div>
       </div>
 
@@ -108,9 +108,9 @@ const questions = [
       <div>
         <p class="eyebrow">NOT SURE YET?</p>
         <h2 class="h2">Not sure training<br />is the answer?</h2>
-        <p class="lead">Start with a diagnostic. If prompt engineering, RAG, or a workflow change is enough, we will say so.</p>
+        <p class="lead">Start with a free problem review. If prompt engineering, RAG, or a workflow change is enough, we will say so.</p>
       </div>
-      <a class="button light" href={mailtoHref}>Book a diagnostic <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={mailtoHref}>Free problem review <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>

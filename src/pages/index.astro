@@ -4,16 +4,20 @@ import PricingTable from "../components/PricingTable.astro";
 import FAQ from "../components/FAQ.astro";
 import { mailto } from "../config";
 
-const mailtoHref = mailto();
+const mailtoHref = mailto("TailorLM 免费问题评估");
 
 const faqs = [
   {
-    q: "为什么先诊断，而不是直接训练？",
-    a: "不是所有问题都该用训练解决。诊断会判断是知识不足、行为不对，还是工作流问题；如果 Prompt、RAG 或流程改造能解决，我们会直接说，不卖你训练。",
+    q: "为什么要免费先看问题，而不是直接开训？",
+    a: "很多问题根本不该用训练解决。把 3 个真实失败例子发过来，我们先免费判断是知识不足、行为不对还是工作流问题；Prompt 或 RAG 能解决的直接告诉你，绝不硬卖训练。",
+  },
+  {
+    q: "限时 ¥10 的基线与评测包为什么能这么便宜？",
+    a: "它是全异步邮件排队交付的标准包（30–50 题固定测试集 + 本地开源基座或自备 API 跑分，每客限 1 次，不含会议）。靠我们已经标准化的评测工具链和错峰排队把边际成本压到极低，优先排期会留给高预算和需求清晰的订单。",
   },
   {
     q: "你们有公开案例吗？",
-    a: "我们不在官网上堆未经验证的案例。首批 3 个客户按共创价合作；项目完成后，经客户授权，我们会脱敏发布过程和结果。",
+    a: "我们不在官网上堆未经验证的案例。客户项目仅在交付验收且获书面授权后，才会脱敏发布过程与测试集指标。",
   },
   {
     q: "数据安全吗？",
@@ -29,25 +33,25 @@ const faqs = [
         <p class="eyebrow">LLM POST-TRAINING STUDIO</p>
         <h1 class="h1">把你的模型，<br />调成你的产品。</h1>
         <p class="lead">
-          TailorLM 为有明确任务和数据的团队做开源 LLM 后训练：先诊断，再训练，用可复现的评测验收。
+          TailorLM 为有明确任务和数据的团队做开源 LLM 后训练：先免费看问题，再用 ¥10 基线建尺子，最后按可复现评测验收。
         </p>
         <div class="hero-actions">
-          <a class="button" href={mailtoHref}>预约诊断 <span aria-hidden="true">↗</span></a>
+          <a class="button" href={mailtoHref}>免费评估问题 <span aria-hidden="true">↗</span></a>
           <a class="button secondary" href="/pricing">看服务与定价</a>
         </div>
-        <p class="small muted hero-note">首批 3 个客户享受 20% 共创价 · 诊断费可抵扣</p>
+        <p class="small muted hero-note">免费看问题给 Go/No-Go · 基线与评测包限时 ¥10（排队制，原价 ¥100）</p>
       </div>
 
-      <aside class="hero-card" aria-label="诊断卡">
-        <div class="card-head"><span>TAILORLM / DIAGNOSTIC</span><span>01</span></div>
-        <h2 class="card-title">先诊断，<br />再训练。</h2>
+      <aside class="hero-card" aria-label="免费问题评估卡">
+        <div class="card-head"><span>TAILORLM / FREE REVIEW</span><span>01</span></div>
+        <h2 class="card-title">先免费看问题，<br />再决定训不训。</h2>
         <ul class="check-list">
-          <li>这是不是训练能解决的问题？</li>
+          <li>发 3 个真实失败例子，先免费看是不是训练能解决的问题</li>
           <li>数据够不够，权属清不清楚？</li>
-          <li>用什么指标验收？</li>
-          <li>大概要花多少？</li>
+          <li>用什么指标和固定测试集验收？</li>
+          <li>值得做的话，基线、小试验、完整交付大概要花多少？</li>
         </ul>
-        <div class="card-foot"><span>3–5 天</span><span>¥4,800 起</span></div>
+        <div class="card-foot"><span>1–2 个工作日</span><span>¥0 免费评估</span></div>
       </aside>
     </div>
   </section>
@@ -129,27 +133,27 @@ const faqs = [
       <div class="process-grid">
         <article class="process-step">
           <span class="n">01</span>
-          <h3>诊断</h3>
-          <p>判断是否值得训练，定义验收指标和预算。</p>
-          <span class="time">3–5 天</span>
+          <h3>问题评估（免费）</h3>
+          <p>看 3 个失败例子，判断是否值得训练、用不用得着微调。</p>
+          <span class="time">1–2 个工作日 · ¥0</span>
         </article>
         <article class="process-step">
           <span class="n">02</span>
-          <h3>基线与数据</h3>
-          <p>建评测集，记录原模型表现，清洗训练数据。</p>
-          <span class="time">1–2 周</span>
+          <h3>基线与评测包</h3>
+          <p>建 30–50 题固定评测集，记录原模型当前真实分数。</p>
+          <span class="time">排队 3–7 天 · ¥10</span>
         </article>
         <article class="process-step">
           <span class="n">03</span>
-          <h3>小试验</h3>
-          <p>少量高质量数据验证方向，有信号再扩大。</p>
-          <span class="time">1–2 周</span>
+          <h3>LoRA 小试验</h3>
+          <p>少量高质量防泄漏数据验证方向，有信号再扩大。</p>
+          <span class="time">排队 5–10 天 · ¥99</span>
         </article>
         <article class="process-step">
           <span class="n">04</span>
-          <h3>训练与交付</h3>
-          <p>正式训练、评测、回归、打包和部署说明。</p>
-          <span class="time">3–6 周</span>
+          <h3>完整交付</h3>
+          <p>正式训练、评测、通用回归、打包和部署说明。</p>
+          <span class="time">1–3 周 · ¥299 起</span>
         </article>
       </div>
     </div>
@@ -160,7 +164,7 @@ const faqs = [
       <div class="section-head">
         <div class="section-label"><span class="num">04</span><span class="txt">服务包</span></div>
         <div class="section-head-row">
-          <h2 class="h2">从诊断开始，<br />按结果往下走。</h2>
+          <h2 class="h2">免费看问题，<br />按证据往下走。</h2>
           <a class="text-link" href="/pricing">完整定价 →</a>
         </div>
       </div>
@@ -172,13 +176,13 @@ const faqs = [
     <div class="container">
       <div class="cta-panel">
         <div>
-          <p class="eyebrow">FIRST THREE</p>
-          <h2 class="h2">做首批客户，<br />一起把案例打磨出来。</h2>
+          <p class="eyebrow">LIMITED QUEUE</p>
+          <h2 class="h2">先花 ¥0 看清问题，<br />再花 ¥10 建一把尺子。</h2>
           <p class="lead">
-            前 3 个客户享受 20% 共创价，需要授权匿名案例和反馈。项目完成后，经客户授权，我们会脱敏发布。
+            限时特惠价采用全异步邮件排队制，按付费档位与需求清晰度优先排单；选原价或高档位可免排队优先排期。
           </p>
         </div>
-        <a class="button light" href={mailtoHref}>聊聊你的场景 <span aria-hidden="true">↗</span></a>
+        <a class="button light" href={mailtoHref}>免费评估问题 <span aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>

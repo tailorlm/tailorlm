@@ -6,6 +6,8 @@ interface Package {
   desc: string;
   cny: string;
   usd: string;
+  origCny?: string;
+  origUsd?: string;
   deliver: string;
   time: string;
   gpu: string;
@@ -21,107 +23,121 @@ const { includeMaintenance = false, lang = "zh" } = Astro.props as Props;
 
 const copy = {
   zh: {
-    headers: ["服务包", "起价", "交付", "周期", "GPU"],
-    labels: ["服务包", "起价", "交付", "周期", "GPU"],
+    headers: ["服务包", "价格", "交付", "周期", "GPU"],
+    labels: ["服务包", "价格", "交付", "周期", "GPU"],
+    origPrefix: "原价 ",
     packages: [
       {
-        name: "诊断",
-        desc: "判断是否真的需要训练",
-        cny: "¥4,800",
-        usd: "$700",
-        deliver: "需求分析、数据 readiness、基线方案、成本预估、go/no-go",
-        time: "3–5 天",
+        name: "问题评估",
+        desc: "看 3 个失败例子，先免费判断该不该训",
+        cny: "免费 ¥0",
+        usd: "$0 Free",
+        deliver: "Go/No-Go 判断、是否真需训练（vs Prompt/RAG）、大致预算",
+        time: "1–2 个工作日",
         gpu: "无",
       },
       {
-        name: "数据与评测包",
-        desc: "把资料变成可训练、可验证的数据",
-        cny: "¥16,800",
-        usd: "$2,500",
-        deliver: "数据集、评测集、质量报告",
-        time: "1–2 周",
+        name: "基线与评测包",
+        desc: "把模糊需求变成可测题目与基线跑分",
+        cny: "限时 ¥10",
+        usd: "$2 limited",
+        origCny: "¥100",
+        origUsd: "$15",
+        deliver: "30–50 题独立评测集、自动评分规则、原模型基线报告（30 天内升档可抵扣）",
+        time: "排队 3–7 天",
         gpu: "无",
       },
       {
         name: "LoRA 小试验",
-        desc: "小规模验证方向是否有效",
-        cny: "¥28,800",
-        usd: "$4,000",
-        deliver: "adapter、前后对比、失败分析",
-        time: "1–2 周",
-        gpu: "实报实销",
+        desc: "小规模验证微调信号，再决定是否扩大",
+        cny: "限时 ¥99",
+        usd: "$15 limited",
+        origCny: "¥299",
+        origUsd: "$45",
+        deliver: "小规模高质量训练/防泄漏、LoRA adapter、训练前后同题对比、失败分析",
+        time: "排队 5–10 天",
+        gpu: "实报实销（0% 加价）",
       },
       {
         name: "完整交付",
-        desc: "可用的定制模型与验收报告",
-        cny: "¥68,000 起",
-        usd: "$9,500 起",
-        deliver: "adapter/模型、评测报告、部署说明、2 轮修改",
-        time: "3–6 周",
-        gpu: "实报实销",
+        desc: "可上线验收的定制模型与全套文档",
+        cny: "限时 ¥299 起",
+        usd: "$45+ limited",
+        origCny: "¥999 起",
+        origUsd: "$149+",
+        deliver: "adapter/合并模型、评测与通用回归报告、部署说明、已知局限、2 轮修改",
+        time: "1–3 周",
+        gpu: "实报实销（0% 加价）",
         featured: true,
       },
     ] as Package[],
     maintenance: {
       name: "月度维护",
-      desc: "持续迭代与回归",
-      cny: "¥6,800/月 起",
-      usd: "$950/月 起",
+      desc: "增量 badcase 回流与回归",
+      cny: "¥99/月 起",
+      usd: "$15/mo+",
       deliver: "增量数据、评测、回归、基座升级",
       time: "按月",
-      gpu: "实报实销",
+      gpu: "实报实销（0% 加价）",
     } as Package,
   },
   en: {
-    headers: ["Service", "From", "Deliverables", "Timeline", "GPU"],
-    labels: ["Service", "From", "Deliverables", "Timeline", "GPU"],
+    headers: ["Service", "Price", "Deliverables", "Timeline", "GPU"],
+    labels: ["Service", "Price", "Deliverables", "Timeline", "GPU"],
+    origPrefix: "Reg. ",
     packages: [
       {
-        name: "Diagnostic",
-        desc: "Decide whether training is the right fix",
-        cny: "¥4,800",
-        usd: "$700",
-        deliver: "Scope, data readiness, baseline plan, cost estimate, go/no-go",
-        time: "3–5 days",
+        name: "Problem review",
+        desc: "Review 3 failure cases free before you spend anything",
+        cny: "¥0 Free",
+        usd: "Free ($0)",
+        deliver: "Go/no-go decision, training vs Prompt/RAG fit, cost range",
+        time: "1–2 business days",
         gpu: "None",
       },
       {
-        name: "Data & evaluation",
-        desc: "Turn raw material into trainable, testable data",
-        cny: "¥16,800",
-        usd: "$2,500",
-        deliver: "Dataset, held-out test set, quality report",
-        time: "1–2 weeks",
+        name: "Baseline & eval pack",
+        desc: "Turn real failures into a fixed test set and baseline score",
+        cny: "¥10 limited",
+        usd: "$2 limited",
+        origCny: "¥100",
+        origUsd: "$15",
+        deliver: "30–50 held-out cases, scoring rubric, baseline report (credited within 30d)",
+        time: "3–7 days (queued)",
         gpu: "None",
       },
       {
         name: "LoRA experiment",
-        desc: "Validate the direction on a small budget",
-        cny: "¥28,800",
-        usd: "$4,000",
-        deliver: "Adapter, before/after comparison, failure analysis",
-        time: "1–2 weeks",
-        gpu: "At cost",
+        desc: "Validate training signal on a small dataset before scaling",
+        cny: "¥99 limited",
+        usd: "$15 limited",
+        origCny: "¥299",
+        origUsd: "$45",
+        deliver: "Small leak-checked train set, LoRA adapter, before/after comparison, failure analysis",
+        time: "5–10 days (queued)",
+        gpu: "At cost (0% fee)",
       },
       {
         name: "Full delivery",
-        desc: "A usable custom model and an acceptance report",
-        cny: "¥68,000+",
-        usd: "$9,500+",
-        deliver: "Adapter/model, evaluation report, deployment notes, 2 revisions",
-        time: "3–6 weeks",
-        gpu: "At cost",
+        desc: "A production-ready custom model and acceptance report",
+        cny: "¥299+ limited",
+        usd: "$45+ limited",
+        origCny: "¥999+",
+        origUsd: "$149+",
+        deliver: "Adapter/model, eval & general regression report, deploy notes, 2 revisions",
+        time: "1–3 weeks",
+        gpu: "At cost (0% fee)",
         featured: true,
       },
     ] as Package[],
     maintenance: {
       name: "Monthly maintenance",
       desc: "Continuous iteration and regression",
-      cny: "¥6,800/mo+",
-      usd: "$950/mo+",
+      cny: "¥99/mo+",
+      usd: "$15/mo+",
       deliver: "Incremental data, evaluation, regression, base-model upgrades",
       time: "Monthly",
-      gpu: "At cost",
+      gpu: "At cost (0% fee)",
     } as Package,
   },
 } as const;
@@ -135,6 +151,7 @@ if (includeMaintenance) {
 
 const primaryPrice = (pkg: Package) => (lang === "en" ? pkg.usd : pkg.cny);
 const secondaryPrice = (pkg: Package) => (lang === "en" ? pkg.cny : pkg.usd);
+const origPrimaryPrice = (pkg: Package) => (lang === "en" ? pkg.origUsd : pkg.origCny);
 ---
 
 <table class="pricing-table">
@@ -153,7 +170,16 @@ const secondaryPrice = (pkg: Package) => (lang === "en" ? pkg.cny : pkg.usd);
           </td>
           <td data-label={t.labels[1]}>
             <div class="price">{primaryPrice(pkg)}</div>
-            <div class="price-usd">{secondaryPrice(pkg)}</div>
+            <div class="price-usd">
+              {origPrimaryPrice(pkg) ? (
+                <>
+                  {t.origPrefix}
+                  <del class="orig-price">{origPrimaryPrice(pkg)}</del>
+                  {" · "}
+                </>
+              ) : null}
+              {secondaryPrice(pkg)}
+            </div>
           </td>
           <td data-label={t.labels[2]}>{pkg.deliver}</td>
           <td data-label={t.labels[3]}>{pkg.time}</td>
@@ -214,6 +240,10 @@ const secondaryPrice = (pkg: Package) => (lang === "en" ? pkg.cny : pkg.usd);
     font-size: 12px;
     color: var(--muted);
     white-space: nowrap;
+  }
+
+  .orig-price {
+    opacity: 0.78;
   }
 
   tr.featured td {

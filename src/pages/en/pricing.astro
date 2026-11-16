@@ -5,16 +5,20 @@ import FAQ from "../../components/FAQ.astro";
 import { mailto } from "../../config";
 import "../../styles/en-pages.css";
 
-const mailtoHref = mailto("TailorLM diagnostic");
+const mailtoHref = mailto("TailorLM free problem review");
 
 const faqs = [
   {
     q: "Why is GPU cost not included?",
-    a: "Training time and GPU type depend on the model, the data, and how many experiments are needed. We pass through the actual Shadeform bill plus 15% management, prepaid with a cap; unused budget is refunded or credited.",
+    a: "Training time and GPU type depend on model size, dataset size, and experiment count. Cloud GPU bills are passed through at pure cost (0% markup), prepaid with a hard cap, and unused budget is refunded or credited. Small local runs incur no extra cloud GPU fee.",
   },
   {
-    q: "Can we skip the diagnostic?",
-    a: "If you already have a fixed test set, a baseline, clear data rights, and an acceptance metric, we can start at the experiment. Otherwise a diagnostic is the cheaper way to avoid a training run that cannot be evaluated.",
+    q: "What is the difference between the free review and the $2 baseline pack?",
+    a: "The free review is an asynchronous expert assessment of your 3 failure examples and use case (Go/No-Go and budget range, no model runs). The $2 queued baseline pack delivers an actual 30–50 case held-out test set, scoring rules, and a measured baseline report.",
+  },
+  {
+    q: "How does the queue work for limited-time pricing?",
+    a: "Limited-time prices are delivered asynchronously over email (no live calls), with the $2 baseline pack scoped to 30–50 cases on an open-source base model or your API (one per client). Queue order prioritizes higher-paid tiers and cleanly scoped tasks; choose regular pricing for immediate priority scheduling.",
   },
   {
     q: "Is our data safe?",
@@ -22,15 +26,11 @@ const faqs = [
   },
   {
     q: "How long does delivery take?",
-    a: "Diagnostic: 3–5 days. Data & evaluation: 1–2 weeks. LoRA experiment: 1–2 weeks. Full delivery: 3–6 weeks. Actual timing depends on data quality, acceptance criteria, and GPU availability.",
+    a: "Free problem review: 1–2 business days. Baseline & eval pack: 3–7 days (queued). LoRA experiment: 5–10 days (queued). Full delivery: 1–3 weeks. Regular-priced orders receive priority scheduling.",
   },
   {
     q: "Do you have public case studies?",
-    a: "We do not publish unverified work. The first three clients join at a founding price; after delivery we publish a redacted case only with written permission.",
-  },
-  {
-    q: "How is this different from renting a GPU?",
-    a: "A GPU rental sells compute. We sell the diagnostic, data work, evaluation, training, regression, and delivery. You do not have to decide whether to train, how to measure it, or how to explain a failure.",
+    a: "We do not publish unverified work. Redacted case studies and benchmark metrics are published only after delivery and written permission.",
   },
 ];
 ---
@@ -38,14 +38,14 @@ const faqs = [
 <Layout
   lang="en"
   title="Pricing — TailorLM"
-  description="TailorLM pricing: diagnostic, data & evaluation, LoRA experiment, full delivery, and maintenance. Transparent starting prices; GPU billed at cost."
+  description="TailorLM pricing: free problem review ($0), queued baseline & eval pack $2 (reg. $15), LoRA experiment $15 (reg. $45), full delivery $45+ (reg. $149+). GPU billed at 0% markup."
 >
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">PRICING</p>
-      <h1 class="h1">Transparent starting prices.<br />GPU billed at cost.</h1>
+      <h1 class="h1">Free review.<br />Pay as the evidence grows.</h1>
       <p class="lead">
-        Quotes are built from service time, GPU cost, and a risk buffer. Start with a diagnostic; the fee is credited toward a project started within 30 days.
+        Start with a free problem review, then queue a $2 (¥10) baseline pack to lock your test set and score (credited toward full delivery within 30 days). Cloud GPU billed at cost with 0% markup.
       </p>
     </div>
   </section>
@@ -59,19 +59,19 @@ const faqs = [
   <section class="section">
     <div class="container notes-grid">
       <div>
-        <div class="section-label"><span class="num">01</span><span class="txt">How billing works</span></div>
+        <div class="section-label"><span class="num">01</span><span class="txt">Billing &amp; queue rules</span></div>
         <h2 class="h2">No “one price,<br />train until satisfied”.</h2>
         <p class="lead">
-          Acceptance criteria go into the SOW before training. Revision rounds, cloud caps, and new scope are agreed up front.
+          Acceptance criteria go into the SOW before training. Limited-time prices run in an async queue prioritized by tier and scope clarity; regular pricing skips the queue.
         </p>
       </div>
       <div class="notes-list">
-        <div><span>Diagnostic</span><p>Credited in full toward a project started within 30 days.</p></div>
-        <div><span>Payment</span><p>Diagnostic 100% upfront; projects 50% deposit + 50% on acceptance.</p></div>
-        <div><span>GPU</span><p>Actual Shadeform bill + 15% management; prepaid, capped, unused budget refunded or credited.</p></div>
-        <div><span>Revisions</span><p>Two rounds included; new scope quoted separately.</p></div>
+        <div><span>Problem review</span><p>Free ($0 / ¥0). Send 3 real failure examples for a Go/No-Go reply.</p></div>
+        <div><span>Baseline credit</span><p>$2 (¥10) baseline covers 30–50 held-out cases on an open-source base or your API (one per client); credited in full toward full delivery within 30 days.</p></div>
+        <div><span>Queue &amp; priority</span><p>Limited prices are email-async queued (no calls), prioritized by budget tier and clear task scope. Regular pricing receives immediate priority.</p></div>
+        <div><span>Payment</span><p>Baseline &amp; LoRA experiment 100% upfront; full delivery 50% deposit + 50% on acceptance (2 revision rounds included).</p></div>
+        <div><span>GPU cost</span><p>Actual cloud GPU bill passed through with 0% markup, prepaid and capped, unused funds refunded/credited; local small runs incur no cloud GPU fee.</p></div>
         <div><span>Taxes</span><p>Prices exclude applicable taxes. Where tax is required, it is added to the invoice.</p></div>
-        <div><span>Founding clients</span><p>20% off for the first three projects, in exchange for an anonymized case and feedback.</p></div>
       </div>
     </div>
   </section>
@@ -80,23 +80,23 @@ const faqs = [
     <div class="container cost-grid">
       <div>
         <div class="section-label"><span class="num">02</span><span class="txt">Cost logic</span></div>
-        <h2 class="h2">Why it<br />costs this.</h2>
+        <h2 class="h2">Why it can<br />cost this little.</h2>
       </div>
       <div class="cost-list">
         <div>
-          <span>Service time</span>
-          <strong>$700 / day</strong>
-          <p>Diagnostic, data work, training, evaluation, and reporting. Estimated by working day, not by token.</p>
+          <span>Automated pipeline</span>
+          <strong>Built-in tooling</strong>
+          <p>Evaluation, leak-free data synthesis, LoRA training, and regression checks are scripted end-to-end — you do not pay inflated consulting day-rates.</p>
         </div>
         <div>
-          <span>GPU</span>
-          <strong>At cost + 15%</strong>
-          <p>Actual Shadeform bill. A budget cap is set before launch; exceeding it requires a new approval.</p>
+          <span>Async priority queue</span>
+          <strong>Zero meeting overhead</strong>
+          <p>Structured 7-question email intake eliminates sync calls. Higher-paid tiers and clean scopes move first; regular pricing skips the queue.</p>
         </div>
         <div>
-          <span>Risk buffer</span>
-          <strong>20%</strong>
-          <p>Failed experiments, reruns, and data rework. We do not promise first-time success, but every step is explainable.</p>
+          <span>GPU cost</span>
+          <strong>At cost (0% markup)</strong>
+          <p>Cloud compute is passed through with zero markup and a hard budget cap before launch; unused compute budget is refunded or credited.</p>
         </div>
       </div>
     </div>
@@ -115,11 +115,11 @@ const faqs = [
   <section class="section">
     <div class="container cta-panel">
       <div>
-        <p class="eyebrow">START HERE</p>
-        <h2 class="h2">Diagnose first,<br />then quote.</h2>
-        <p class="lead">Tell us the use case, the data, and the acceptance criteria. We will return a go/no-go and a cost range.</p>
+        <p class="eyebrow">START FREE</p>
+        <h2 class="h2">Free review first,<br />then decide.</h2>
+        <p class="lead">Send your use case, data rights, and 3 real failure examples. We will return an honest Go/No-Go and cost range.</p>
       </div>
-      <a class="button light" href={mailtoHref}>Book a diagnostic <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={mailtoHref}>Free problem review <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>

@@ -4,16 +4,20 @@ import PricingTable from "../components/PricingTable.astro";
 import FAQ from "../components/FAQ.astro";
 import { mailto } from "../config";
 
-const mailtoHref = mailto();
+const mailtoHref = mailto("TailorLM 免费问题评估");
 
 const faqs = [
   {
     q: "为什么 GPU 不包在报价里？",
-    a: "训练时长和卡型取决于模型、数据和实验次数。我们按 Shadeform 实际账单 + 15% 管理费转嫁，预付、设上限，未用完退还或抵扣。这样你不会为没用到的算力买单。",
+    a: "训练时长和卡型取决于模型大小、数据量和实验次数。我们按实际云账单纯实报实销（0% 管理费），启动前预付并设预算上限，未用完退还或抵扣；本地小模型试跑不另收云算力费。",
   },
   {
-    q: "能不能只做训练，不做诊断？",
-    a: "不建议。没有基线、验收指标和数据权属，训练很容易变成“跑完但说不清有没有变好”。如果你已经有完整评测集和明确指标，可以直接进小试验。",
+    q: "¥0 免费评估和 ¥10 限时基线包有什么区别？",
+    a: "免费评估是人工异步审阅你的 3 个失败例子与场景，1–2 个工作日给出“该不该训 / 大致花多少”的判断（不动手跑模型）；¥10 基线与评测包则会实际帮你产出 30–50 题固定评测集 + 自动评分规则 + 原模型基线报告（排队交付）。",
+  },
+  {
+    q: "¥10 基线包会亏损或被长期拖延吗？怎么排队？",
+    a: "¥10 基线包采用全异步邮件排队制（不含实时会议），固定 30–50 题规格、基于本地开源基座或客户自备 API 跑分，每客限 1 次。排单按“付费档位高优先、任务清晰简单优先”处理；如需加急免排队，可选原价或直接升档后续阶段。",
   },
   {
     q: "数据安全吗？",
@@ -21,29 +25,25 @@ const faqs = [
   },
   {
     q: "多久能交付？",
-    a: "诊断 3–5 天；数据与评测 1–2 周；LoRA 小试验 1–2 周；完整交付 3–6 周。实际时间取决于数据质量、验收指标和算力排队。",
+    a: "免费问题评估 1–2 个工作日；基线与评测包排队 3–7 天；LoRA 小试验排队 5–10 天；完整交付 1–3 周；按原价优先排期可进一步缩短等待时间。",
   },
   {
-    q: "你们有案例吗？",
-    a: "我们不在官网上堆未经验证的案例。首批 3 个客户按共创价合作；项目完成后，经客户授权，我们会脱敏发布过程和结果。",
-  },
-  {
-    q: "和直接租 GPU 有什么区别？",
-    a: "租卡只卖算力；我们卖的是诊断、数据、评测、训练、回归和交付。你不需要自己判断该不该训、怎么测、失败了怎么解释。",
+    q: "你们有公开案例吗？",
+    a: "我们不在官网上堆未经验证的案例。客户项目完成后，只有经客户书面授权，才会脱敏发布过程和固定测试集上的指标变化。",
   },
 ];
 ---
 
 <Layout
   title="定价 — TailorLM"
-  description="TailorLM 定价：诊断、数据与评测包、LoRA 小试验、完整交付、月度维护。起价透明，GPU 实报实销。"
+  description="TailorLM 定价：问题评估免费 ¥0、基线与评测包限时 ¥10（原价 ¥100）、LoRA 小试验限时 ¥99（原价 ¥299）、完整交付限时 ¥299 起（原价 ¥999 起）。GPU 零加价实报实销。"
 >
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">PRICING</p>
-      <h1 class="h1">起价透明，<br />GPU 实报实销。</h1>
+      <h1 class="h1">免费看问题，<br />按阶段小步付。</h1>
       <p class="lead">
-        按“服务费 + GPU 成本 + 风险缓冲”报价。先做诊断，再决定走到哪一步；诊断费在 30 天内启动项目可全额抵扣。
+        先免费邮件判断值不值得训；再花 ¥10 排队拿到固定评测集与基线分数（30 天内升档完整交付可全额抵扣）；GPU 按实报实销、0% 加价。
       </p>
     </div>
   </section>
@@ -57,19 +57,19 @@ const faqs = [
   <section class="section">
     <div class="container notes-grid">
       <div>
-        <div class="section-label"><span class="num">01</span><span class="txt">计费方式</span></div>
+        <div class="section-label"><span class="num">01</span><span class="txt">计费与排队规则</span></div>
         <h2 class="h2">不报“一口价，<br />训到满意”。</h2>
         <p class="lead">
-          验收指标在训练前写进 SOW。修改轮次、云成本上限、新增需求都提前说清楚。
+          验收指标在训练前写进 SOW。限时特惠采用异步排队制，高档位与清晰任务优先排期；加急或免排队可选原价。
         </p>
       </div>
       <div class="notes-list">
-        <div><span>诊断费</span><p>30 天内启动项目可全额抵扣。</p></div>
-        <div><span>付款</span><p>诊断 100% 预付；项目 50% 定金 + 50% 验收。</p></div>
-        <div><span>GPU</span><p>Shadeform 实际账单 + 15% 管理费；预付、设上限，未用完退还或抵扣。</p></div>
-        <div><span>修改</span><p>包含 2 轮修改；新增需求单独报价。</p></div>
-        <div><span>税费</span><p>价格不含税；如需发票，税费按实际开票主体和适用税率另计。</p></div>
-        <div><span>首批</span><p>前 3 个客户 20% 共创价，需授权匿名案例和反馈。</p></div>
+        <div><span>问题评估</span><p>免费（¥0 / $0），发 3 个真实失败例子即可获 Go/No-Go 判断。</p></div>
+        <div><span>基线抵扣</span><p>¥10 基线包限 30–50 题标准规格、本地开源基座或自备 API（每客限 1 次），30 天内升档完整交付可全额抵扣。</p></div>
+        <div><span>排队与加急</span><p>限时价为全异步邮件排队交付（不含实时会议），按付费档位与任务简单清晰度优先排单；原价下单享优先排期免排队。</p></div>
+        <div><span>付款方式</span><p>基线包与 LoRA 小试验 100% 预付；完整交付 50% 定金 + 50% 验收（含 2 轮修改，新增需求单独报价）。</p></div>
+        <div><span>GPU 算力</span><p>实际云账单纯实报实销（0% 管理费），预付并设预算上限，未用完退还或抵扣；本地小模型试跑免云算力费。</p></div>
+        <div><span>税费说明</span><p>价格不含税；如需发票，税费按实际开票主体和适用税率另计。</p></div>
       </div>
     </div>
   </section>
@@ -77,24 +77,24 @@ const faqs = [
   <section class="section">
     <div class="container cost-grid">
       <div>
-        <div class="section-label"><span class="num">02</span><span class="txt">成本逻辑</span></div>
-        <h2 class="h2">为什么是<br />这个价。</h2>
+        <div class="section-label"><span class="num">02</span><span class="txt">为什么能做到这个价</span></div>
+        <h2 class="h2">省掉人工废话，<br />只收结果钱。</h2>
       </div>
       <div class="cost-list">
         <div>
-          <span>人工</span>
-          <strong>¥5,000 / 天</strong>
-          <p>诊断、数据、训练、评测、报告。按实际工作日估算，不按 token 计费。</p>
+          <span>自动化流水线</span>
+          <strong>标准化工具链</strong>
+          <p>评测、防泄漏数据合成、训练配置与回归检查已高度脚本化，无需按传统咨询高额人天计费。</p>
         </div>
         <div>
-          <span>GPU</span>
-          <strong>实报实销 + 15%</strong>
-          <p>Shadeform 实际账单；启动前设预算上限，超过停止并重新授权。</p>
+          <span>异步排队制</span>
+          <strong>零无效会议成本</strong>
+          <p>全程按七个问题邮件结构化沟通，减少扯皮时间；高付费档位与范围清晰的任务优先处理，原价直接免排队。</p>
         </div>
         <div>
-          <span>风险缓冲</span>
-          <strong>20%</strong>
-          <p>实验失败、重跑、数据返工。不承诺一次成功，但承诺每一步可解释。</p>
+          <span>GPU 算力</span>
+          <strong>实报实销（0% 加价）</strong>
+          <p>按云平台实际账单原价透明结算并设预算上限，不为“可能重跑”的虚高算力溢价买单。</p>
         </div>
       </div>
     </div>
@@ -113,11 +113,11 @@ const faqs = [
   <section class="section">
     <div class="container cta-panel">
       <div>
-        <p class="eyebrow">START HERE</p>
-        <h2 class="h2">先做诊断，<br />再谈报价。</h2>
-        <p class="lead">告诉我们场景、数据和验收标准，我们会给一个 go/no-go 和大致成本。</p>
+        <p class="eyebrow">START FREE</p>
+        <h2 class="h2">先免费看问题，<br />再谈下一步。</h2>
+        <p class="lead">发来场景与 3 个真实失败例子，我们先免费给一个诚实的 Go/No-Go 和大致预算。</p>
       </div>
-      <a class="button light" href={mailtoHref}>预约诊断 <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={mailtoHref}>免费评估问题 <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>

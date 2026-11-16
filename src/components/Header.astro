@@ -23,8 +23,8 @@ const nav = {
   ],
 } as const;
 
-const ctaLabel = lang === "en" ? "Book a diagnostic" : "预约诊断";
-const mailtoHref = mailto(lang === "en" ? "TailorLM diagnostic" : "TailorLM 诊断咨询");
+const ctaLabel = lang === "en" ? "Free review" : "免费评估问题";
+const mailtoHref = mailto(lang === "en" ? "TailorLM free problem review" : "TailorLM 免费问题评估");
 const current = Astro.url.pathname;
 const isNotFound = current.includes("404");
 const switchHref = isNotFound
