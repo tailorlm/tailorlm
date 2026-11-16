@@ -69,6 +69,7 @@ const isActive = (href: string) => current === href || current.startsWith(`${hre
         nav[lang].map((link) => (
           <a
             href={link.href}
+            aria-current={isActive(link.href) ? "page" : undefined}
             class:list={["nav-link", { active: isActive(link.href) }]}
           >
             {link.label}
@@ -91,13 +92,14 @@ const isActive = (href: string) => current === href || current.startsWith(`${hre
           nav[lang].map((link) => (
             <a
               href={link.href}
+              aria-current={isActive(link.href) ? "page" : undefined}
               class:list={["mobile-link", { active: isActive(link.href) }]}
             >
               {link.label}
             </a>
           ))
         }
-        <a class="mobile-link" href={switchHref}>
+        <a class="mobile-link" href={switchHref} hreflang={lang === "en" ? "zh-CN" : "en"}>
           {lang === "en" ? "中文" : "English"}
         </a>
         <a class="button" href={mailtoHref}>{ctaLabel}</a>
@@ -105,6 +107,24 @@ const isActive = (href: string) => current === href || current.startsWith(`${hre
     </details>
   </div>
 </header>
+
+<script>
+  for (const menu of document.querySelectorAll<HTMLDetailsElement>(".mobile-menu")) {
+    const summary = menu.querySelector("summary");
+    document.addEventListener("click", (event) => {
+      if (!menu.open) return;
+      if (event.target instanceof Node && !menu.contains(event.target)) {
+        menu.open = false;
+      }
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && menu.open) {
+        menu.open = false;
+        summary?.focus();
+      }
+    });
+  }
+</script>
 
 <style>
   .site-header {
@@ -156,8 +176,18 @@ const isActive = (href: string) => current === href || current.startsWith(`${hre
   }
 
   .nav-link:hover,
-  .nav-link.active {
+  .nav-link[aria-current="page"] {
     color: var(--ink);
+  }
+
+  .nav-link[aria-current="page"],
+  .mobile-link[aria-current="page"] {
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--ink);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 6px;
   }
 
   .lang-switch {
@@ -215,10 +245,6 @@ const isActive = (href: string) => current === href || current.startsWith(`${hre
   .mobile-link {
     font-size: 14px;
     color: var(--muted);
-  }
-
-  .mobile-link.active {
-    color: var(--ink);
   }
 
   @media (max-width: 760px) {

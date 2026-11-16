@@ -56,11 +56,33 @@ const { items } = Astro.props;
     font-family: var(--font-sans);
     font-size: 20px;
     line-height: 1;
-    transition: transform 0.15s ease;
   }
 
   details[open] .plus {
     transform: rotate(45deg);
+  }
+
+  .faq-item::details-content {
+    interpolate-size: allow-keywords;
+    overflow: clip;
+    contain: layout;
+  }
+
+  .faq-item:not([open])::details-content {
+    block-size: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .plus {
+      transition: transform 0.15s ease;
+    }
+
+    .faq-item::details-content {
+      transition-property: block-size, content-visibility, display;
+      transition-duration: 0.24s;
+      transition-timing-function: ease-in-out;
+      transition-behavior: allow-discrete;
+    }
   }
 
   .answer {

@@ -50,7 +50,12 @@ const questions = [
         </p>
         <div class="contact-actions">
           <a class="button light" href={mailtoHref}>Send 3 failure cases <span aria-hidden="true">↗</span></a>
-          <CopyButton copy={site.email} done="Email copied ✓" variantClass="ghost-light">
+          <CopyButton
+            copy={site.email}
+            done="Email copied ✓"
+            fail="Copy failed"
+            variantClass="ghost-light"
+          >
             Copy email
           </CopyButton>
         </div>
@@ -71,6 +76,7 @@ const questions = [
           <CopyButton
             copy={intakeBody}
             done="Template copied ✓"
+            fail="Copy failed"
             variantClass="secondary copy-template-btn"
           >
             Copy 7-question template

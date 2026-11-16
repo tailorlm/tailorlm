@@ -83,6 +83,7 @@
 
 .check-list li::before {
   content: "·";
+  content: "·" / "";
   position: absolute;
   left: 0;
   color: var(--accent);
@@ -365,6 +366,7 @@
 
 .service-body li::before {
   content: "·";
+  content: "·" / "";
   position: absolute;
   left: 0;
   color: var(--accent);
@@ -712,6 +714,7 @@
 
 .list li::before {
   content: "·";
+  content: "·" / "";
   position: absolute;
   left: 0;
   color: var(--accent);

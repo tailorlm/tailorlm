@@ -2,41 +2,188 @@
 interface Props {
   copy: string;
   done: string;
+  fail?: string;
   variantClass: string;
 }
 
-const { copy, done, variantClass } = Astro.props as Props;
+const { copy, done, fail = "Copy failed", variantClass } = Astro.props as Props;
 ---
 
-<button type="button" class={`button ${variantClass} copy-btn`} data-copy={copy} data-done={done}>
-  <slot />
-</button>
+<span class="copy-wrap">
+  <button
+    type="button"
+    class={`button ${variantClass} copy-btn`}
+    data-copy={copy}
+    data-done={done}
+    data-fail={fail}
+  >
+    <span class="copy-icon" aria-hidden="true">
+      <svg class="icon-copy" width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5" />
+        <path
+          d="M11 3V2.5A1.5 1.5 0 0 0 9.5 1H2.5A1.5 1.5 0 0 0 1 2.5v7A1.5 1.5 0 0 0 2.5 11H3"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        />
+      </svg>
+      <svg class="icon-check" width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <path
+          d="M3 8.5l3.2 3.2L13 4.8"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </span>
+    <span class="copy-label"><slot /></span>
+  </button>
+  <span class="copy-tip" role="status"></span>
+</span>
+
+<style>
+  .copy-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .copy-btn {
+    min-inline-size: 24px;
+    min-block-size: 24px;
+  }
+
+  .copy-icon {
+    position: relative;
+    display: inline-flex;
+    inline-size: 14px;
+    block-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .copy-icon svg {
+    position: absolute;
+    inset: 0;
+  }
+
+  .icon-check {
+    opacity: 0;
+  }
+
+  .copy-btn[data-copied] .icon-copy {
+    opacity: 0;
+  }
+
+  .copy-btn[data-copied] .icon-check {
+    opacity: 1;
+  }
+
+  .copy-tip {
+    position: absolute;
+    inset-block-end: calc(100% + 8px);
+    inset-inline-start: 0;
+    z-index: 10;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: var(--white);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    box-shadow: 0 8px 20px rgba(18, 60, 47, 0.12);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .copy-btn[data-copied] + .copy-tip,
+  .copy-btn[data-failed] + .copy-tip {
+    opacity: 1;
+  }
+
+  .copy-btn[data-failed] + .copy-tip {
+    border-color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .copy-tip {
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      transform: translateY(4px);
+    }
+
+    .copy-btn[data-copied] + .copy-tip,
+    .copy-btn[data-failed] + .copy-tip {
+      transform: translateY(0);
+    }
+  }
+</style>
 
 <script>
+  const timers = new WeakMap<HTMLButtonElement, number>();
+  let lastMessage = "";
+
+  function legacyCopy(text: string): boolean {
+    const field = Object.assign(document.createElement("textarea"), { value: text });
+    field.setAttribute("readonly", "");
+    field.style.cssText = "position:fixed;inset-block-start:0;opacity:0";
+    document.body.append(field);
+    field.select();
+    try {
+      return document.execCommand("copy");
+    } catch {
+      return false;
+    } finally {
+      field.remove();
+    }
+  }
+
+  function report(button: HTMLButtonElement, ok: boolean) {
+    const tip = button.nextElementSibling;
+    if (!(tip instanceof HTMLElement)) return;
+
+    window.clearTimeout(timers.get(button));
+    button.removeAttribute("data-copied");
+    button.removeAttribute("data-failed");
+
+    let message = ok
+      ? (button.dataset.done ?? "Copied")
+      : (button.dataset.fail ?? "Copy failed");
+    if (message === lastMessage) message += "\u00A0";
+    lastMessage = message;
+
+    tip.textContent = "";
+    void button.offsetWidth;
+    button.setAttribute(ok ? "data-copied" : "data-failed", "");
+    requestAnimationFrame(() => {
+      tip.textContent = message;
+    });
+
+    timers.set(
+      button,
+      window.setTimeout(() => {
+        button.removeAttribute("data-copied");
+        button.removeAttribute("data-failed");
+        tip.textContent = "";
+      }, 2000),
+    );
+  }
+
   for (const btn of document.querySelectorAll<HTMLButtonElement>(".copy-btn")) {
-    const label = btn.textContent?.trim() ?? "";
-    let timer: number | undefined;
     btn.addEventListener("click", async () => {
       const value = btn.dataset.copy ?? "";
       if (!value) return;
+
+      let ok = false;
       try {
         await navigator.clipboard.writeText(value);
+        ok = true;
       } catch {
-        const area = document.createElement("textarea");
-        area.value = value;
-        area.setAttribute("readonly", "");
-        area.style.position = "fixed";
-        area.style.opacity = "0";
-        document.body.appendChild(area);
-        area.select();
-        document.execCommand("copy");
-        document.body.removeChild(area);
+        ok = legacyCopy(value);
       }
-      window.clearTimeout(timer);
-      btn.textContent = btn.dataset.done ?? label;
-      timer = window.setTimeout(() => {
-        btn.textContent = label;
-      }, 1800);
+      report(btn, ok);
     });
   }
 </script>
