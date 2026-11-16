@@ -2,38 +2,40 @@
 import Layout from "../layouts/Layout.astro";
 import CopyButton from "../components/CopyButton.astro";
 import { site, mailto } from "../config";
+import "../styles/en-pages.css";
 
-const intakeBody = `1. 产品是什么：
-2. 模型现在哪里不好（3 个真实失败例子）：
-3. 当前模型/方案：
-4. 数据情况（数量、格式、权属）：
-5. 验收指标（现在多少，目标多少）：
-6. 谁验收、部署环境、延迟/显存/成本限制：
-7. 时间和预算范围：`;
+const intakeBody = `1. What is the product, and who is it for?
+2. Where does the model fail? Three real examples:
+3. Current model / setup:
+4. Data: volume, format, rights, labels
+5. Acceptance metric: current value and target
+6. Who signs off, deployment environment, latency / VRAM / cost limits
+7. Timeline and budget range:`;
 
-const mailtoHref = mailto("TailorLM 免费问题评估", intakeBody);
+const mailtoHref = mailto("TailorLM free problem review", intakeBody);
 
 const questions = [
-  "你的产品是什么，用户是谁？",
-  "模型现在哪里不好？给 3 个真实失败例子。",
-  "现在用什么模型/方案？试过 Prompt、RAG 或微调吗？",
-  "有多少数据？什么格式？有标注吗？数据权属清楚吗？",
-  "什么指标算成功？现在是多少，目标是多少？",
-  "谁验收？模型最终跑在哪里？有延迟/显存/成本限制吗？",
-  "时间和预算范围？",
+  "What is the product, and who is it for?",
+  "Where does the model fail? Give three real examples.",
+  "What model or setup are you using? Have you tried prompt engineering, RAG, or fine-tuning?",
+  "How much data do you have, in what format, and are the rights clear?",
+  "What metric defines success, and what is the current value?",
+  "Who signs off? Where will the model run, and what are the latency, VRAM, and cost limits?",
+  "What are the timeline and budget range?",
 ];
 ---
 
 <Layout
-  title="联系 — TailorLM"
-  description="免费让 TailorLM 看一眼问题：发送你的场景和 3 个真实失败例子，1–2 个工作日内获 Go/No-Go 与预算区间。"
+  lang="en"
+  title="Contact — TailorLM"
+  description="Get a free TailorLM problem review. Send 3 real failure examples and your data summary to get a Go/No-Go and budget range."
 >
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">CONTACT</p>
-      <h1 class="h1">先免费看问题，<br />再决定是否训练。</h1>
+      <h1 class="h1">Free review first.<br />Train only if it makes sense.</h1>
       <p class="lead">
-        告诉我们模型现在哪里不好、数据大概什么情况、什么结果算成功。发 3 个真实失败例子即可，评估本身完全免费（¥0）；需要建尺子跑基线再走限时 ¥10 排队包。
+        Send 3 real model failures, your data summary, and what “better” looks like. The initial problem review is free ($0); if you want a test set and measured score, move to the $2 queued baseline pack.
       </p>
     </div>
   </section>
@@ -44,38 +46,38 @@ const questions = [
         <p class="eyebrow">EMAIL</p>
         <a class="email" href={mailtoHref}>{site.email}</a>
         <p class="muted">
-          点击会打开一封预填好问题的邮件。限时价采取全异步邮件排队处理，问题写得越清晰、意向档位越高排单越快。
+          The link opens an email with the 7 questions prefilled. Consult first by email, confirm scope with $0 upfront service deposit, and settle fees at the end upon delivery. Limited prices run via async queue, prioritized by tier and clarity of scope.
         </p>
         <div class="contact-actions">
-          <a class="button light" href={mailtoHref}>发邮件免费评估 <span aria-hidden="true">↗</span></a>
-          <CopyButton copy={site.email} done="已复制邮箱 ✓" variantClass="ghost-light">
-            复制邮箱
+          <a class="button light" href={mailtoHref}>Send 3 failure cases <span aria-hidden="true">↗</span></a>
+          <CopyButton copy={site.email} done="Email copied ✓" variantClass="ghost-light">
+            Copy email
           </CopyButton>
         </div>
         <div class="contact-meta">
-          <div><span>响应时间</span><strong>1–2 个工作日</strong></div>
-          <div><span>问题评估</span><strong>¥0 免费</strong></div>
-          <div><span>基线与评测包</span><strong>限时 ¥10（原价 ¥100）</strong></div>
+          <div><span>Response</span><strong>1–2 business days</strong></div>
+          <div><span>Problem review</span><strong>Free ($0)</strong></div>
+          <div><span>Baseline pack</span><strong>$2 limited (reg. $15)</strong></div>
         </div>
       </div>
 
       <div class="intake">
-        <div class="section-label"><span class="num">01</span><span class="txt">邮件里写什么</span></div>
-        <h2 class="h3">七个问题，帮我们快速判断。</h2>
+        <div class="section-label"><span class="num">01</span><span class="txt">What to include</span></div>
+        <h2 class="h3">Seven questions that speed up the first call.</h2>
         <ol>
           {questions.map((question) => <li>{question}</li>)}
         </ol>
         <div class="intake-actions">
           <CopyButton
             copy={intakeBody}
-            done="已复制问题模板 ✓"
+            done="Template copied ✓"
             variantClass="secondary copy-template-btn"
           >
-            复制七个问题模板
+            Copy 7-question template
           </CopyButton>
         </div>
         <p class="small muted note">
-          首封邮件请不要发送未脱敏的客户数据、聊天记录或密钥。先聊场景、指标和数据权属；需要看数据时再走安全渠道。
+          Please do not send unredacted client data, chat logs, or secrets in the first email. Start with the use case, metric, and data rights; we will set up a secure channel if the data needs review.
         </p>
       </div>
     </div>
@@ -85,18 +87,18 @@ const questions = [
     <div class="container policy-grid">
       <article class="policy-card">
         <span class="n">01</span>
-        <h3>数据不进 git</h3>
-        <p>客户数据只放对象存储，仓库只存 manifest、hash 和指针。项目结束按约定删除。</p>
+        <h3>Data never enters git</h3>
+        <p>Client data lives in object storage; the repository stores only the manifest, hash, and pointer. Data is deleted or archived as agreed at the end.</p>
       </article>
       <article class="policy-card">
         <span class="n">02</span>
-        <h3>训练/评测隔离</h3>
-        <p>评测集不参与训练；不跨客户混用数据；不把客户数据用于其他项目。</p>
+        <h3>Training and evaluation are isolated</h3>
+        <p>The test set never enters training. Data is not mixed across clients or reused for another project.</p>
       </article>
       <article class="policy-card">
         <span class="n">03</span>
-        <h3>验收写进 SOW</h3>
-        <p>指标、测试集、修改轮次和云成本上限提前写清楚，不用“感觉”验收。</p>
+        <h3>Acceptance is in the SOW</h3>
+        <p>Metrics, test set, revision rounds, and cloud caps are written down before work starts. No “it feels better” acceptance.</p>
       </article>
     </div>
   </section>
@@ -105,226 +107,10 @@ const questions = [
     <div class="container cta-panel">
       <div>
         <p class="eyebrow">NOT SURE YET?</p>
-        <h2 class="h2">不确定要不要训练？</h2>
-        <p class="lead">先把 3 个失败例子发过来免费看看。如果 Prompt、RAG 或工作流能解决，我们会直接说。</p>
+        <h2 class="h2">Not sure training<br />is the answer?</h2>
+        <p class="lead">Start with a free problem review. If prompt engineering, RAG, or a workflow change is enough, we will say so.</p>
       </div>
-      <a class="button light" href={mailtoHref}>免费评估问题 <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={mailtoHref}>Free problem review <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>
-
-<style>
-  .page-hero {
-    padding: 80px 0 64px;
-  }
-
-  .page-hero .eyebrow {
-    margin-bottom: 20px;
-  }
-
-  .page-hero .h1 {
-    margin-bottom: 28px;
-  }
-
-  .contact-grid {
-    display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: 64px;
-    align-items: start;
-  }
-
-  .contact-card {
-    background: var(--ink);
-    color: var(--bg);
-    border-radius: 24px;
-    padding: 40px;
-    display: grid;
-    gap: 20px;
-    align-content: start;
-  }
-
-  .contact-card .eyebrow {
-    color: rgba(247, 243, 234, 0.55);
-  }
-
-  .email {
-    font-family: var(--font-serif);
-    font-size: clamp(24px, 3vw, 34px);
-    color: var(--bg);
-    word-break: break-all;
-  }
-
-  .email:hover {
-    color: var(--accent);
-  }
-
-  .contact-card .muted {
-    color: rgba(247, 243, 234, 0.66);
-    font-size: 14px;
-  }
-
-  .contact-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    margin-top: 8px;
-  }
-
-  .intake-actions {
-    margin-top: 16px;
-  }
-
-  .button.light {
-    background: var(--bg);
-    color: var(--ink);
-    border-color: var(--bg);
-  }
-
-  .button.light:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--bg);
-  }
-
-  .contact-meta {
-    display: grid;
-    gap: 12px;
-    margin-top: 8px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(247, 243, 234, 0.18);
-  }
-
-  .contact-meta div {
-    display: flex;
-    justify-content: space-between;
-    gap: 24px;
-    font-size: 13px;
-  }
-
-  .contact-meta span {
-    color: rgba(247, 243, 234, 0.55);
-  }
-
-  .intake h2 {
-    margin-bottom: 20px;
-  }
-
-  .intake ol {
-    counter-reset: item;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    border-top: 1px solid var(--line);
-  }
-
-  .intake li {
-    counter-increment: item;
-    display: grid;
-    grid-template-columns: 32px 1fr;
-    gap: 12px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--line);
-    font-size: 14px;
-    color: var(--ink-2);
-  }
-
-  .intake li::before {
-    content: counter(item, decimal-leading-zero);
-    color: var(--accent);
-    font-size: 11px;
-    font-weight: 600;
-    padding-top: 3px;
-  }
-
-  .note {
-    margin-top: 20px;
-    max-width: 640px;
-  }
-
-  .policy-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  .policy-card {
-    border-top: 1px solid var(--line);
-    padding-top: 20px;
-  }
-
-  .policy-card .n {
-    font-size: 11px;
-    color: var(--accent);
-    font-weight: 600;
-  }
-
-  .policy-card h3 {
-    font-size: 22px;
-    margin: 16px 0 8px;
-  }
-
-  .policy-card p {
-    font-size: 14px;
-    color: var(--muted);
-  }
-
-  .cta-panel {
-    background: var(--ink);
-    color: var(--bg);
-    border-radius: 28px;
-    padding: 56px;
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 40px;
-  }
-
-  .cta-panel .eyebrow {
-    color: rgba(247, 243, 234, 0.55);
-    margin-bottom: 18px;
-  }
-
-  .cta-panel .h2 {
-    color: var(--bg);
-  }
-
-  .cta-panel .lead {
-    color: rgba(247, 243, 234, 0.72);
-    margin-top: 20px;
-    max-width: 560px;
-    font-size: 16px;
-  }
-
-  @media (max-width: 900px) {
-    .contact-grid,
-    .policy-grid {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-
-    .contact-card {
-      padding: 32px;
-    }
-
-    .cta-panel {
-      flex-direction: column;
-      align-items: start;
-      padding: 40px;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .page-hero {
-      padding: 56px 0;
-    }
-
-    .contact-card {
-      padding: 24px;
-    }
-
-    .cta-panel {
-      padding: 28px;
-    }
-  }
-</style>

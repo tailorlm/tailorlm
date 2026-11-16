@@ -18,17 +18,17 @@ function normalize(path: string): string {
   return clean.replace(/\/+$/, "") || "/";
 }
 
-/** Build a path in the requested language. Chinese lives at the root, English under /en. */
+/** Build a path in the requested language. English lives at the root, Chinese under /zh. */
 export function localePath(lang: Lang, path: string): string {
   const clean = normalize(path);
-  if (lang === "zh") return clean === "/" ? "/" : `${clean}/`;
-  return clean === "/" ? "/en/" : `/en${clean}/`;
+  if (lang === "en") return clean === "/" ? "/" : `${clean}/`;
+  return clean === "/" ? "/zh/" : `/zh${clean}/`;
 }
 
 /** Given the current language and pathname, return the same page in the other language. */
 export function alternatePath(lang: Lang, pathname: string): string {
-  if (lang === "en") {
-    return localePath("zh", pathname.replace(/^\/en(?=\/|$)/, "") || "/");
+  if (lang === "zh") {
+    return localePath("en", pathname.replace(/^\/zh(?=\/|$)/, "") || "/");
   }
-  return localePath("en", pathname);
+  return localePath("zh", pathname);
 }

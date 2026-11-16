@@ -1,0 +1,273 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import PricingTable from "../../components/PricingTable.astro";
+import FAQ from "../../components/FAQ.astro";
+import { mailto } from "../../config";
+
+const mailtoHref = mailto("TailorLM 免费问题评估");
+
+const faqs = [
+  {
+    q: "为什么 GPU 不包在报价里？",
+    a: "训练时长和卡型取决于模型大小、数据量和实验次数。本地小模型试跑免收云算力费；如需大卡云训，可直接在客户自备云算力账户运行，或按 SOW 书面预算上限以实际云账单 0% 加价据实结算（绝不虚高溢价）。",
+  },
+  {
+    q: "¥0 免费评估和 ¥10 限时基线包有什么区别？",
+    a: "免费评估是人工异步审阅你的 3 个失败例子与场景，1–2 个工作日给出“该不该训 / 大致花多少”的判断（不动手跑模型）；¥10 基线与评测包则会实际帮你产出 30–50 题固定评测集 + 自动评分规则 + 原模型基线报告（排队交付，交付时再结账）。",
+  },
+  {
+    q: "什么时候付款？限时 ¥10 基线包怎么排队？",
+    a: "先咨询后付款，结尾交付验收结账：所有合作均先通过邮件免费看问题、书面确认范围与 SOW 验收指标，零预付服务费定金；跑出对应交付物与报告时再结账（完整权重/部署包随结款移交）。¥10 基线包采用全异步邮件排队制（不含实时会议，30–50 题规格，每客限 1 次），按“付费档位高优先、任务清晰简单优先”处理；如需加急免排队，可选原价或直接升档后续阶段。",
+  },
+  {
+    q: "数据安全吗？",
+    a: "客户数据不进 git，只存对象存储和 manifest 指针；训练和评测隔离；项目结束按约定删除。首封邮件请不要发送未脱敏的客户数据。",
+  },
+  {
+    q: "多久能交付？",
+    a: "免费问题评估 1–2 个工作日；基线与评测包排队 3–7 天；LoRA 小试验排队 5–10 天；完整交付 1–3 周；按原价优先排期可进一步缩短等待时间。",
+  },
+  {
+    q: "你们有公开案例吗？",
+    a: "我们不在官网上堆未经验证的案例。客户项目完成后，只有经客户书面授权，才会脱敏发布过程和固定测试集上的指标变化。",
+  },
+];
+---
+
+<Layout
+  lang="zh"
+  title="定价 — TailorLM"
+  description="TailorLM 定价：先咨询后付款，结尾交付验收结账。问题评估免费 ¥0、基线包限时 ¥10（原价 ¥100）、LoRA 小试验限时 ¥99（原价 ¥299）、完整交付限时 ¥299 起（原价 ¥999 起）。GPU 零加价实报实销。"
+>
+  <section class="page-hero">
+    <div class="container">
+      <p class="eyebrow">PRICING</p>
+      <h1 class="h1">先免费咨询定范围，<br />最后结尾交付时付款。</h1>
+      <p class="lead">
+        先免费邮件判断值不值得训、零预付服务费定金；结果跑出、结尾交付验收时再结账（含限时 ¥10 排队基线包，30 天内升档完整交付可全额抵扣）；GPU 按实报实销、0% 加价。
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <PricingTable lang="zh" includeMaintenance />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container notes-grid">
+      <div>
+        <div class="section-label"><span class="num">01</span><span class="txt">计费与排队规则</span></div>
+        <h2 class="h2">不报“一口价，<br />训到满意”。</h2>
+        <p class="lead">
+          先邮件免费看问题并把验收指标写进 SOW，最后结尾交付验收时结账。限时特惠采用异步排队制，高档位与清晰任务优先排期；加急或免排队可选原价。
+        </p>
+      </div>
+      <div class="notes-list">
+        <div><span>问题评估</span><p>免费（¥0 / $0），发 3 个真实失败例子即可获 Go/No-Go 判断，零承诺零收费。</p></div>
+        <div><span>基线抵扣</span><p>¥10 基线包限 30–50 题标准规格、本地开源基座或自备 API（每客限 1 次），报告交付时结账，30 天内升档完整交付可全额抵扣。</p></div>
+        <div><span>排队与加急</span><p>限时价为全异步邮件排队交付（不含实时会议），按付费档位与任务简单清晰度优先排单；原价下单享优先排期免排队。</p></div>
+        <div><span>付款方式</span><p>先咨询后付款，不收预付服务费定金；各阶段在结果交付/验收结清服务费后移交完整模型权重与部署包（完整交付含 2 轮修改，新增需求单独报价）。</p></div>
+        <div><span>GPU 算力</span><p>本地小模型试跑免云算力费；如需大卡云训，可使用客户自备云算力，或按 SOW 预算上限以实际云账单 0% 加价在结尾据实结算。</p></div>
+        <div><span>税费说明</span><p>价格不含税；如需发票，税费按实际开票主体和适用税率另计。</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cost-grid">
+      <div>
+        <div class="section-label"><span class="num">02</span><span class="txt">为什么能做到这个价</span></div>
+        <h2 class="h2">省掉人工废话，<br />只收结果钱。</h2>
+      </div>
+      <div class="cost-list">
+        <div>
+          <span>自动化流水线</span>
+          <strong>标准化工具链</strong>
+          <p>评测、防泄漏数据合成、训练配置与回归检查已高度脚本化，无需按传统咨询高额人天计费。</p>
+        </div>
+        <div>
+          <span>异步排队制</span>
+          <strong>零无效会议成本</strong>
+          <p>全程按七个问题邮件结构化沟通，减少扯皮时间；高付费档位与范围清晰的任务优先处理，原价直接免排队。</p>
+        </div>
+        <div>
+          <span>GPU 算力</span>
+          <strong>实报实销（0% 加价）</strong>
+          <p>支持客户自备云算力或按 SOW 预算上限以云平台实际账单原价在结尾据实结算，不为虚高算力溢价买单。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container faq-wrap">
+      <div>
+        <div class="section-label"><span class="num">03</span><span class="txt">常见问题</span></div>
+        <h2 class="h2">先把账<br />算清楚。</h2>
+      </div>
+      <FAQ items={faqs} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container cta-panel">
+      <div>
+        <p class="eyebrow">START FREE</p>
+        <h2 class="h2">先免费看问题，<br />再谈下一步。</h2>
+        <p class="lead">发来场景与 3 个真实失败例子，我们先免费给一个诚实的 Go/No-Go 和大致预算。</p>
+      </div>
+      <a class="button light" href={mailtoHref}>免费评估问题 <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .page-hero {
+    padding: 80px 0 40px;
+  }
+
+  .page-hero .eyebrow {
+    margin-bottom: 20px;
+  }
+
+  .page-hero .h1 {
+    margin-bottom: 28px;
+  }
+
+  .notes-grid,
+  .cost-grid,
+  .faq-wrap {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .notes-grid .lead {
+    margin-top: 24px;
+  }
+
+  .notes-list {
+    border-top: 1px solid var(--line);
+  }
+
+  .notes-list div {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+  }
+
+  .notes-list span {
+    color: var(--muted);
+  }
+
+  .notes-list p {
+    color: var(--ink-2);
+  }
+
+  .cost-list {
+    display: grid;
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .cost-list div {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .cost-list span {
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .cost-list strong {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 24px;
+    font-weight: 500;
+    margin: 6px 0;
+  }
+
+  .cost-list p {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .cta-panel {
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 28px;
+    padding: 56px;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .cta-panel .eyebrow {
+    color: rgba(247, 243, 234, 0.55);
+    margin-bottom: 18px;
+  }
+
+  .cta-panel .h2 {
+    color: var(--bg);
+  }
+
+  .cta-panel .lead {
+    color: rgba(247, 243, 234, 0.72);
+    margin-top: 20px;
+    max-width: 560px;
+    font-size: 16px;
+  }
+
+  .button.light {
+    background: var(--bg);
+    color: var(--ink);
+    border-color: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .button.light:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+
+  @media (max-width: 900px) {
+    .notes-grid,
+    .cost-grid,
+    .faq-wrap {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .cta-panel {
+      flex-direction: column;
+      align-items: start;
+      padding: 40px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-hero {
+      padding: 56px 0 24px;
+    }
+
+    .notes-list div {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+
+    .cta-panel {
+      padding: 28px;
+    }
+  }
+</style>

@@ -6,20 +6,20 @@ interface Props {
   lang?: Lang;
 }
 
-const { lang = "zh" } = Astro.props as Props;
+const { lang = "en" } = Astro.props as Props;
 
 const nav = {
   zh: [
-    { href: "/services", label: "服务" },
-    { href: "/pricing", label: "定价" },
-    { href: "/process", label: "流程" },
-    { href: "/contact", label: "联系" },
+    { href: "/zh/services", label: "服务" },
+    { href: "/zh/pricing", label: "定价" },
+    { href: "/zh/process", label: "流程" },
+    { href: "/zh/contact", label: "联系" },
   ],
   en: [
-    { href: "/en/services", label: "Services" },
-    { href: "/en/pricing", label: "Pricing" },
-    { href: "/en/process", label: "Process" },
-    { href: "/en/contact", label: "Contact" },
+    { href: "/services", label: "Services" },
+    { href: "/pricing", label: "Pricing" },
+    { href: "/process", label: "Process" },
+    { href: "/contact", label: "Contact" },
   ],
 } as const;
 

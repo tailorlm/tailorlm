@@ -1,87 +1,89 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { mailto } from "../config";
+import "../styles/en-pages.css";
 
-const mailtoHref = mailto("TailorLM 免费问题评估");
+const mailtoHref = mailto("TailorLM free problem review");
 
 const services = [
   {
     n: "01",
-    name: "问题评估（免费）",
-    desc: "看 3 个真实失败例子，先免费判断问题是不是训练能解决的。",
-    price: "免费 ¥0",
-    usd: "$0 · 无需预付",
-    time: "1–2 个工作日",
+    name: "Problem review (Free)",
+    desc: "Review 3 real failure examples for free before spending anything.",
+    price: "Free ($0)",
+    cny: "¥0 · Consult first",
+    time: "1–2 business days",
     deliverables: [
-      "需求拆解：区分是知识不足（RAG）、行为风格（SFT）还是工作流问题",
-      "可测性与数据 readiness 初步判断",
-      "建议合作档位与大致预算区间",
-      "明确 Go/No-Go：适合 Prompt/RAG 解决会直接劝退，不硬卖训练",
+      "Root-cause triage: knowledge gap (RAG), behavior/tone (SFT), or workflow issue",
+      "Initial testability and data readiness check",
+      "Recommended next package and realistic budget range",
+      "Honest Go/No-Go: if prompts/RAG are enough, we tell you not to train",
     ],
-    fit: "觉得模型不对劲但不确定该不该微调；想先找懂行的人免费看一眼再拍板。",
-    not: "不动手建测试集、不跑模型推理、不做数据清洗或正式训练。",
+    fit: "You see model failures and want an experienced, free second opinion on whether fine-tuning makes sense.",
+    notIncluded: "Running model inference, writing full test sets, data cleaning, or training.",
   },
   {
     n: "02",
-    name: "基线与评测包",
-    desc: "把模糊需求变成 30–50 题固定测试集，并跑出原模型的真实基线分数。",
-    price: "限时 ¥10",
-    usd: "原价 ¥100 · $2（reg. $15）",
-    time: "排队 3–7 天",
+    name: "Baseline & eval pack",
+    desc: "Turn real failure cases into a fixed 30–50 case test set and measured baseline score.",
+    price: "$2 limited",
+    cny: "¥10（reg. $15 / ¥100）",
+    time: "3–7 days (queued)",
     deliverables: [
-      "30–50 题独立 held-out 评测集与自动评分规则",
-      "基于本地开源基座或客户自备 API 的原模型基线跑分",
-      "按维度拆解失败率与典型失败样本摘要",
-      "30 天内升档完整交付，¥10 / ¥100 费用可全额抵扣",
+      "30–50 held-out test cases and automated scoring rubric",
+      "Measured baseline score using an open-source base model or your API",
+      "Dimension breakdown and representative failure cases",
+      "Fee credited in full toward full delivery within 30 days",
     ],
-    fit: "确认有问题但没有固定测试集，想先低成本建尺子看清原模型有多差。",
-    not: "全异步邮件排队交付，不含实时语音会议；每客限 1 次，不含数据大规模清洗与模型训练。",
+    fit: "You want a real held-out ruler and baseline numbers at minimal cost before investing in training.",
+    notIncluded: "Async email queue delivery only (no live calls); 1 per client; large-scale cleaning or model training.",
   },
   {
     n: "03",
-    name: "LoRA 小试验",
-    desc: "小规模高质量防泄漏数据验证训练方向是否有可测信号，再决定要不要扩大。",
-    price: "限时 ¥99",
-    usd: "原价 ¥299 · $15（reg. $45）",
-    time: "排队 5–10 天",
+    name: "LoRA experiment",
+    desc: "Validate the training direction on a small, leak-checked sample before scaling.",
+    price: "$15 limited",
+    cny: "¥99（reg. $45 / ¥299）",
+    time: "5–10 days (queued)",
     deliverables: [
-      "小规模高质量数据构建 / 去重与防评测泄漏检查",
-      "LoRA / QLoRA / SFT 小试验与训练记录",
-      "同一评测集上的训练前后分数对比",
-      "失败案例分析与是否扩大到完整交付的建议",
+      "Small high-quality dataset curation / deduplication / anti-leak check",
+      "LoRA / QLoRA / SFT training run and experiment log",
+      "Before/after comparison on the fixed test set",
+      "Failure analysis and scale / adjust / stop recommendation",
     ],
-    fit: "已有基线或清晰问题，想先用极低预算验证 LoRA 能不能把指标拉起来。",
-    not: "正式全量交付、多轮精调与长期维护。云 GPU 按实报实销（0% 加价），本地小卡试跑免云费。",
+    fit: "You want empirical signal that LoRA improves your metric before committing to full delivery.",
+    notIncluded: "Full production polish, multiple revision rounds, or ongoing maintenance. GPU billed at 0% markup (no cloud fee on local runs).",
   },
   {
     n: "04",
-    name: "完整交付",
-    desc: "可用的定制模型，加上独立评测、通用回归报告、部署脚本和已知局限。",
-    price: "限时 ¥299 起",
-    usd: "原价 ¥999 起 · $45+（reg. $149+）",
-    time: "1–3 周",
+    name: "Full delivery",
+    desc: "A production-ready custom model, with held-out evaluation, general regression, and deployment notes.",
+    price: "$45+ limited",
+    cny: "¥299+（reg. $149+ / ¥999+）",
+    time: "1–3 weeks",
     deliverables: [
-      "完整训练数据集构建/脱敏与 LoRA adapter / 合并模型",
-      "独立评测报告（域内主指标前后对比）+ 通用能力防退化回归报告",
-      "最小可运行推理示例与部署显存/参数说明",
-      "已知局限、失败边界清单与 2 轮依据评测反馈的修改",
+      "Curated redacted training dataset + LoRA adapter or merged model",
+      "Independent evaluation report + general capability regression check",
+      "Minimal runnable inference example & hardware/deployment notes",
+      "Known limitations list + two revision rounds tied to eval findings",
     ],
-    fit: "要真实上线使用、需要明确验收标准与可复现交付物的团队。",
-    not: "24/7 线上托管、无限制重训或新增需求。云 GPU 按实际账单纯实报实销（0% 管理费）。",
+    fit: "You have an acceptance target and need reproducible artifacts you can ship in production.",
+    notIncluded: "24/7 hosting, unlimited retraining, or uncontracted scope. Cloud GPU passed through at cost (0% markup).",
   },
 ];
 ---
 
 <Layout
-  title="服务 — TailorLM"
-  description="TailorLM 四阶服务：免费问题评估 ¥0、基线与评测包限时 ¥10（原价 ¥100）、LoRA 小试验限时 ¥99（原价 ¥299）、完整交付限时 ¥299 起（原价 ¥999 起）。"
+  lang="en"
+  title="Services — TailorLM"
+  description="TailorLM services: free problem review ($0), $2 limited queued baseline & eval pack (reg. $15), $15 LoRA experiment (reg. $45), $45+ full delivery (reg. $149+)."
 >
   <section class="page-hero">
     <div class="container">
       <p class="eyebrow">SERVICES</p>
-      <h1 class="h1">先免费看问题，<br />按证据往下走。</h1>
+      <h1 class="h1">Free review first.<br />Then let numbers lead.</h1>
       <p class="lead">
-        不是每个问题都需要训练。先零成本发 3 个失败例子免费看一眼；值得做再用 ¥10 基线建尺子，只在看到可测信号时再扩大投入。
+        Not every problem needs training. Send three real failures for a free Go/No-Go, spend $2 to lock a baseline ruler in the async queue, and scale only when evidence shows up.
       </p>
     </div>
   </section>
@@ -99,25 +101,24 @@ const services = [
               </div>
               <div class="service-price">
                 <strong>{service.price}</strong>
-                <span>{service.usd}</span>
+                <span>{service.cny}</span>
                 <span class="time">{service.time}</span>
               </div>
             </div>
-
             <div class="service-body">
               <div>
-                <h4>交付</h4>
+                <h4>Deliverables</h4>
                 <ul>
                   {service.deliverables.map((item) => <li>{item}</li>)}
                 </ul>
               </div>
               <div>
-                <h4>适合谁</h4>
+                <h4>Who it fits</h4>
                 <p>{service.fit}</p>
               </div>
               <div>
-                <h4>不包含</h4>
-                <p>{service.not}</p>
+                <h4>Not included</h4>
+                <p>{service.notIncluded}</p>
               </div>
             </div>
           </article>
@@ -129,14 +130,14 @@ const services = [
   <section class="section">
     <div class="container choose-grid">
       <div>
-        <div class="section-label"><span class="num">→</span><span class="txt">怎么选</span></div>
-        <h2 class="h2">不确定从哪开始？<br />先免费发 3 个例子。</h2>
+        <div class="section-label"><span class="num">→</span><span class="txt">How to choose</span></div>
+        <h2 class="h2">Not sure where<br />to start?</h2>
       </div>
       <div class="choose-list">
-        <div><span>不确定值不值得训练</span><strong>问题评估（免费 ¥0）</strong></div>
-        <div><span>没有测试集、想看原模型实测跑分</span><strong>基线与评测包（限时 ¥10）</strong></div>
-        <div><span>想先验证微调信号</span><strong>LoRA 小试验（限时 ¥99）</strong></div>
-        <div><span>要上线、要防退化回归与部署交付</span><strong>完整交付（限时 ¥299 起）</strong></div>
+        <div><span>Not sure training is worth it</span><strong>Problem review (Free $0)</strong></div>
+        <div><span>No test set or baseline score yet</span><strong>Baseline &amp; eval pack ($2 queued)</strong></div>
+        <div><span>Want quick empirical signal</span><strong>LoRA experiment ($15 queued)</strong></div>
+        <div><span>Need a production model &amp; regression check</span><strong>Full delivery ($45+)</strong></div>
       </div>
     </div>
   </section>
@@ -145,248 +146,12 @@ const services = [
     <div class="container cta-panel">
       <div>
         <p class="eyebrow">START FREE</p>
-        <h2 class="h2">先免费看一眼问题。</h2>
-        <p class="lead">把场景、当前模型和 3 个真实失败例子发来，我们会在 1–2 个工作日给出诚实的 Go/No-Go 判断。</p>
+        <h2 class="h2">Send three real<br />failure examples.</h2>
+        <p class="lead">
+          Describe the task, current model, and three real failures. We will review it for free within 1–2 business days and tell you if fine-tuning fits.
+        </p>
       </div>
-      <a class="button light" href={mailtoHref}>免费评估问题 <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={mailtoHref}>Free problem review <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 </Layout>
-
-<style>
-  .page-hero {
-    padding: 80px 0 72px;
-  }
-
-  .page-hero .eyebrow {
-    margin-bottom: 20px;
-  }
-
-  .page-hero .h1 {
-    margin-bottom: 28px;
-  }
-
-  .service-list {
-    display: grid;
-    gap: 0;
-  }
-
-  .service-item {
-    border-top: 1px solid var(--line);
-    padding: 40px 0;
-  }
-
-  .service-head {
-    display: grid;
-    grid-template-columns: 48px 1fr auto;
-    gap: 24px;
-    align-items: start;
-  }
-
-  .service-head .n {
-    font-size: 12px;
-    color: var(--accent);
-    font-weight: 600;
-    padding-top: 8px;
-  }
-
-  .service-title h2 {
-    margin-bottom: 8px;
-  }
-
-  .service-desc {
-    color: var(--muted);
-    font-size: 15px;
-    max-width: 520px;
-  }
-
-  .service-price {
-    display: grid;
-    gap: 2px;
-    justify-items: end;
-    text-align: right;
-    white-space: nowrap;
-  }
-
-  .service-price strong {
-    font-family: var(--font-serif);
-    font-size: 24px;
-    font-weight: 500;
-  }
-
-  .service-price span {
-    font-size: 12px;
-    color: var(--muted);
-  }
-
-  .service-price .time {
-    margin-top: 6px;
-    border: 1px solid var(--line);
-    border-radius: 999px;
-    padding: 3px 9px;
-    color: var(--ink);
-  }
-
-  .service-body {
-    display: grid;
-    grid-template-columns: 1.4fr 0.8fr 0.8fr;
-    gap: 32px;
-    margin: 28px 0 0 72px;
-  }
-
-  .service-body h4 {
-    font-family: var(--font-sans);
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 10px;
-    font-weight: 600;
-  }
-
-  .service-body ul {
-    display: grid;
-    gap: 6px;
-  }
-
-  .service-body li {
-    font-size: 14px;
-    color: var(--ink-2);
-    padding-left: 14px;
-    position: relative;
-  }
-
-  .service-body li::before {
-    content: "·";
-    position: absolute;
-    left: 0;
-    color: var(--accent);
-  }
-
-  .service-body p {
-    font-size: 14px;
-    color: var(--muted);
-  }
-
-  .choose-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: start;
-  }
-
-  .choose-list {
-    border-top: 1px solid var(--line);
-  }
-
-  .choose-list div {
-    display: flex;
-    justify-content: space-between;
-    gap: 24px;
-    padding: 18px 0;
-    border-bottom: 1px solid var(--line);
-    font-size: 14px;
-  }
-
-  .choose-list span {
-    color: var(--muted);
-  }
-
-  .choose-list strong {
-    font-weight: 600;
-    color: var(--ink);
-    white-space: nowrap;
-  }
-
-  .cta-panel {
-    background: var(--ink);
-    color: var(--bg);
-    border-radius: 28px;
-    padding: 56px;
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 40px;
-  }
-
-  .cta-panel .eyebrow {
-    color: rgba(247, 243, 234, 0.55);
-    margin-bottom: 18px;
-  }
-
-  .cta-panel .h2 {
-    color: var(--bg);
-  }
-
-  .cta-panel .lead {
-    color: rgba(247, 243, 234, 0.72);
-    margin-top: 20px;
-    max-width: 560px;
-    font-size: 16px;
-  }
-
-  .button.light {
-    background: var(--bg);
-    color: var(--ink);
-    border-color: var(--bg);
-    flex-shrink: 0;
-  }
-
-  .button.light:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: var(--bg);
-  }
-
-  @media (max-width: 900px) {
-    .service-head {
-      grid-template-columns: 32px 1fr;
-    }
-
-    .service-price {
-      grid-column: 2;
-      justify-items: start;
-      text-align: left;
-      margin-top: 8px;
-    }
-
-    .service-body {
-      grid-template-columns: 1fr;
-      gap: 24px;
-      margin-left: 56px;
-    }
-
-    .choose-grid {
-      grid-template-columns: 1fr;
-      gap: 40px;
-    }
-
-    .cta-panel {
-      flex-direction: column;
-      align-items: start;
-      padding: 40px;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .page-hero {
-      padding: 56px 0;
-    }
-
-    .service-head {
-      grid-template-columns: 1fr;
-    }
-
-    .service-price {
-      grid-column: 1;
-    }
-
-    .service-body {
-      margin-left: 0;
-    }
-
-    .cta-panel {
-      padding: 28px;
-    }
-  }
-</style>
