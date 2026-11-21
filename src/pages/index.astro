@@ -2,10 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import PricingTable from "../components/PricingTable.astro";
 import FAQ from "../components/FAQ.astro";
-import { mailto } from "../config";
 import "../styles/en-pages.css";
 
-const mailtoHref = mailto("TailorLM free problem review");
+const contactHref = "/contact";
 
 const faqs = [
   {
@@ -42,7 +41,7 @@ const faqs = [
           Start with a free problem review, lock a $2 baseline test set, and accept on reproducible metrics.
         </p>
         <div class="hero-actions">
-          <a class="button" href={mailtoHref}>Free review <span aria-hidden="true">↗</span></a>
+          <a class="button" href={contactHref}>Free review <span aria-hidden="true">→</span></a>
           <a class="button secondary" href="/pricing">Services &amp; pricing</a>
         </div>
         <p class="small muted hero-note">Consult first, pay at delivery · Free Go/No-Go · Baseline pack $2 limited queued (reg. $15)</p>
@@ -188,7 +187,7 @@ const faqs = [
             Limited-time queued prices run asynchronously by email. Higher-paid tiers and clearly scoped tasks take priority; regular prices skip the queue.
           </p>
         </div>
-        <a class="button light" href={mailtoHref}>Free problem review <span aria-hidden="true">↗</span></a>
+        <a class="button light" href={contactHref}>Free problem review <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>

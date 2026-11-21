@@ -2,9 +2,8 @@
 import Layout from "../../layouts/Layout.astro";
 import PricingTable from "../../components/PricingTable.astro";
 import FAQ from "../../components/FAQ.astro";
-import { mailto } from "../../config";
 
-const mailtoHref = mailto("TailorLM 免费问题评估");
+const contactHref = "/zh/contact";
 
 const faqs = [
   {
@@ -118,7 +117,7 @@ const faqs = [
         <h2 class="h2">先免费看问题，<br />再谈下一步。</h2>
         <p class="lead">发来场景与 3 个真实失败例子，我们先免费给一个诚实的 Go/No-Go 和大致预算。</p>
       </div>
-      <a class="button light" href={mailtoHref}>免费评估问题 <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={contactHref}>免费评估问题 <span aria-hidden="true">→</span></a>
     </div>
   </section>
 </Layout>

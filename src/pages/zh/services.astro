@@ -1,8 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
-import { mailto } from "../../config";
 
-const mailtoHref = mailto("TailorLM 免费问题评估");
+const contactHref = "/zh/contact";
 
 const services = [
   {
@@ -149,7 +148,7 @@ const services = [
         <h2 class="h2">先免费看一眼问题。</h2>
         <p class="lead">把场景、当前模型和 3 个真实失败例子发来，我们会在 1–2 个工作日给出诚实的 Go/No-Go 判断。</p>
       </div>
-      <a class="button light" href={mailtoHref}>免费评估问题 <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={contactHref}>免费评估问题 <span aria-hidden="true">→</span></a>
     </div>
   </section>
 </Layout>

@@ -1,9 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { mailto } from "../config";
 import "../styles/en-pages.css";
 
-const mailtoHref = mailto("TailorLM free problem review");
+const contactHref = "/contact";
 
 const services = [
   {
@@ -151,7 +150,7 @@ const services = [
           Describe the task, current model, and three real failures. We will review it for free within 1–2 business days and tell you if fine-tuning fits.
         </p>
       </div>
-      <a class="button light" href={mailtoHref}>Free problem review <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={contactHref}>Free problem review <span aria-hidden="true">→</span></a>
     </div>
   </section>
 </Layout>

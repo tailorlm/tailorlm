@@ -1,5 +1,4 @@
 ---
-import { mailto } from "../config";
 import { alternatePath, localePath, type Lang } from "../i18n";
 
 interface Props {
@@ -24,7 +23,7 @@ const nav = {
 } as const;
 
 const ctaLabel = lang === "en" ? "Free review" : "免费评估问题";
-const mailtoHref = mailto(lang === "en" ? "TailorLM free problem review" : "TailorLM 免费问题评估");
+const contactHref = localePath(lang, "/contact");
 const current = Astro.url.pathname;
 const isNotFound = current.includes("404");
 const switchHref = isNotFound
@@ -81,8 +80,8 @@ const isActive = (href: string) => current === href || current.startsWith(`${hre
       </a>
     </nav>
 
-    <a class="button header-cta" href={mailtoHref}>
-      {ctaLabel} <span aria-hidden="true">↗</span>
+    <a class="button header-cta" href={contactHref}>
+      {ctaLabel} <span aria-hidden="true">→</span>
     </a>
 
     <details class="mobile-menu">
@@ -102,7 +101,7 @@ const isActive = (href: string) => current === href || current.startsWith(`${hre
         <a class="mobile-link" href={switchHref} hreflang={lang === "en" ? "zh-CN" : "en"}>
           {lang === "en" ? "中文" : "English"}
         </a>
-        <a class="button" href={mailtoHref}>{ctaLabel}</a>
+        <a class="button" href={contactHref}>{ctaLabel}</a>
       </div>
     </details>
   </div>

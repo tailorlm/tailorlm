@@ -1,0 +1,821 @@
+---
+import { site } from "../config";
+import type { Lang } from "../i18n";
+
+interface Props {
+  lang?: Lang;
+  headingId: string;
+}
+
+const { lang = "en", headingId } = Astro.props as Props;
+const uid = `intake-${lang}`;
+
+const copy = {
+  en: {
+    requiredNote: "Fields marked * are required. Everything below generates a formatted email locally in your browser — nothing is uploaded.",
+    tierLegend: "Service tier (USD)",
+    errIconLabel: "Error",
+    moreSummary: "Add data, metric & timeline (optional — speeds up triage)",
+    submitLabel: "Open prefilled email",
+    copyLabel: "Copy prefilled email (webmail)",
+    copyDone: "Copied for webmail ✓",
+    copyFail: "Copy failed",
+    openedNotice: "Your mail app should open with your structured intake prefilled. Using webmail instead? Click “Copy prefilled email” and paste it to contact@mcocdaa.com.",
+    copyNotice: "Copied formatted subject and body to your clipboard. Paste into your email client and send to contact@mcocdaa.com.",
+    fields: {
+      product: {
+        label: "1. Product & use case",
+        hint: "What your product does and who uses it.",
+        placeholder: "e.g. B2B support ticket triage assistant for SaaS teams",
+        err: "Please describe your product and who uses it.",
+      },
+      failures: {
+        label: "2. Three real failure examples",
+        hint: "Paste input -> bad output vs expected output (redact secrets and customer PII).",
+        placeholder: "1) Input: ...\n   Bad: ...\n   Expected: ...",
+        err: "Please share at least one real failure example (three helps most).",
+      },
+      model: {
+        label: "3. Current model / setup",
+        hint: "Base model or API tried so far, plus prompt or RAG attempts.",
+        placeholder: "e.g. Qwen2.5-7B-Instruct via vLLM, tried few-shot prompt",
+      },
+      data: {
+        label: "4. Data volume, format & rights",
+        hint: "Approximate rows, format, labels, and confirmation you own/may use it.",
+        placeholder: "e.g. ~800 JSONL pairs, company-owned redacted logs",
+      },
+      metric: {
+        label: "5. Target acceptance metric",
+        hint: "What metric defines success, current value, and target.",
+        placeholder: "e.g. Valid JSON schema pass rate from 64% -> >=95%",
+      },
+      deploy: {
+        label: "6. Deployment, latency, VRAM & sign-off",
+        hint: "Where it runs, hardware/latency limits, and who signs off.",
+        placeholder: "e.g. Single 24GB L4/4090 GPU, <1.5s latency, CTO signs off",
+      },
+      timeline: {
+        label: "7. Timeline & budget range",
+        hint: "Target window and preferred package.",
+        placeholder: "e.g. Start with $2 baseline this week; $45+ full delivery next month",
+      },
+    },
+    tiers: [
+      { value: "free-review", label: "Free problem review ($0)", subject: "TailorLM: Free problem review ($0)" },
+      { value: "baseline", label: "Baseline & eval pack ($2 queued)", subject: "TailorLM: Baseline & eval pack ($2 queued)" },
+      { value: "experiment", label: "LoRA experiment ($15 queued)", subject: "TailorLM: LoRA experiment ($15 queued)" },
+      { value: "full-delivery", label: "Full delivery ($45+)", subject: "TailorLM: Full delivery ($45+)" },
+    ],
+  },
+  zh: {
+    requiredNote: "带 * 为必填项。下方仅在浏览器本地拼接结构化邮件内容，不会向任何服务器上传数据。",
+    tierLegend: "意向服务档位（人民币）",
+    errIconLabel: "错误",
+    moreSummary: "补充数据、指标与时间（选填，填得越清排单越快）",
+    submitLabel: "打开预填邮件",
+    copyLabel: "复制邮件内容（网页邮箱适用）",
+    copyDone: "已复制邮件正文 ✓",
+    copyFail: "复制失败",
+    openedNotice: "已尝试唤起邮件客户端并预填 7 项需求。如果使用 QQ / 163 / Gmail 等网页邮箱，请点右侧按钮复制内容发送至 contact@mcocdaa.com。",
+    copyNotice: "已复制主题与 7 问正文到剪贴板，请直接粘贴发送至 contact@mcocdaa.com。",
+    fields: {
+      product: {
+        label: "1. 产品与使用场景",
+        hint: "一句话说明你的产品做什么、给谁用。",
+        placeholder: "例如：面向 SaaS 团队的内部工单自动分类助手",
+        err: "请补充产品与使用场景。",
+      },
+      failures: {
+        label: "2. 三个真实失败例子",
+        hint: "贴出输入 -> 模型坏输出 vs 期望输出（请先脱敏，不要包含密钥或隐私）。",
+        placeholder: "1) 输入：...\n   现状坏输出：...\n   期望输出：...",
+        err: "请至少填写 1 个真实失败例子（提供 3 个最利于判断）。",
+      },
+      model: {
+        label: "3. 当前模型与方案",
+        hint: "正在使用的基座模型/API，以及是否试过 Prompt 或 RAG。",
+        placeholder: "例如：Qwen2.5-7B-Instruct + vLLM，试过 few-shot 仍不稳定",
+      },
+      data: {
+        label: "4. 数据数量、格式与权属",
+        hint: "大概有多少条、什么格式、有无标注，数据权属是否清楚。",
+        placeholder: "例如：约 1000 条脱敏 JSONL 样本，我司自有权属",
+      },
+      metric: {
+        label: "5. 验收指标（现在多少，目标多少）",
+        hint: "例如 JSON 严格通过率、拒答率、Tone 评分等。",
+        placeholder: "例如：JSON 字段通过率从 65% 提升到 >=95%",
+      },
+      deploy: {
+        label: "6. 验收人、部署环境与延迟/显存限制",
+        hint: "模型跑在哪里、显存/延迟要求，以及由谁验收。",
+        placeholder: "例如：单卡 24GB 推理，响应 <1.5s，技术负责人验收",
+      },
+      timeline: {
+        label: "7. 时间和预算范围",
+        hint: "期望时间窗口与意向档位。",
+        placeholder: "例如：先做 ¥10 基线建尺子，下周看结果再定完整交付",
+      },
+    },
+    tiers: [
+      { value: "free-review", label: "免费问题评估（¥0）", subject: "TailorLM 免费问题评估（¥0）" },
+      { value: "baseline", label: "基线与评测包（限时 ¥10）", subject: "TailorLM 申请基线与评测包（限时 ¥10）" },
+      { value: "experiment", label: "LoRA 小试验（限时 ¥99）", subject: "TailorLM 申请 LoRA 小试验（限时 ¥99）" },
+      { value: "full-delivery", label: "完整交付（限时 ¥299 起）", subject: "TailorLM 咨询完整交付（限时 ¥299 起）" },
+    ],
+  },
+} as const;
+
+const t = copy[lang];
+---
+
+<div class="intake-builder">
+  <p class="small muted intake-req-note">{t.requiredNote}</p>
+  <form
+    class="intake-form"
+    aria-labelledby={headingId}
+    novalidate
+    data-lang={lang}
+    data-email={site.email}
+    data-opened-msg={t.openedNotice}
+    data-copied-msg={t.copyNotice}
+  >
+    <fieldset class="tier-fieldset">
+      <legend>{t.tierLegend}</legend>
+      <div class="tier-grid">
+        {
+          t.tiers.map((tier, idx) => (
+            <label class="tier-option">
+              <input
+                type="radio"
+                name="tier"
+                value={tier.value}
+                data-subject={tier.subject}
+                data-label={tier.label}
+                checked={idx === 0}
+              />
+              <span>{tier.label}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <div class="field-group">
+      <label for={`${uid}-product`}>
+        {t.fields.product.label} <span aria-hidden="true">*</span>
+      </label>
+      <input
+        id={`${uid}-product`}
+        name="product"
+        type="text"
+        required
+        enterkeyhint="next"
+        aria-describedby={`${uid}-product-hint`}
+        data-error={`${uid}-product-err`}
+        placeholder={t.fields.product.placeholder}
+      />
+      <span id={`${uid}-product-hint`} class="field-hint">{t.fields.product.hint}</span>
+      <div id={`${uid}-product-err`} class="field-error">
+        <span role="img" aria-label={t.errIconLabel}>!</span>
+        <span>{t.fields.product.err}</span>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label for={`${uid}-failures`}>
+        {t.fields.failures.label} <span aria-hidden="true">*</span>
+      </label>
+      <textarea
+        id={`${uid}-failures`}
+        name="failures"
+        rows="4"
+        required
+        aria-describedby={`${uid}-failures-hint`}
+        data-error={`${uid}-failures-err`}
+        placeholder={t.fields.failures.placeholder}
+      ></textarea>
+      <span id={`${uid}-failures-hint`} class="field-hint">{t.fields.failures.hint}</span>
+      <div id={`${uid}-failures-err`} class="field-error">
+        <span role="img" aria-label={t.errIconLabel}>!</span>
+        <span>{t.fields.failures.err}</span>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <label for={`${uid}-model`}>{t.fields.model.label}</label>
+      <input
+        id={`${uid}-model`}
+        name="model"
+        type="text"
+        enterkeyhint="next"
+        autocorrect="off"
+        autocapitalize="none"
+        spellcheck="false"
+        aria-describedby={`${uid}-model-hint`}
+        placeholder={t.fields.model.placeholder}
+      />
+      <span id={`${uid}-model-hint`} class="field-hint">{t.fields.model.hint}</span>
+    </div>
+
+    <details class="intake-more">
+      <summary>{t.moreSummary}</summary>
+      <div class="intake-more-body">
+        <div class="field-group">
+          <label for={`${uid}-data`}>{t.fields.data.label}</label>
+          <input
+            id={`${uid}-data`}
+            name="data"
+            type="text"
+            enterkeyhint="next"
+            aria-describedby={`${uid}-data-hint`}
+            placeholder={t.fields.data.placeholder}
+          />
+          <span id={`${uid}-data-hint`} class="field-hint">{t.fields.data.hint}</span>
+        </div>
+
+        <div class="field-group">
+          <label for={`${uid}-metric`}>{t.fields.metric.label}</label>
+          <input
+            id={`${uid}-metric`}
+            name="metric"
+            type="text"
+            enterkeyhint="next"
+            aria-describedby={`${uid}-metric-hint`}
+            placeholder={t.fields.metric.placeholder}
+          />
+          <span id={`${uid}-metric-hint`} class="field-hint">{t.fields.metric.hint}</span>
+        </div>
+
+        <div class="field-group">
+          <label for={`${uid}-deploy`}>{t.fields.deploy.label}</label>
+          <input
+            id={`${uid}-deploy`}
+            name="deploy"
+            type="text"
+            enterkeyhint="next"
+            aria-describedby={`${uid}-deploy-hint`}
+            placeholder={t.fields.deploy.placeholder}
+          />
+          <span id={`${uid}-deploy-hint`} class="field-hint">{t.fields.deploy.hint}</span>
+        </div>
+
+        <div class="field-group">
+          <label for={`${uid}-timeline`}>{t.fields.timeline.label}</label>
+          <input
+            id={`${uid}-timeline`}
+            name="timeline"
+            type="text"
+            enterkeyhint="done"
+            aria-describedby={`${uid}-timeline-hint`}
+            placeholder={t.fields.timeline.placeholder}
+          />
+          <span id={`${uid}-timeline-hint`} class="field-hint">{t.fields.timeline.hint}</span>
+        </div>
+      </div>
+    </details>
+
+    <div class="intake-submit-row">
+      <button type="submit" class="button">
+        {t.submitLabel} <span aria-hidden="true">↗</span>
+      </button>
+      <span class="copy-wrap">
+        <button
+          type="button"
+          class="button secondary intake-copy-btn"
+          data-done={t.copyDone}
+          data-fail={t.copyFail}
+        >
+          {t.copyLabel}
+        </button>
+        <span class="copy-tip" role="status"></span>
+      </span>
+    </div>
+    <p class="intake-status small muted" role="status"></p>
+  </form>
+</div>
+
+<style>
+  .intake-req-note {
+    margin-bottom: 16px;
+  }
+
+  .intake-form {
+    display: grid;
+    gap: 20px;
+  }
+
+  .tier-fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-inline-size: 0;
+  }
+
+  .tier-fieldset legend {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 10px;
+    padding: 0;
+  }
+
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .tier-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-block-size: 48px;
+    padding: 10px 14px;
+    border: 1px solid #767676;
+    border-radius: 12px;
+    background: var(--white);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.35;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .tier-option input[type="radio"] {
+    accent-color: var(--ink);
+    inline-size: 18px;
+    block-size: 18px;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .tier-option:has(:checked) {
+    border-color: var(--ink);
+    border-width: 1.5px;
+    background: var(--bg-soft);
+    font-weight: 600;
+  }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .field-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .field-group label span[aria-hidden="true"] {
+    color: #b3261e;
+  }
+
+  .field-group:has(:is(:user-invalid, .user-invalid-fallback)) label {
+    color: #b3261e;
+  }
+
+  .field-group input,
+  .field-group textarea {
+    width: 100%;
+    min-block-size: 48px;
+    box-sizing: border-box;
+    font: inherit;
+    font-size: max(1rem, 1em);
+    line-height: 1.5;
+    padding: 11px 14px;
+    color: var(--ink);
+    background: var(--white);
+    border: 1px solid #767676;
+    border-radius: 10px;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .field-group textarea {
+    height: auto;
+    field-sizing: content;
+    min-block-size: 4lh;
+    max-block-size: 14lh;
+    resize: vertical;
+  }
+
+  .field-group input::placeholder,
+  .field-group textarea::placeholder {
+    color: #6c6a61;
+    opacity: 0.85;
+  }
+
+  .field-group :is(input, textarea):is(:user-invalid, .user-invalid-fallback) {
+    border-color: #b3261e;
+    border-width: 1.5px;
+    background: #fdf2f2;
+  }
+
+  .field-hint {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .field-error {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #b3261e;
+  }
+
+  .field-error [role="img"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 18px;
+    block-size: 18px;
+    border-radius: 999px;
+    background: #b3261e;
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .field-group :is(:user-invalid, .user-invalid-fallback) ~ .field-error {
+    display: flex;
+  }
+
+  .intake-more {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 4px 16px;
+    background: var(--bg-soft);
+  }
+
+  .intake-more summary {
+    cursor: pointer;
+    list-style: none;
+    padding: 12px 0;
+    min-block-size: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .intake-more summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .intake-more summary::after {
+    content: "+";
+    content: "+" / "";
+    color: var(--accent);
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .intake-more[open] summary::after {
+    content: "−";
+    content: "−" / "";
+  }
+
+  .intake-more-body {
+    display: grid;
+    gap: 16px;
+    padding: 8px 0 16px;
+    border-top: 1px solid var(--line);
+  }
+
+  .intake-submit-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .copy-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .copy-tip {
+    position: absolute;
+    inset-block-end: calc(100% + 8px);
+    inset-inline-start: 0;
+    z-index: 10;
+    padding: 5px 10px;
+    border-radius: 8px;
+    background: var(--white);
+    color: var(--ink);
+    border: 1px solid var(--line);
+    box-shadow: 0 8px 20px rgba(18, 60, 47, 0.12);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .intake-copy-btn[data-copied] + .copy-tip,
+  .intake-copy-btn[data-failed] + .copy-tip {
+    opacity: 1;
+  }
+
+  .intake-copy-btn[data-failed] + .copy-tip {
+    border-color: #b3261e;
+  }
+
+  .intake-status:empty {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .tier-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .intake-submit-row .button,
+    .intake-submit-row .copy-wrap {
+      width: 100%;
+    }
+
+    .intake-submit-row .button {
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  const linkError = (el: HTMLElement, shown: boolean) => {
+    const errorId = el.dataset.error;
+    if (!errorId) return;
+    const ids = (el.getAttribute("aria-describedby") || "")
+      .split(/\s+/)
+      .filter((id) => id && id !== errorId);
+    if (shown) ids.push(errorId);
+    if (ids.length) el.setAttribute("aria-describedby", ids.join(" "));
+    else el.removeAttribute("aria-describedby");
+  };
+
+  const announcer = document.createElement("div");
+  announcer.setAttribute("aria-live", "polite");
+  announcer.classList.add("visually-hidden");
+  document.body.append(announcer);
+  let announceTimer: number | undefined;
+  let announcedField: HTMLElement | undefined;
+
+  const spokenText = (node: HTMLElement) => {
+    const copy = node.cloneNode(true) as HTMLElement;
+    copy.querySelectorAll('[aria-hidden="true"]').forEach((n) => n.remove());
+    copy.querySelectorAll('[role="img"][aria-label]').forEach((n) => {
+      n.replaceWith(`${n.getAttribute("aria-label")}: `);
+    });
+    return (copy.textContent || "").replace(/\s+/g, " ").trim();
+  };
+
+  const announceError = (el: HTMLInputElement | HTMLTextAreaElement) => {
+    const errorId = el.dataset.error;
+    if (!errorId) return;
+    const error = document.getElementById(errorId);
+    if (!error) return;
+    const labelText = el.labels?.[0] ? `${spokenText(el.labels[0])}: ` : "";
+    window.clearTimeout(announceTimer);
+    announcer.textContent = "";
+    announcedField = el;
+    announceTimer = window.setTimeout(() => {
+      announcer.textContent = labelText + spokenText(error);
+    }, 500);
+  };
+
+  const flagged = new WeakSet<HTMLElement>();
+  const announced = new WeakSet<HTMLElement>();
+  const dirtyFallback = new WeakMap<HTMLElement, { hasInteracted: boolean; hasBlurred: boolean }>();
+  const supportsUserInvalid = typeof CSS !== "undefined" && CSS.supports("selector(:user-invalid)");
+  const tipTimers = new WeakMap<HTMLButtonElement, number>();
+  let lastTipMsg = "";
+
+  const isFieldUserInvalid = (el: HTMLInputElement | HTMLTextAreaElement) =>
+    (supportsUserInvalid && el.matches(":user-invalid")) || el.classList.contains("user-invalid-fallback");
+
+  const syncAria = (el: EventTarget | null, announce = false) => {
+    if (!(el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement)) return;
+    const invalid = isFieldUserInvalid(el);
+    if (invalid) {
+      if (announce && !announced.has(el)) {
+        announceError(el);
+        announced.add(el);
+      }
+      el.setAttribute("aria-invalid", "true");
+      linkError(el, true);
+      flagged.add(el);
+    } else if (flagged.has(el) || el.getAttribute("aria-invalid") !== "true") {
+      el.setAttribute("aria-invalid", "false");
+      linkError(el, false);
+      flagged.delete(el);
+      announced.delete(el);
+      if (announcedField === el) {
+        window.clearTimeout(announceTimer);
+        announcer.textContent = "";
+      }
+    }
+  };
+
+  function legacyCopy(text: string): boolean {
+    const area = Object.assign(document.createElement("textarea"), { value: text });
+    area.setAttribute("readonly", "");
+    area.style.cssText = "position:fixed;inset-block-start:0;opacity:0";
+    document.body.append(area);
+    area.select();
+    try {
+      return document.execCommand("copy");
+    } catch {
+      return false;
+    } finally {
+      area.remove();
+    }
+  }
+
+  function buildEmailPayload(form: HTMLFormElement) {
+    const lang = form.dataset.lang === "zh" ? "zh" : "en";
+    const fd = new FormData(form);
+    const val = (key: string) => String(fd.get(key) ?? "").trim();
+    const checkedTier = form.querySelector<HTMLInputElement>('input[name="tier"]:checked');
+    const subject =
+      checkedTier?.dataset.subject ||
+      (lang === "zh" ? "TailorLM 免费问题评估" : "TailorLM free problem review");
+    const tierLabel = checkedTier?.dataset.label || "";
+
+    const bodyLines =
+      lang === "zh"
+        ? [
+            `1. 产品是什么：${val("product")}`,
+            `2. 模型现在哪里不好（3 个真实失败例子）：\n${val("failures")}`,
+            `3. 当前模型/方案：${val("model")}`,
+            `4. 数据情况（数量、格式、权属）：${val("data")}`,
+            `5. 验收指标（现在多少，目标多少）：${val("metric")}`,
+            `6. 谁验收、部署环境、延迟/显存/成本限制：${val("deploy")}`,
+            `7. 时间和预算范围：${val("timeline")}`,
+            tierLabel ? `意向档位：${tierLabel}` : "",
+          ].filter(Boolean)
+        : [
+            `1. What is the product, and who is it for? ${val("product")}`,
+            `2. Where does the model fail? Three real examples:\n${val("failures")}`,
+            `3. Current model / setup: ${val("model")}`,
+            `4. Data (volume, format, rights, labels): ${val("data")}`,
+            `5. Acceptance metric (current and target): ${val("metric")}`,
+            `6. Sign-off, deployment, latency / VRAM / cost limits: ${val("deploy")}`,
+            `7. Timeline and budget range: ${val("timeline")}`,
+            tierLabel ? `Requested tier: ${tierLabel}` : "",
+          ].filter(Boolean);
+
+    return { subject, body: bodyLines.join("\n") };
+  }
+
+  for (const form of document.querySelectorAll<HTMLFormElement>(".intake-form")) {
+    const controls = [...form.elements].filter(
+      (el): el is HTMLInputElement | HTMLTextAreaElement =>
+        el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement,
+    );
+    controls.forEach((el) => syncAria(el));
+
+    form.addEventListener(
+      "blur",
+      (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement)) return;
+        const st = dirtyFallback.get(target) || { hasInteracted: false, hasBlurred: false };
+        st.hasBlurred = true;
+        dirtyFallback.set(target, st);
+        if (!supportsUserInvalid && st.hasInteracted) {
+          target.classList.toggle("user-invalid-fallback", !target.validity.valid);
+        } else if (target.validity.valid) {
+          target.classList.remove("user-invalid-fallback");
+        }
+        syncAria(target, true);
+      },
+      true,
+    );
+
+    form.addEventListener("input", (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement)) return;
+      const st = dirtyFallback.get(target) || { hasInteracted: false, hasBlurred: false };
+      st.hasInteracted = true;
+      dirtyFallback.set(target, st);
+      if (target.validity.valid) {
+        target.classList.remove("user-invalid-fallback");
+      } else if (!supportsUserInvalid && st.hasBlurred) {
+        target.classList.add("user-invalid-fallback");
+      }
+      if (target.hasAttribute("aria-invalid")) {
+        syncAria(target);
+      }
+    });
+
+    form.addEventListener(
+      "change",
+      (event) => {
+        syncAria(event.target, true);
+      },
+      true,
+    );
+
+    form.addEventListener(
+      "reset",
+      () => {
+        window.setTimeout(() => {
+          controls.forEach((el) => {
+            dirtyFallback.delete(el);
+            el.classList.remove("user-invalid-fallback");
+            syncAria(el);
+          });
+        });
+      },
+      true,
+    );
+
+    const statusEl = form.querySelector<HTMLElement>(".intake-status");
+    const copyBtn = form.querySelector<HTMLButtonElement>(".intake-copy-btn");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      let firstInvalid: HTMLInputElement | HTMLTextAreaElement | null = null;
+      for (const el of controls) {
+        if (!el.checkValidity()) {
+          if (!firstInvalid) firstInvalid = el;
+          dirtyFallback.set(el, { hasInteracted: true, hasBlurred: true });
+          el.classList.add("user-invalid-fallback");
+          announced.add(el);
+          syncAria(el);
+        }
+      }
+      if (firstInvalid) {
+        firstInvalid.focus();
+        return;
+      }
+
+      const { subject, body } = buildEmailPayload(form);
+      const email = form.dataset.email || "contact@mcocdaa.com";
+      const href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+        body.replace(/\r?\n/g, "\r\n"),
+      )}`;
+      if (statusEl) {
+        statusEl.textContent = form.dataset.openedMsg || "";
+      }
+      window.location.href = href;
+    });
+
+    copyBtn?.addEventListener("click", async () => {
+      const { subject, body } = buildEmailPayload(form);
+      const email = form.dataset.email || "contact@mcocdaa.com";
+      const fullText = `To: ${email}\nSubject: ${subject}\n\n${body}`;
+      let ok = false;
+      try {
+        await navigator.clipboard.writeText(fullText);
+        ok = true;
+      } catch {
+        ok = legacyCopy(fullText);
+      }
+
+      const tip = copyBtn.nextElementSibling;
+      window.clearTimeout(tipTimers.get(copyBtn));
+      copyBtn.removeAttribute("data-copied");
+      copyBtn.removeAttribute("data-failed");
+
+      let message = ok
+        ? (copyBtn.dataset.done ?? "Copied")
+        : (copyBtn.dataset.fail ?? "Copy failed");
+      if (message === lastTipMsg) message += "\u00A0";
+      lastTipMsg = message;
+
+      copyBtn.setAttribute(ok ? "data-copied" : "data-failed", "");
+      if (tip instanceof HTMLElement) {
+        tip.textContent = "";
+        void copyBtn.offsetWidth;
+        requestAnimationFrame(() => {
+          tip.textContent = message;
+        });
+      }
+      if (ok && statusEl) {
+        statusEl.textContent = form.dataset.copiedMsg || "";
+      }
+      tipTimers.set(
+        copyBtn,
+        window.setTimeout(() => {
+          copyBtn.removeAttribute("data-copied");
+          copyBtn.removeAttribute("data-failed");
+          if (tip instanceof HTMLElement) tip.textContent = "";
+        }, 2200),
+      );
+    });
+  }
+</script>

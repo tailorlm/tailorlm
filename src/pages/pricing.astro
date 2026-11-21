@@ -2,10 +2,9 @@
 import Layout from "../layouts/Layout.astro";
 import PricingTable from "../components/PricingTable.astro";
 import FAQ from "../components/FAQ.astro";
-import { mailto } from "../config";
 import "../styles/en-pages.css";
 
-const mailtoHref = mailto("TailorLM free problem review");
+const contactHref = "/contact";
 
 const faqs = [
   {
@@ -119,7 +118,7 @@ const faqs = [
         <h2 class="h2">Free review first,<br />then decide.</h2>
         <p class="lead">Send your use case, data rights, and 3 real failure examples. We will return an honest Go/No-Go and cost range.</p>
       </div>
-      <a class="button light" href={mailtoHref}>Free problem review <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={contactHref}>Free problem review <span aria-hidden="true">→</span></a>
     </div>
   </section>
 </Layout>

@@ -1,9 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { mailto } from "../config";
 import "../styles/en-pages.css";
 
-const mailtoHref = mailto("TailorLM free problem review");
+const contactHref = "/contact";
 
 const steps = [
   {
@@ -181,7 +180,7 @@ const deliverables = [
           The fastest way to start is three examples where the current model failed, plus the result you expected. We will tell you which gate applies.
         </p>
       </div>
-      <a class="button light" href={mailtoHref}>Free problem review <span aria-hidden="true">↗</span></a>
+      <a class="button light" href={contactHref}>Free problem review <span aria-hidden="true">→</span></a>
     </div>
   </section>
 </Layout>

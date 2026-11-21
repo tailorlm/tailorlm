@@ -48,14 +48,26 @@ a:hover {
   color: var(--accent);
 }
 
-:where(a, button, summary, [tabindex]):focus-visible {
+:where(a, button, summary, input, textarea, select, [tabindex]):focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-:where(.hero-card, .contact-card, .cta-panel) :where(a, button, summary, [tabindex]):focus-visible {
+:where(.hero-card, .contact-card, .cta-panel) :where(a, button, summary, input, textarea, select, [tabindex]):focus-visible {
   outline-color: var(--bg);
+}
+
+.visually-hidden:where(:not(:focus-within, :active)) {
+  position: absolute !important;
+  clip-path: inset(50%) !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  white-space: nowrap !important;
 }
 
 h1,

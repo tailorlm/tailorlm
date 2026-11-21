@@ -2,9 +2,8 @@
 import Layout from "../../layouts/Layout.astro";
 import PricingTable from "../../components/PricingTable.astro";
 import FAQ from "../../components/FAQ.astro";
-import { mailto } from "../../config";
 
-const mailtoHref = mailto("TailorLM 免费问题评估");
+const contactHref = "/zh/contact";
 
 const faqs = [
   {
@@ -36,7 +35,7 @@ const faqs = [
           TailorLM 为有明确任务和数据的团队做开源 LLM 后训练：先免费看问题，再用 ¥10 基线建尺子，最后按可复现评测验收，结尾交付结账。
         </p>
         <div class="hero-actions">
-          <a class="button" href={mailtoHref}>免费评估问题 <span aria-hidden="true">↗</span></a>
+          <a class="button" href={contactHref}>免费评估问题 <span aria-hidden="true">→</span></a>
           <a class="button secondary" href="/zh/pricing">看服务与定价</a>
         </div>
         <p class="small muted hero-note">先咨询后付款 · 免费看问题给 Go/No-Go · 基线与评测包限时 ¥10（排队制，原价 ¥100）</p>
@@ -182,7 +181,7 @@ const faqs = [
             限时特惠价采用全异步邮件排队制，按付费档位与需求清晰度优先排单；选原价或高档位可免排队优先排期。
           </p>
         </div>
-        <a class="button light" href={mailtoHref}>免费评估问题 <span aria-hidden="true">↗</span></a>
+        <a class="button light" href={contactHref}>免费评估问题 <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>

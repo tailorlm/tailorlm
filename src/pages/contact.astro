@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import CopyButton from "../components/CopyButton.astro";
+import IntakeBuilder from "../components/IntakeBuilder.astro";
 import { site, mailto } from "../config";
 import "../styles/en-pages.css";
 
@@ -13,16 +14,6 @@ const intakeBody = `1. What is the product, and who is it for?
 7. Timeline and budget range:`;
 
 const mailtoHref = mailto("TailorLM free problem review", intakeBody);
-
-const questions = [
-  "What is the product, and who is it for?",
-  "Where does the model fail? Give three real examples.",
-  "What model or setup are you using? Have you tried prompt engineering, RAG, or fine-tuning?",
-  "How much data do you have, in what format, and are the rights clear?",
-  "What metric defines success, and what is the current value?",
-  "Who signs off? Where will the model run, and what are the latency, VRAM, and cost limits?",
-  "What are the timeline and budget range?",
-];
 ---
 
 <Layout
@@ -67,21 +58,9 @@ const questions = [
       </div>
 
       <div class="intake">
-        <div class="section-label"><span class="num">01</span><span class="txt">What to include</span></div>
-        <h2 class="h3">Seven questions that speed up the first call.</h2>
-        <ol>
-          {questions.map((question) => <li>{question}</li>)}
-        </ol>
-        <div class="intake-actions">
-          <CopyButton
-            copy={intakeBody}
-            done="Template copied ✓"
-            fail="Copy failed"
-            variantClass="secondary copy-template-btn"
-          >
-            Copy 7-question template
-          </CopyButton>
-        </div>
+        <div class="section-label"><span class="num">01</span><span class="txt">Structured intake</span></div>
+        <h2 id="intake-heading" class="h3">Seven details that speed up your free review.</h2>
+        <IntakeBuilder lang="en" headingId="intake-heading" />
         <p class="small muted note">
           Please do not send unredacted client data, chat logs, or secrets in the first email. Start with the use case, metric, and data rights; we will set up a secure channel if the data needs review.
         </p>

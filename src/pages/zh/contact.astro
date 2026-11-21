@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import CopyButton from "../../components/CopyButton.astro";
+import IntakeBuilder from "../../components/IntakeBuilder.astro";
 import { site, mailto } from "../../config";
 
 const intakeBody = `1. 产品是什么：
@@ -12,16 +13,6 @@ const intakeBody = `1. 产品是什么：
 7. 时间和预算范围：`;
 
 const mailtoHref = mailto("TailorLM 免费问题评估", intakeBody);
-
-const questions = [
-  "你的产品是什么，用户是谁？",
-  "模型现在哪里不好？给 3 个真实失败例子。",
-  "现在用什么模型/方案？试过 Prompt、RAG 或微调吗？",
-  "有多少数据？什么格式？有标注吗？数据权属清楚吗？",
-  "什么指标算成功？现在是多少，目标是多少？",
-  "谁验收？模型最终跑在哪里？有延迟/显存/成本限制吗？",
-  "时间和预算范围？",
-];
 ---
 
 <Layout
@@ -66,21 +57,9 @@ const questions = [
       </div>
 
       <div class="intake">
-        <div class="section-label"><span class="num">01</span><span class="txt">邮件里写什么</span></div>
-        <h2 class="h3">七个问题，帮我们快速判断。</h2>
-        <ol>
-          {questions.map((question) => <li>{question}</li>)}
-        </ol>
-        <div class="intake-actions">
-          <CopyButton
-            copy={intakeBody}
-            done="已复制问题模板 ✓"
-            fail="复制失败"
-            variantClass="secondary copy-template-btn"
-          >
-            复制七个问题模板
-          </CopyButton>
-        </div>
+        <div class="section-label"><span class="num">01</span><span class="txt">结构化需求表</span></div>
+        <h2 id="intake-heading" class="h3">七个细节，帮我们快速判断并优先排单。</h2>
+        <IntakeBuilder lang="zh" headingId="intake-heading" />
         <p class="small muted note">
           首封邮件请不要发送未脱敏的客户数据、聊天记录或密钥。先聊场景、指标和数据权属；需要看数据时再走安全渠道。
         </p>
